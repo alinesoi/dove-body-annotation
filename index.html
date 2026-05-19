@@ -3,57 +3,83 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Appearance Ideals for Males</title>
+<title>Appearance Ideals</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#0d1117;
-  --surface:#161b22;
-  --border:#30363d;
-  --text:#e6edf3;
-  --text-dim:#8b949e;
-  --text-muted:#484f58;
-  --accent:#58a6ff;
-  --accent-soft:rgba(88,166,255,0.12);
-  --accent-border:rgba(88,166,255,0.3);
-  --accent-line:rgba(88,166,255,0.3);
-  --accent-dot:rgba(88,166,255,0.7);
-  --figure-fill:rgba(255,255,255,0.045);
-  --figure-stroke:rgba(255,255,255,0.1);
+  --navy:#1B3D6F;
+  --navy-light:#2A5298;
+  --green:#3EA66B;
+  --green-light:#48C278;
+  --green-dim:rgba(62,166,107,0.12);
+  --green-line:rgba(62,166,107,0.55);
+  --green-dot:rgba(62,166,107,0.85);
+  --bg:#FFFFFF;
+  --border-dash:#B8C9DD;
+  --text:#1B3D6F;
+  --text-dim:#5A7A9E;
+  --text-muted:#8FA4BC;
+  --input-bg:#F5F8FC;
 }
-html,body{height:100%;font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);overflow:hidden}
+html,body{height:100%;font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);overflow:hidden}
 
-/* Page layout */
-.page{display:flex;flex-direction:column;height:100vh}
-.header{padding:24px 32px 8px;text-align:center;flex-shrink:0}
-.header h1{font-size:24px;font-weight:700;letter-spacing:-0.5px;color:var(--text)}
-.header p{font-size:13px;color:var(--text-muted);margin-top:4px}
-.workspace{flex:1;display:flex;padding:8px 16px 16px;min-height:0;gap:16px}
+/* Page */
+.page{display:flex;flex-direction:column;height:100vh;max-width:1400px;margin:0 auto;border-left:3px dashed var(--border-dash);border-right:3px dashed var(--border-dash)}
+
+/* Header */
+.header{
+  padding:28px 40px 16px;
+  display:flex;align-items:center;gap:16px;
+  border-bottom:3px dashed var(--border-dash);
+  flex-shrink:0;
+}
+.chevrons{display:flex;gap:4px;flex-shrink:0}
+.chevron{
+  width:0;height:0;
+  border-top:14px solid transparent;
+  border-bottom:14px solid transparent;
+  border-left:16px solid var(--navy);
+}
+.header h1{
+  font-size:32px;font-weight:800;color:var(--navy);
+  letter-spacing:-0.5px;line-height:1.1;
+}
+
+/* Instruction box */
+.instruction-box{
+  margin:16px 40px;
+  padding:16px 22px;
+  border:2.5px dashed var(--navy);
+  border-radius:6px;
+  flex-shrink:0;
+}
+.instruction-box p{font-size:14px;line-height:1.6;color:var(--navy);font-weight:400}
+.instruction-box p strong{font-weight:700}
+
+/* Workspace */
+.workspace{flex:1;display:flex;padding:8px 20px 20px;min-height:0;gap:12px}
 
 /* Figure area */
 .figure-area{flex:1;position:relative;overflow:hidden}
 #bodySvg{
   position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  height:88%;max-height:580px;
-  filter:drop-shadow(0 0 40px rgba(88,166,255,0.03));
+  height:90%;max-height:520px;
 }
 #lineSvg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}
 #labelsContainer{position:absolute;inset:0;pointer-events:none;z-index:3}
 
-/* Labels */
+/* Annotation labels */
 .label-tag{
   position:absolute;pointer-events:auto;
-  padding:5px 12px;
-  background:var(--accent-soft);
-  border:1px solid var(--accent-border);
-  border-radius:6px;
-  font-size:13px;font-weight:500;
-  color:var(--accent);
+  padding:4px 0;
+  font-size:13px;font-weight:600;
+  color:var(--navy);
   white-space:nowrap;
+  border-bottom:2.5px solid var(--green);
   opacity:0;
-  transition:opacity 0.4s ease,transform 0.4s ease,font-size 0.3s ease,padding 0.3s ease;
+  transition:opacity 0.4s ease;
 }
 .label-tag.visible{opacity:1}
 .label-tag.left-side{text-align:right}
@@ -62,58 +88,59 @@ html,body{height:100%;font-family:'Inter',system-ui,sans-serif;background:var(--
 /* Input panel */
 .input-panel{
   width:280px;flex-shrink:0;
-  display:flex;flex-direction:column;gap:12px;
-  padding:12px 0;
+  display:flex;flex-direction:column;gap:10px;
+  padding:8px 0;
+  border-left:2px dashed var(--border-dash);
+  padding-left:20px;
 }
-.input-panel h2{font-size:14px;font-weight:600;color:var(--text-dim);margin-bottom:2px}
+.input-panel h2{font-size:13px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:0.5px}
 .input-panel textarea{
-  width:100%;min-height:90px;padding:12px 14px;
-  background:var(--surface);border:1px solid var(--border);border-radius:10px;
-  color:var(--text);font-family:'Inter',sans-serif;font-size:14px;line-height:1.5;
+  width:100%;min-height:80px;padding:12px 14px;
+  background:var(--input-bg);border:2px solid var(--border-dash);border-radius:8px;
+  color:var(--navy);font-family:'Poppins',sans-serif;font-size:13px;line-height:1.5;
   resize:vertical;outline:none;transition:border-color 0.2s;
 }
-.input-panel textarea:focus{border-color:var(--accent)}
+.input-panel textarea:focus{border-color:var(--navy)}
 .input-panel textarea::placeholder{color:var(--text-muted)}
 
 .btn-primary{
-  width:100%;padding:12px;
-  background:var(--accent);color:#fff;
-  border:none;border-radius:10px;
-  font-size:14px;font-weight:600;cursor:pointer;
-  font-family:'Inter',sans-serif;transition:all 0.2s;
+  width:100%;padding:11px;
+  background:var(--green);color:#fff;
+  border:none;border-radius:8px;
+  font-size:13px;font-weight:700;cursor:pointer;
+  font-family:'Poppins',sans-serif;transition:all 0.2s;
+  text-transform:uppercase;letter-spacing:0.5px;
 }
-.btn-primary:hover{filter:brightness(1.1)}
+.btn-primary:hover{background:var(--green-light)}
 .btn-primary:disabled{opacity:0.5;cursor:not-allowed}
-.btn-primary.loading{
-  background:var(--surface);border:1px solid var(--border);
-  color:var(--text-muted);
-}
-.btn-secondary{
-  width:100%;padding:9px;
-  background:none;border:1px solid var(--border);border-radius:8px;
-  color:var(--text-muted);font-size:12px;cursor:pointer;
-  font-family:'Inter',sans-serif;transition:all 0.2s;
-}
-.btn-secondary:hover{border-color:var(--text-dim);color:var(--text-dim)}
+.btn-primary.loading{background:var(--input-bg);border:2px solid var(--border-dash);color:var(--text-muted)}
 
-.annot-count{font-size:11px;color:var(--text-muted);text-align:center;padding:2px}
-.error-msg{font-size:12px;color:#f85149;padding:4px 0;display:none}
+.btn-secondary{
+  width:100%;padding:8px;
+  background:none;border:2px solid var(--border-dash);border-radius:8px;
+  color:var(--text-dim);font-size:11px;font-weight:600;cursor:pointer;
+  font-family:'Poppins',sans-serif;transition:all 0.2s;
+}
+.btn-secondary:hover{border-color:var(--navy);color:var(--navy)}
+
+.annot-count{font-size:11px;color:var(--text-muted);text-align:center;padding:2px;font-weight:500}
+.error-msg{font-size:11px;color:#D32F2F;padding:4px 0;display:none;font-weight:500}
 .error-msg.show{display:block}
 
 /* Example chips */
-.examples{margin-top:auto;padding-top:12px;border-top:1px solid var(--border)}
-.examples h3{font-size:11px;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px}
+.examples{margin-top:auto;padding-top:12px;border-top:2px dashed var(--border-dash)}
+.examples h3{font-size:10px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
 .example-chip{
-  display:inline-block;padding:5px 10px;margin:2px;
-  background:var(--surface);border:1px solid var(--border);border-radius:16px;
-  font-size:11px;color:var(--text-dim);cursor:pointer;transition:all 0.2s;
+  display:inline-block;padding:4px 10px;margin:2px;
+  background:var(--input-bg);border:1.5px solid var(--border-dash);border-radius:14px;
+  font-size:11px;font-weight:500;color:var(--text-dim);cursor:pointer;transition:all 0.2s;
 }
-.example-chip:hover{border-color:var(--accent);color:var(--accent)}
+.example-chip:hover{border-color:var(--green);color:var(--green)}
 
 /* Animations */
 @keyframes dotPulse{
-  0%,100%{r:3.5;opacity:0.7}
-  50%{r:5;opacity:1}
+  0%,100%{r:4;opacity:0.85}
+  50%{r:6;opacity:1}
 }
 .dot-new{animation:dotPulse 0.6s ease-out}
 </style>
@@ -121,60 +148,45 @@ html,body{height:100%;font-family:'Inter',system-ui,sans-serif;background:var(--
 <body>
 <div class="page">
   <div class="header">
-    <h1>What are appearance ideals for males?</h1>
-    <p>Type a trait below to annotate the figure</p>
+    <div class="chevrons">
+      <div class="chevron"></div>
+      <div class="chevron"></div>
+    </div>
+    <h1>Appearance Ideals</h1>
+  </div>
+
+  <div class="instruction-box">
+    <p>Label the body below with as many features as you can that make up today's appearance ideals.<br>
+    <strong>What are appearance ideals for males?</strong></p>
   </div>
 
   <div class="workspace">
     <div class="figure-area" id="figureArea">
 
-      <!-- Male silhouette (composite shapes) -->
-      <svg id="bodySvg" viewBox="0 0 300 500" xmlns="http://www.w3.org/2000/svg">
-        <g fill="var(--figure-fill)" stroke="var(--figure-stroke)" stroke-width="1.2" stroke-linejoin="round">
+      <!-- Simple pictogram human figure (bathroom-sign style) -->
+      <svg id="bodySvg" viewBox="0 0 200 420" xmlns="http://www.w3.org/2000/svg">
+        <g fill="#1B3D6F">
           <!-- Head -->
-          <ellipse cx="150" cy="42" rx="28" ry="34"/>
-          <!-- Neck -->
-          <rect x="139" y="74" width="22" height="22" rx="8"/>
-          <!-- Shoulders + upper torso -->
-          <rect x="76" y="93" width="148" height="46" rx="22"/>
-          <!-- Torso -->
-          <rect x="92" y="120" width="116" height="100" rx="14"/>
-          <!-- Left upper arm -->
-          <rect x="52" y="96" width="28" height="78" rx="13" transform="rotate(-8 66 135)"/>
-          <!-- Right upper arm -->
-          <rect x="220" y="96" width="28" height="78" rx="13" transform="rotate(8 234 135)"/>
-          <!-- Left forearm -->
-          <rect x="38" y="170" width="22" height="72" rx="10" transform="rotate(-5 49 206)"/>
-          <!-- Right forearm -->
-          <rect x="240" y="170" width="22" height="72" rx="10" transform="rotate(5 251 206)"/>
-          <!-- Left hand -->
-          <ellipse cx="43" cy="248" rx="12" ry="14"/>
-          <!-- Right hand -->
-          <ellipse cx="257" cy="248" rx="12" ry="14"/>
-          <!-- Hips -->
-          <ellipse cx="150" cy="224" rx="50" ry="18"/>
-          <!-- Left thigh -->
-          <rect x="110" y="236" width="36" height="105" rx="17"/>
-          <!-- Right thigh -->
-          <rect x="154" y="236" width="36" height="105" rx="17"/>
-          <!-- Left calf -->
-          <rect x="114" y="335" width="28" height="100" rx="13"/>
-          <!-- Right calf -->
-          <rect x="158" y="335" width="28" height="100" rx="13"/>
-          <!-- Left foot -->
-          <ellipse cx="127" cy="440" rx="18" ry="9"/>
-          <!-- Right foot -->
-          <ellipse cx="173" cy="440" rx="18" ry="9"/>
+          <circle cx="100" cy="36" r="28"/>
+          <!-- Body / torso -->
+          <rect x="66" y="70" width="68" height="128" rx="10"/>
+          <!-- Left arm -->
+          <rect x="18" y="80" width="52" height="26" rx="13"/>
+          <!-- Right arm -->
+          <rect x="130" y="80" width="52" height="26" rx="13"/>
+          <!-- Left leg -->
+          <rect x="62" y="202" width="30" height="138" rx="14"/>
+          <!-- Right leg -->
+          <rect x="108" y="202" width="30" height="138" rx="14"/>
         </g>
       </svg>
 
-      <!-- Line overlay for connecting annotations -->
+      <!-- Line overlay -->
       <svg id="lineSvg" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <filter id="glow" x="-100%" y="-100%" width="300%" height="300%">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="b"/>
-            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
+          <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="var(--green-line)"/>
+          </marker>
         </defs>
       </svg>
 
@@ -183,7 +195,7 @@ html,body{height:100%;font-family:'Inter',system-ui,sans-serif;background:var(--
     </div>
 
     <div class="input-panel">
-      <h2>Add appearance traits</h2>
+      <h2>Add traits</h2>
       <textarea id="userInput" placeholder="e.g., long hair, blue eyes, muscular build..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();addAnnotation()}"></textarea>
       <button class="btn-primary" id="btnAdd" onclick="addAnnotation()">Add to Figure</button>
       <button class="btn-secondary" onclick="clearAll()">Clear All</button>
@@ -214,62 +226,54 @@ const DEPLOYMENT = 'gpt-5.4';
 let annotations = [];
 let processing = false;
 
-/* ───── Body coordinate map (matches SVG viewBox 0 0 300 500) ───── */
-const BODY_MAP = `BODY REGION COORDINATE MAP (SVG viewBox: 0 0 300 500, origin top-left):
+/* Body coordinate map matching the pictogram SVG (viewBox 0 0 200 420) */
+const BODY_MAP = `BODY REGION COORDINATE MAP (SVG viewBox: 0 0 200 420, origin = top-left):
 
 HEAD & FACE:
-- Top of head / crown: (150, 8)
-- Hair: (150, 16)
-- Forehead: (150, 26)
-- Left eye: (139, 36), Right eye: (161, 36)
-- Nose: (150, 44)
-- Mouth / lips: (150, 52)
-- Chin: (150, 60)
-- Left ear: (122, 38), Right ear: (178, 38)
-- Left jawline: (127, 54), Right jawline: (173, 54)
-- Facial hair / beard area: (150, 58)
+- Top of head / crown / hair: (100, 10)
+- Forehead: (100, 22)
+- Left eye: (88, 32), Right eye: (112, 32)
+- Nose: (100, 38)
+- Mouth / lips / smile / teeth: (100, 44)
+- Chin: (100, 52)
+- Left ear: (72, 35), Right ear: (128, 35)
+- Left jawline: (78, 48), Right jawline: (122, 48)
+- Facial hair / beard: (100, 50)
 
 UPPER BODY:
-- Neck: (150, 80)
-- Left shoulder: (88, 104), Right shoulder: (212, 104)
-- Collarbone area: (150, 96)
-- Upper chest: (150, 112)
-- Left pectoral: (120, 124), Right pectoral: (180, 124)
-- Left bicep/upper arm: (62, 128), Right bicep: (238, 128)
-- Left elbow: (50, 170), Right elbow: (250, 170)
-- Left forearm: (44, 200), Right forearm: (256, 200)
-- Left wrist: (42, 235), Right wrist: (258, 235)
-- Left hand/fingers: (43, 248), Right hand: (257, 248)
-- Upper abs: (150, 145)
-- Core / midsection: (150, 165)
-- Lower abs: (150, 185)
-- Waist: (150, 200)
-- Navel: (150, 190)
-- Left oblique: (102, 185), Right oblique: (198, 185)
+- Neck: (100, 64)
+- Left shoulder: (44, 88), Right shoulder: (156, 88)
+- Upper chest: (100, 90)
+- Left pectoral: (80, 100), Right pectoral: (120, 100)
+- Left arm / bicep: (32, 92), Right arm / bicep: (168, 92)
+- Upper abs: (100, 118)
+- Core / midsection: (100, 138)
+- Lower abs / six-pack: (100, 155)
+- Waist: (100, 170)
+- Navel: (100, 152)
+- Left oblique / side: (72, 148), Right oblique: (128, 148)
 
 LOWER BODY:
-- Left hip: (118, 224), Right hip: (182, 224)
-- Groin / pelvis: (150, 238)
-- Left thigh (quad): (128, 280), Right thigh: (172, 280)
-- Left inner thigh: (140, 290), Right inner thigh: (160, 290)
-- Left knee: (128, 338), Right knee: (172, 338)
-- Left shin: (128, 370), Right shin: (172, 370)
-- Left calf: (128, 390), Right calf: (172, 390)
-- Left ankle: (127, 430), Right ankle: (173, 430)
-- Left foot/toes: (127, 440), Right foot: (173, 440)
+- Left hip: (76, 200), Right hip: (124, 200)
+- Groin / pelvis: (100, 206)
+- Left thigh: (77, 245), Right thigh: (123, 245)
+- Left knee: (77, 280), Right knee: (123, 280)
+- Left shin / calf: (77, 310), Right shin / calf: (123, 310)
+- Left ankle: (77, 335), Right ankle: (123, 335)
+- Left foot: (77, 340), Right foot: (123, 340)
 
 GENERAL / WHOLE-BODY:
-- Overall height / stature: (150, 240)
-- Posture: (150, 180)
-- Overall build / physique: (150, 170)
-- Skin (general): (150, 160)
-- Body hair (torso): (150, 155)`;
+- Overall height / stature: (100, 210)
+- Posture: (100, 160)
+- Overall build / physique: (100, 135)
+- Skin (general): (100, 128)
+- Body hair (torso): (100, 130)`;
 
-const SYSTEM_PROMPT = `You annotate a front-facing male human figure for an educational tool about appearance ideals.
+const SYSTEM_PROMPT = `You annotate a front-facing male human pictogram for an educational tool about appearance ideals.
 
 Given user text describing physical traits, extract each distinct trait and map it to the correct body region. Return precise SVG coordinates for placing annotation arrows.
 
-The figure uses an SVG coordinate system (viewBox 0 0 300 500):
+The figure uses an SVG coordinate system (viewBox 0 0 200 420):
 ${BODY_MAP}
 
 EXISTING ANNOTATIONS ON THE FIGURE (avoid placing new labels at the same target positions):
@@ -281,8 +285,8 @@ Return ONLY valid JSON. No markdown fences, no explanation.
   "annotations": [
     {
       "text": "concise label (2-4 words)",
-      "targetX": 150,
-      "targetY": 44,
+      "targetX": 100,
+      "targetY": 38,
       "side": "left"
     }
   ]
@@ -297,7 +301,7 @@ RULES:
 - If a trait refers to paired body parts (eyes, arms, legs), pick ONE side
 - For general traits (height, build, skin), use center coordinates
 - Return 1-5 annotations per input
-- targetX must be 0-300, targetY must be 0-500
+- targetX must be 0-200, targetY must be 0-420
 - Do NOT place two annotations at the exact same target coordinates. Offset slightly if needed.`;
 
 function existingText() {
@@ -357,8 +361,8 @@ async function addAnnotation() {
         const idx = annotations.length;
         annotations.push({
           text: String(ann.text || '').slice(0, 40),
-          targetX: Math.max(0, Math.min(300, Number(ann.targetX) || 150)),
-          targetY: Math.max(0, Math.min(500, Number(ann.targetY) || 250)),
+          targetX: Math.max(0, Math.min(200, Number(ann.targetX) || 100)),
+          targetY: Math.max(0, Math.min(420, Number(ann.targetY) || 210)),
           side: ann.side === 'left' ? 'left' : 'right'
         });
         newIndices.push(idx);
@@ -400,16 +404,15 @@ function renderAll(newIndices) {
   const bTop = bRect.top - aRect.top;
   const bW = bRect.width;
   const bH = bRect.height;
-  const sx = bW / 300;
-  const sy = bH / 500;
+  const sx = bW / 200;
+  const sy = bH / 420;
 
   lineSvg.setAttribute('viewBox', `0 0 ${aRect.width} ${aRect.height}`);
 
   const total = annotations.length;
   const fontSize = Math.max(9, Math.min(13, 13 - Math.max(0, total - 8) * 0.35));
-  const padV = Math.max(2, Math.min(5, 5 - Math.max(0, total - 12) * 0.25));
-  const padH = Math.max(6, Math.min(12, 12 - Math.max(0, total - 12) * 0.4));
-  const itemH = fontSize + padV * 2 + 4;
+  const padV = Math.max(2, Math.min(4, 4 - Math.max(0, total - 12) * 0.2));
+  const itemH = fontSize + padV * 2 + 5;
   const margin = 14;
 
   const leftAnns = [];
@@ -425,10 +428,10 @@ function renderAll(newIndices) {
   function layoutSide(anns, side) {
     const count = anns.length;
     if (!count) return;
-    const availH = aRect.height - 30;
+    const availH = aRect.height - 20;
     const gap = Math.max(1, Math.min(8, (availH - count * itemH) / Math.max(count, 1)));
     const totalH = count * itemH + (count - 1) * gap;
-    const startY = Math.max(15, (aRect.height - totalH) / 2);
+    const startY = Math.max(10, (aRect.height - totalH) / 2);
 
     anns.forEach((ann, i) => {
       const label = document.createElement('div');
@@ -436,7 +439,7 @@ function renderAll(newIndices) {
       label.textContent = ann.text;
       label.dataset.idx = ann.idx;
       label.style.fontSize = fontSize + 'px';
-      label.style.padding = `${padV}px ${padH}px`;
+      label.style.padding = `${padV}px 0`;
       label.style.top = (startY + i * (itemH + gap)) + 'px';
 
       if (side === 'left') {
@@ -448,7 +451,6 @@ function renderAll(newIndices) {
 
       container.appendChild(label);
 
-      const isNew = newIndices && newIndices.includes(ann.idx);
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
           label.classList.add('visible');
@@ -470,31 +472,29 @@ function renderAll(newIndices) {
       const lCenterY = lRect.top - aRect.top + lRect.height / 2;
       let lEdgeX;
       if (ann.side === 'left') {
-        lEdgeX = lRect.right - aRect.left + 3;
+        lEdgeX = lRect.right - aRect.left + 6;
       } else {
-        lEdgeX = lRect.left - aRect.left - 3;
+        lEdgeX = lRect.left - aRect.left - 6;
       }
 
       const tX = bLeft + ann.targetX * sx;
       const tY = bTop + ann.targetY * sy;
 
-      const midX = ann.side === 'left'
-        ? lEdgeX + (tX - lEdgeX) * 0.35
-        : lEdgeX - (lEdgeX - tX) * 0.35;
-
-      const polyline = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
-      polyline.setAttribute('points', `${lEdgeX},${lCenterY} ${midX},${lCenterY} ${tX},${tY}`);
-      polyline.setAttribute('fill', 'none');
-      polyline.setAttribute('stroke', 'var(--accent-line)');
-      polyline.setAttribute('stroke-width', '1.2');
-      lineSvg.appendChild(polyline);
+      const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      line.setAttribute('x1', lEdgeX);
+      line.setAttribute('y1', lCenterY);
+      line.setAttribute('x2', tX);
+      line.setAttribute('y2', tY);
+      line.setAttribute('stroke', 'var(--green-line)');
+      line.setAttribute('stroke-width', '1.5');
+      line.setAttribute('marker-end', 'url(#arrowhead)');
+      lineSvg.appendChild(line);
 
       const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
       dot.setAttribute('cx', tX);
       dot.setAttribute('cy', tY);
-      dot.setAttribute('r', '3.5');
-      dot.setAttribute('fill', 'var(--accent-dot)');
-      dot.setAttribute('filter', 'url(#glow)');
+      dot.setAttribute('r', '4');
+      dot.setAttribute('fill', 'var(--green-dot)');
       if (newIndices && newIndices.includes(idx)) {
         dot.classList.add('dot-new');
       }
