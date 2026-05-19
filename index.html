@@ -9,735 +9,530 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --navy:#1B3D6F;
-  --navy-dark:#122B50;
-  --mint:#7EDDC3;
-  --mint-light:#C5F5E8;
-  --mint-bg:#E8FBF4;
-  --coral:#F47B6C;
-  --coral-light:#F9A99F;
-  --yellow:#F7DC6F;
-  --yellow-light:#FFF4CC;
-  --green:#3EA66B;
-  --green-glow:rgba(62,166,107,0.4);
-  --green-line:rgba(62,166,107,0.55);
-  --green-dot:#3EA66B;
-  --bg:#FFFFFF;
-  --dash:#B8D4E8;
-  --text:#1B3D6F;
-  --text-dim:#5A7A9E;
-  --text-muted:#9BB4CC;
+  --navy:#1B3D6F;--navy-dark:#122B50;
+  --mint:#7EDDC3;--mint-light:#C5F5E8;--mint-bg:#E8FBF4;
+  --coral:#F47B6C;--coral-light:#F9A99F;
+  --yellow:#F7DC6F;--yellow-light:#FFF4CC;
+  --green:#3EA66B;--green-glow:rgba(62,166,107,0.4);
+  --green-line:rgba(62,166,107,0.55);--green-dot:#3EA66B;
+  --bg:#FFFFFF;--dash:#B8D4E8;
+  --text:#1B3D6F;--text-dim:#5A7A9E;--text-muted:#9BB4CC;
 }
 html,body{height:100%;font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);overflow:hidden}
 
-/* ═══════════════ INTRO OVERLAY ═══════════════ */
-#introOverlay{
+/* ═══════ ANIMATED BACKGROUND ═══════ */
+.bg-layer{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bg-blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:0;transition:opacity 1.5s}
+.bg-blob.show{opacity:1}
+.bg-blob-1{width:500px;height:500px;background:var(--mint);opacity:0.07;top:-10%;left:-8%;animation:blobDrift1 18s ease-in-out infinite}
+.bg-blob-2{width:400px;height:400px;background:var(--coral);opacity:0.05;bottom:-5%;right:-5%;animation:blobDrift2 22s ease-in-out infinite}
+.bg-blob-3{width:350px;height:350px;background:var(--yellow);opacity:0.06;top:40%;right:20%;animation:blobDrift3 20s ease-in-out infinite}
+@keyframes blobDrift1{0%,100%{transform:translate(0,0)}50%{transform:translate(60px,40px)}}
+@keyframes blobDrift2{0%,100%{transform:translate(0,0)}50%{transform:translate(-50px,-30px)}}
+@keyframes blobDrift3{0%,100%{transform:translate(0,0)}50%{transform:translate(-40px,50px)}}
+
+/* ═══════ FLOATING PARTICLES ═══════ */
+.particle{position:fixed;pointer-events:none;z-index:1;opacity:0}
+.particle.active{opacity:1}
+.p-plus{font-family:'Fredoka';font-weight:700;font-size:20px}
+.p-dot{width:6px;height:6px;border-radius:50%}
+.p-ring{width:14px;height:14px;border-radius:50%;border:2.5px solid}
+.p-diamond{width:10px;height:10px;border:2px solid;transform:rotate(45deg)}
+
+/* ═══════ INTRO OVERLAY ═══════ */
+#intro{
   position:fixed;inset:0;z-index:1000;
-  display:flex;align-items:center;justify-content:center;
-  background:linear-gradient(135deg,#E8FBF4 0%,#FFFFFF 40%,#FFF4CC 100%);
-  transition:opacity 0.7s ease,transform 0.7s ease;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  background:linear-gradient(145deg,#E8FBF4 0%,#FFF 35%,#FFF4CC 70%,#FDE8E5 100%);
+  background-size:200% 200%;animation:gradientShift 6s ease infinite;
+  transition:opacity 0.8s ease,transform 0.8s ease;
 }
-#introOverlay.hidden{opacity:0;transform:scale(1.05);pointer-events:none}
-.intro-content{text-align:center;position:relative;z-index:2}
-.intro-badge{
-  display:inline-block;padding:6px 18px;
-  background:var(--mint);border-radius:20px;
-  font-size:12px;font-weight:700;color:var(--navy);
-  text-transform:uppercase;letter-spacing:1.5px;
-  opacity:0;animation:popUp 0.6s 0.2s cubic-bezier(.34,1.56,.64,1) forwards;
+#intro.hidden{opacity:0;transform:scale(1.08);pointer-events:none}
+@keyframes gradientShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.i-badge{
+  display:inline-block;padding:6px 20px;background:var(--mint);border-radius:20px;
+  font-size:11px;font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:2px;
+  opacity:0;animation:popIn 0.6s 0.3s cubic-bezier(.34,1.56,.64,1) forwards;
 }
-.intro-title{
-  font-family:'Fredoka',sans-serif;font-size:clamp(48px,8vw,80px);font-weight:700;
-  color:var(--navy);margin:16px 0 8px;line-height:1;
-  opacity:0;animation:popUp 0.7s 0.5s cubic-bezier(.34,1.56,.64,1) forwards;
+.i-title{
+  font-family:'Fredoka';font-size:clamp(52px,9vw,90px);font-weight:700;color:var(--navy);
+  margin:18px 0 6px;line-height:0.95;letter-spacing:-2px;
+  opacity:0;animation:popIn 0.7s 0.6s cubic-bezier(.34,1.56,.64,1) forwards;
 }
-.intro-subtitle{
-  font-size:clamp(20px,3vw,28px);font-weight:700;color:var(--coral);
-  opacity:0;animation:slideUp 0.6s 0.9s ease-out forwards;
+.i-sub{
+  font-family:'Fredoka';font-size:clamp(22px,3.5vw,32px);font-weight:600;color:var(--coral);
+  opacity:0;animation:slideUp 0.6s 1s ease-out forwards;
 }
-.intro-start{
-  display:inline-block;margin-top:36px;padding:16px 48px;
-  background:var(--coral);color:#fff;border:none;border-radius:50px;
-  font-family:'Fredoka',sans-serif;font-size:20px;font-weight:600;
-  cursor:pointer;position:relative;overflow:hidden;
-  opacity:0;animation:popUp 0.6s 1.3s cubic-bezier(.34,1.56,.64,1) forwards;
-  box-shadow:0 6px 24px rgba(244,123,108,0.4);
-  transition:transform 0.2s,box-shadow 0.2s;
+.i-btn{
+  margin-top:40px;padding:18px 56px;background:var(--coral);color:#fff;border:none;border-radius:60px;
+  font-family:'Fredoka';font-size:22px;font-weight:600;cursor:pointer;position:relative;
+  opacity:0;animation:popIn 0.6s 1.4s cubic-bezier(.34,1.56,.64,1) forwards;
+  box-shadow:0 8px 30px rgba(244,123,108,0.4);transition:transform 0.2s,box-shadow 0.2s;
 }
-.intro-start:hover{transform:scale(1.05);box-shadow:0 8px 30px rgba(244,123,108,0.5)}
-.intro-start::after{
-  content:'';position:absolute;inset:-2px;border-radius:52px;
-  border:3px solid var(--coral-light);
-  animation:pulseRing 2s 1.6s ease-out infinite;
+.i-btn:hover{transform:scale(1.06);box-shadow:0 10px 36px rgba(244,123,108,0.5)}
+.i-btn::after{
+  content:'';position:absolute;inset:-3px;border-radius:63px;border:3px solid var(--coral-light);
+  animation:pulseRing 2s 1.8s ease-out infinite;
+}
+/* Intro floating decos */
+.i-deco{position:fixed;pointer-events:none;z-index:999;opacity:0}
+.id-show{animation:floatDeco 0.8s ease-out forwards}
+
+/* ═══════ CONFETTI ═══════ */
+#confetti{position:fixed;inset:0;z-index:9999;pointer-events:none}
+
+/* ═══════ MAIN PAGE ═══════ */
+.page{position:relative;z-index:2;display:flex;height:100vh;opacity:0;transform:translateY(20px)}
+.page.on{opacity:1;transform:translateY(0);transition:all 0.9s cubic-bezier(.23,1,.32,1)}
+
+/* Figure area - FULL WIDTH now, no separate header */
+.fig-area{flex:1;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+
+/* Floating title inside figure area */
+.fig-title{
+  position:absolute;top:14px;left:50%;transform:translateX(-50%);z-index:5;
+  text-align:center;opacity:0;
+}
+.page.on .fig-title{animation:fadeSlideDown 0.6s 0.5s ease-out forwards}
+.fig-title h1{
+  font-family:'Fredoka';font-size:20px;font-weight:700;color:var(--navy);
+  background:rgba(255,255,255,0.85);backdrop-filter:blur(8px);
+  padding:8px 24px;border-radius:30px;border:2px solid var(--dash);
+  display:inline-block;box-shadow:0 4px 16px rgba(27,61,111,0.06);
 }
 
-/* Intro decorations */
-.intro-deco{position:fixed;pointer-events:none;z-index:999;opacity:0}
-.deco-plus{font-family:'Fredoka';font-weight:700;color:var(--mint);font-size:36px;animation:floatIn 0.8s ease-out forwards}
-.deco-circle{width:24px;height:24px;border-radius:50%;border:4px solid var(--coral);animation:floatIn 0.8s ease-out forwards}
-.deco-diamond{width:18px;height:18px;border:3px solid var(--navy);transform:rotate(45deg);animation:floatIn 0.8s ease-out forwards}
-.deco-dots{display:grid;grid-template-columns:repeat(4,8px);gap:6px;animation:floatIn 0.8s ease-out forwards}
-.deco-dots span{width:8px;height:8px;border-radius:50%;background:var(--navy);opacity:0.2}
-.deco-chevrons{display:flex;gap:2px;animation:floatIn 0.8s ease-out forwards}
-.deco-chevrons span{
-  width:0;height:0;
-  border-top:10px solid transparent;border-bottom:10px solid transparent;
-  border-left:12px solid var(--navy);opacity:0.15;
+#bodySvg{
+  position:absolute;top:52%;left:50%;transform:translate(-50%,-50%);
+  height:88%;max-height:540px;opacity:0;
+  filter:drop-shadow(0 0 20px rgba(27,61,111,0.06));
 }
+.page.on #bodySvg{animation:bounceUp 0.9s 0.7s cubic-bezier(.34,1.56,.64,1) forwards}
 
-/* ═══════════════ CONFETTI CANVAS ═══════════════ */
-#confettiCanvas{position:fixed;inset:0;z-index:9999;pointer-events:none}
+/* Figure glow pulse */
+@keyframes figGlow{0%,100%{filter:drop-shadow(0 0 20px rgba(27,61,111,0.06))}50%{filter:drop-shadow(0 0 28px rgba(62,166,107,0.12))}}
+.page.on #bodySvg{animation:bounceUp 0.9s 0.7s cubic-bezier(.34,1.56,.64,1) forwards, figGlow 4s 2s ease-in-out infinite}
 
-/* ═══════════════ MAIN PAGE ═══════════════ */
-.page{display:flex;flex-direction:column;height:100vh;opacity:0;transform:translateY(20px)}
-.page.revealed{opacity:1;transform:translateY(0);transition:opacity 0.8s ease,transform 0.8s ease}
+#lineSvg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:3}
+#labels{position:absolute;inset:0;pointer-events:none;z-index:4}
 
-/* Header */
-.header{
-  padding:18px 32px 10px;
-  display:flex;align-items:center;gap:12px;
-  border-bottom:3px dashed var(--dash);
-  flex-shrink:0;
-  opacity:0;
-}
-.page.revealed .header{animation:slideDown 0.5s 0.3s ease-out forwards}
-.chevrons{display:flex;gap:2px}
-.chevron{width:0;height:0;border-top:11px solid transparent;border-bottom:11px solid transparent;border-left:13px solid var(--navy)}
-.header h1{font-family:'Fredoka',sans-serif;font-size:26px;font-weight:700;color:var(--navy);letter-spacing:-0.3px}
-
-/* Instruction box */
-.instr{
-  margin:10px 32px 4px;padding:12px 18px;
-  border:2.5px dashed var(--navy);border-radius:6px;
-  flex-shrink:0;opacity:0;
-}
-.page.revealed .instr{animation:slideDown 0.5s 0.5s ease-out forwards}
-.instr p{font-size:13px;line-height:1.55;color:var(--navy);font-weight:600}
-.instr strong{font-weight:800}
-
-/* Workspace */
-.workspace{flex:1;display:flex;min-height:0;gap:8px;padding:4px 16px 12px}
-
-/* Figure area */
-.figure-area{flex:1;position:relative;overflow:hidden;opacity:0}
-.page.revealed .figure-area{animation:bounceUp 0.8s 0.6s cubic-bezier(.34,1.56,.64,1) forwards}
-#bodySvg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);height:90%;max-height:540px}
-#lineSvg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}
-#labelsContainer{position:absolute;inset:0;pointer-events:none;z-index:3}
-
-/* Figure idle glow */
-#bodySvg{filter:drop-shadow(0 0 12px rgba(27,61,111,0.08))}
-
-/* Labels */
-.label-tag{
-  position:absolute;pointer-events:auto;padding:4px 0;
+/* Annotation labels */
+.lbl{
+  position:absolute;pointer-events:auto;padding:3px 2px;
   font-size:13px;font-weight:700;color:var(--navy);white-space:nowrap;
   border-bottom:3px solid var(--green);
   opacity:0;transform:scale(0.3);
 }
-.label-tag.pop-in{animation:labelPop 0.5s cubic-bezier(.34,1.56,.64,1) forwards}
-
-/* Animated SVG lines */
+.lbl.pop{animation:labelPop 0.5s cubic-bezier(.34,1.56,.64,1) forwards}
 .line-draw{stroke-dasharray:600;stroke-dashoffset:600;animation:drawLine 0.6s 0.15s ease-out forwards}
 .dot-pop{opacity:0;animation:dotPop 0.4s 0.3s cubic-bezier(.34,1.56,.64,1) forwards}
 
-/* Input panel */
-.input-panel{
-  width:270px;flex-shrink:0;display:flex;flex-direction:column;gap:8px;
-  padding:10px 0 10px 16px;border-left:2.5px dashed var(--dash);
-  opacity:0;
+/* ═══════ INPUT PANEL ═══════ */
+.inp-panel{
+  width:280px;flex-shrink:0;display:flex;flex-direction:column;gap:8px;
+  padding:20px;position:relative;z-index:5;
+  background:rgba(255,255,255,0.7);backdrop-filter:blur(12px);
+  border-left:2px solid var(--dash);opacity:0;
 }
-.page.revealed .input-panel{animation:slideLeft 0.6s 0.8s ease-out forwards}
-.input-panel h2{font-family:'Fredoka',sans-serif;font-size:15px;font-weight:600;color:var(--navy)}
-.input-panel textarea{
-  width:100%;min-height:72px;padding:10px 12px;
-  background:#F5F9FE;border:2px solid var(--dash);border-radius:10px;
-  color:var(--navy);font-family:'Nunito',sans-serif;font-size:13px;line-height:1.5;
+.page.on .inp-panel{animation:slideFromRight 0.7s 0.9s ease-out forwards}
+.inp-panel h2{font-family:'Fredoka';font-size:16px;font-weight:600;color:var(--navy);display:flex;align-items:center;gap:6px}
+.inp-panel textarea{
+  width:100%;min-height:70px;padding:10px 13px;
+  background:#F5F9FE;border:2px solid var(--dash);border-radius:12px;
+  color:var(--navy);font-family:'Nunito';font-size:13px;line-height:1.5;
   resize:none;outline:none;transition:border-color 0.2s,box-shadow 0.2s;
 }
-.input-panel textarea:focus{border-color:var(--green);box-shadow:0 0 0 3px var(--green-glow)}
-.input-panel textarea::placeholder{color:var(--text-muted)}
-.btn-primary{
-  width:100%;padding:12px;
-  background:var(--coral);color:#fff;border:none;border-radius:10px;
-  font-family:'Fredoka',sans-serif;font-size:15px;font-weight:600;cursor:pointer;
-  transition:all 0.2s;box-shadow:0 4px 14px rgba(244,123,108,0.3);
+.inp-panel textarea:focus{border-color:var(--green);box-shadow:0 0 0 4px var(--green-glow)}
+.inp-panel textarea::placeholder{color:var(--text-muted)}
+
+.btn-go{
+  width:100%;padding:13px;background:var(--coral);color:#fff;border:none;border-radius:14px;
+  font-family:'Fredoka';font-size:16px;font-weight:600;cursor:pointer;
+  transition:all 0.2s;box-shadow:0 5px 18px rgba(244,123,108,0.35);
+  display:flex;align-items:center;justify-content:center;gap:6px;
 }
-.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(244,123,108,0.4)}
-.btn-primary:disabled{opacity:0.5;cursor:not-allowed;transform:none}
-.btn-primary.loading{background:#E8EDF4;color:var(--text-muted);box-shadow:none}
+.btn-go:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(244,123,108,0.45)}
+.btn-go:active{transform:translateY(0)}
+.btn-go:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+.btn-go.loading{background:#E8EDF4;color:var(--text-muted);box-shadow:none}
+.btn-go .spinner{display:none;width:16px;height:16px;border:2px solid #ccc;border-top-color:var(--navy);border-radius:50%;animation:spin 0.6s linear infinite}
+.btn-go.loading .spinner{display:inline-block}
+.btn-go.loading .btn-text{display:none}
+
 .btn-clear{
-  width:100%;padding:7px;background:none;border:2px solid var(--dash);border-radius:8px;
+  width:100%;padding:7px;background:none;border:2px solid var(--dash);border-radius:10px;
   color:var(--text-dim);font-size:11px;font-weight:700;cursor:pointer;
-  font-family:'Nunito',sans-serif;transition:all 0.2s;
+  font-family:'Nunito';transition:all 0.2s;
 }
 .btn-clear:hover{border-color:var(--coral);color:var(--coral)}
 
-/* Trait counter */
-.trait-counter{
-  text-align:center;padding:8px;margin-top:4px;
-  background:var(--yellow-light);border-radius:10px;
-  border:2px solid var(--yellow);
+/* Counter */
+.counter{
+  text-align:center;padding:10px;margin-top:2px;
+  background:linear-gradient(135deg,var(--yellow-light),#FFF);
+  border-radius:14px;border:2px solid var(--yellow);
+  position:relative;overflow:hidden;
 }
-.counter-num{font-family:'Fredoka',sans-serif;font-size:28px;font-weight:700;color:var(--coral);display:block;line-height:1}
-.counter-num.bounce{animation:counterBounce 0.4s cubic-bezier(.34,1.56,.64,1)}
-.counter-label{font-size:11px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.5px}
+.counter::before{
+  content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+  background:conic-gradient(transparent,rgba(247,220,111,0.1),transparent);
+  animation:shimmer 3s linear infinite;
+}
+@keyframes shimmer{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+.c-num{font-family:'Fredoka';font-size:32px;font-weight:700;color:var(--coral);display:block;line-height:1;position:relative}
+.c-num.bounce{animation:cBounce 0.4s cubic-bezier(.34,1.56,.64,1)}
+.c-lbl{font-size:11px;font-weight:800;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.5px;position:relative}
 
-.error-msg{font-size:11px;color:var(--coral);padding:2px 0;display:none;font-weight:700}
-.error-msg.show{display:block}
+.err{font-size:11px;color:var(--coral);padding:2px;display:none;font-weight:700}
+.err.show{display:block}
 
-/* Example chips */
-.examples{margin-top:auto;padding-top:8px;border-top:2px dashed var(--dash)}
-.examples h3{font-size:10px;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px}
-.example-chip{
+/* Chips */
+.chips{margin-top:auto;padding-top:8px;border-top:2px dashed var(--dash)}
+.chips h3{font-size:9px;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.chip{
   display:inline-block;padding:4px 10px;margin:2px;
   background:var(--mint-light);border:2px solid var(--mint);border-radius:16px;
   font-size:11px;font-weight:700;color:var(--navy);cursor:pointer;transition:all 0.2s;
 }
-.example-chip:hover{transform:scale(1.05);border-color:var(--green);background:rgba(62,166,107,0.1)}
+.chip:hover{transform:scale(1.06);border-color:var(--green);background:rgba(62,166,107,0.12)}
 
-/* Milestone toast */
-#milestoneToast{
+/* Toast */
+#toast{
   position:fixed;top:-80px;left:50%;transform:translateX(-50%);z-index:8000;
-  padding:14px 32px;background:var(--navy);color:#fff;border-radius:16px;
-  font-family:'Fredoka',sans-serif;font-size:18px;font-weight:600;
-  box-shadow:0 8px 30px rgba(27,61,111,0.3);
+  padding:14px 30px;background:var(--navy);color:#fff;border-radius:18px;
+  font-family:'Fredoka';font-size:17px;font-weight:600;
+  box-shadow:0 10px 40px rgba(27,61,111,0.3);
   display:flex;align-items:center;gap:10px;white-space:nowrap;
-  transition:top 0.5s cubic-bezier(.34,1.56,.64,1);
+  transition:top 0.6s cubic-bezier(.34,1.56,.64,1);
 }
-#milestoneToast.show{top:24px}
-#milestoneToast .toast-emoji{font-size:24px}
+#toast.show{top:20px}
 
-/* Floating decorations on main page */
-.page-deco{
-  position:fixed;pointer-events:none;z-index:0;opacity:0.08;
-  font-family:'Fredoka';font-weight:700;color:var(--navy);
-}
-
-/* ═══════════════ KEYFRAMES ═══════════════ */
-@keyframes popUp{0%{opacity:0;transform:scale(0.5) translateY(20px)}100%{opacity:1;transform:scale(1) translateY(0)}}
+/* ═══════ KEYFRAMES ═══════ */
+@keyframes popIn{0%{opacity:0;transform:scale(0.5) translateY(20px)}100%{opacity:1;transform:scale(1) translateY(0)}}
 @keyframes slideUp{0%{opacity:0;transform:translateY(30px)}100%{opacity:1;transform:translateY(0)}}
-@keyframes slideDown{0%{opacity:0;transform:translateY(-20px)}100%{opacity:1;transform:translateY(0)}}
-@keyframes slideLeft{0%{opacity:0;transform:translateX(30px)}100%{opacity:1;transform:translateX(0)}}
-@keyframes bounceUp{0%{opacity:0;transform:translateY(50px)}60%{transform:translateY(-8px)}100%{opacity:1;transform:translateY(0)}}
-@keyframes floatIn{0%{opacity:0;transform:scale(0.5)}100%{opacity:0.15;transform:scale(1)}}
-@keyframes float{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-12px) rotate(3deg)}}
-@keyframes pulseRing{0%{transform:scale(1);opacity:0.6}100%{transform:scale(1.4);opacity:0}}
-@keyframes labelPop{0%{opacity:0;transform:scale(0.3)}60%{transform:scale(1.12)}100%{opacity:1;transform:scale(1)}}
+@keyframes bounceUp{0%{opacity:0;transform:translate(-50%,-50%) translateY(60px)}60%{transform:translate(-50%,-50%) translateY(-8px)}100%{opacity:1;transform:translate(-50%,-50%) translateY(0)}}
+@keyframes fadeSlideDown{0%{opacity:0;transform:translateX(-50%) translateY(-15px)}100%{opacity:1;transform:translateX(-50%) translateY(0)}}
+@keyframes slideFromRight{0%{opacity:0;transform:translateX(40px)}100%{opacity:1;transform:translateX(0)}}
+@keyframes labelPop{0%{opacity:0;transform:scale(0.3)}60%{transform:scale(1.15)}100%{opacity:1;transform:scale(1)}}
 @keyframes drawLine{0%{stroke-dashoffset:600}100%{stroke-dashoffset:0}}
 @keyframes dotPop{0%{opacity:0;r:0}50%{opacity:1;r:7}100%{opacity:1;r:4}}
-@keyframes counterBounce{0%{transform:scale(1)}40%{transform:scale(1.3)}100%{transform:scale(1)}}
-@keyframes gentleFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes cBounce{0%{transform:scale(1)}40%{transform:scale(1.35)}100%{transform:scale(1)}}
+@keyframes pulseRing{0%{transform:scale(1);opacity:0.5}100%{transform:scale(1.5);opacity:0}}
+@keyframes floatDeco{0%{opacity:0;transform:scale(0.4)}100%{opacity:0.15;transform:scale(1)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes gentleFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 </style>
 </head>
 <body>
 
-<!-- ═══════════ INTRO OVERLAY ═══════════ -->
-<div id="introOverlay">
-  <div class="intro-content">
-    <div class="intro-badge">Dove Self-Esteem Project</div>
-    <div class="intro-title">Confident Me</div>
-    <div class="intro-subtitle">Appearance Ideals</div>
-    <button class="intro-start" id="introBtn" onclick="startGame()">Let's Go!</button>
-  </div>
-  <!-- Decorative elements -->
-  <div class="intro-deco deco-plus" style="top:12%;left:8%;animation-delay:0.4s">+</div>
-  <div class="intro-deco deco-plus" style="top:18%;right:12%;animation-delay:0.6s;font-size:28px;color:var(--coral)">+</div>
-  <div class="intro-deco deco-circle" style="bottom:22%;left:15%;animation-delay:0.7s"></div>
-  <div class="intro-deco deco-diamond" style="top:30%;right:18%;animation-delay:0.8s"></div>
-  <div class="intro-deco deco-circle" style="top:15%;left:35%;animation-delay:0.5s;width:16px;height:16px;border-color:var(--yellow)"></div>
-  <div class="intro-deco deco-plus" style="bottom:18%;right:10%;animation-delay:0.9s;font-size:24px;color:var(--yellow)">+</div>
-  <div class="intro-deco deco-diamond" style="bottom:30%;left:10%;animation-delay:1s;border-color:var(--mint)"></div>
-  <div class="intro-deco deco-chevrons" style="bottom:14%;left:40%;animation-delay:1.1s">
-    <span></span><span></span><span></span>
-  </div>
-  <div class="intro-deco deco-dots" style="top:25%;left:18%;animation-delay:0.8s">
-    <span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span>
-  </div>
+<!-- Background blobs -->
+<div class="bg-layer">
+  <div class="bg-blob bg-blob-1" id="blob1"></div>
+  <div class="bg-blob bg-blob-2" id="blob2"></div>
+  <div class="bg-blob bg-blob-3" id="blob3"></div>
 </div>
 
-<!-- ═══════════ CONFETTI CANVAS ═══════════ -->
-<canvas id="confettiCanvas"></canvas>
+<!-- ═══════ INTRO ═══════ -->
+<div id="intro">
+  <div class="i-badge">Dove Self-Esteem Project</div>
+  <div class="i-title">Confident Me</div>
+  <div class="i-sub">Appearance Ideals</div>
+  <button class="i-btn" onclick="startGame()">Let's Go!</button>
+  <!-- Decos -->
+  <div class="i-deco p-plus" style="top:10%;left:7%;color:var(--mint);font-size:32px;animation-delay:0.4s">+</div>
+  <div class="i-deco p-plus" style="top:16%;right:10%;color:var(--coral);font-size:26px;animation-delay:0.6s">+</div>
+  <div class="i-deco p-ring" style="bottom:20%;left:12%;border-color:var(--coral);width:22px;height:22px;animation-delay:0.7s"></div>
+  <div class="i-deco p-diamond" style="top:28%;right:16%;border-color:var(--navy);animation-delay:0.8s"></div>
+  <div class="i-deco p-ring" style="top:14%;left:32%;border-color:var(--yellow);width:14px;height:14px;animation-delay:0.5s"></div>
+  <div class="i-deco p-plus" style="bottom:16%;right:8%;color:var(--yellow);font-size:22px;animation-delay:0.9s">+</div>
+  <div class="i-deco p-diamond" style="bottom:28%;left:8%;border-color:var(--mint);width:14px;height:14px;animation-delay:1s"></div>
+</div>
 
-<!-- ═══════════ MAIN PAGE ═══════════ -->
-<div class="page" id="mainPage">
-  <div class="header">
-    <div class="chevrons"><div class="chevron"></div><div class="chevron"></div><div class="chevron"></div></div>
-    <h1>Appearance Ideals</h1>
-  </div>
+<!-- Confetti -->
+<canvas id="confetti"></canvas>
 
-  <div class="instr">
-    <p>Label the body below with as many features as you can that make up today's appearance ideals.<br>
-    <strong>What are appearance ideals for males?</strong></p>
-  </div>
-
-  <div class="workspace">
-    <div class="figure-area" id="figureArea">
-      <svg id="bodySvg" viewBox="0 0 200 440" xmlns="http://www.w3.org/2000/svg">
-        <g fill="none" stroke="#1B3D6F" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="100" cy="34" r="26"/>
-          <path d="M 30,88 Q 30,76 42,76 L 158,76 Q 170,76 170,88 L 170,186 Q 170,200 157,200 Q 146,200 146,186 L 146,112 Q 146,102 138,102 L 134,102 Q 128,102 128,110 L 128,234 Q 128,246 116,246 L 84,246 Q 72,246 72,234 L 72,110 Q 72,102 66,102 L 62,102 Q 54,102 54,112 L 54,186 Q 54,200 43,200 Q 30,200 30,186 Z"/>
-          <rect x="72" y="256" width="24" height="138" rx="12"/>
-          <rect x="104" y="256" width="24" height="138" rx="12"/>
-        </g>
-      </svg>
-      <svg id="lineSvg" xmlns="http://www.w3.org/2000/svg"></svg>
-      <div id="labelsContainer"></div>
+<!-- ═══════ MAIN PAGE ═══════ -->
+<div class="page" id="page">
+  <div class="fig-area" id="figArea">
+    <!-- Floating title pill -->
+    <div class="fig-title">
+      <h1>What are appearance ideals for males?</h1>
     </div>
 
-    <div class="input-panel">
-      <h2>Add traits ✏️</h2>
-      <textarea id="userInput" placeholder="e.g., long hair, blue eyes, muscular build..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();addAnnotation()}"></textarea>
-      <button class="btn-primary" id="btnAdd" onclick="addAnnotation()">Add to Figure ✨</button>
-      <button class="btn-clear" onclick="clearAll()">Clear All</button>
-      <div class="trait-counter">
-        <span class="counter-num" id="counterNum">0</span>
-        <span class="counter-label">traits found!</span>
-      </div>
-      <div class="error-msg" id="errorMsg"></div>
-      <div class="examples">
-        <h3>Try these</h3>
-        <span class="example-chip" onclick="tryExample(this)">tall stature</span>
-        <span class="example-chip" onclick="tryExample(this)">broad shoulders</span>
-        <span class="example-chip" onclick="tryExample(this)">defined jawline</span>
-        <span class="example-chip" onclick="tryExample(this)">muscular arms</span>
-        <span class="example-chip" onclick="tryExample(this)">six-pack abs</span>
-        <span class="example-chip" onclick="tryExample(this)">thick hair</span>
-        <span class="example-chip" onclick="tryExample(this)">strong legs</span>
-        <span class="example-chip" onclick="tryExample(this)">clear skin</span>
-      </div>
+    <!-- Human figure -->
+    <svg id="bodySvg" viewBox="0 0 200 440" xmlns="http://www.w3.org/2000/svg">
+      <g fill="none" stroke="#1B3D6F" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="100" cy="34" r="26"/>
+        <path d="M 30,88 Q 30,76 42,76 L 158,76 Q 170,76 170,88 L 170,186 Q 170,200 157,200 Q 146,200 146,186 L 146,112 Q 146,102 138,102 L 134,102 Q 128,102 128,110 L 128,234 Q 128,246 116,246 L 84,246 Q 72,246 72,234 L 72,110 Q 72,102 66,102 L 62,102 Q 54,102 54,112 L 54,186 Q 54,200 43,200 Q 30,200 30,186 Z"/>
+        <rect x="72" y="256" width="24" height="138" rx="12"/>
+        <rect x="104" y="256" width="24" height="138" rx="12"/>
+      </g>
+    </svg>
+    <svg id="lineSvg" xmlns="http://www.w3.org/2000/svg"></svg>
+    <div id="labels"></div>
+  </div>
+
+  <!-- Input panel -->
+  <div class="inp-panel">
+    <h2>✏️ Add traits</h2>
+    <textarea id="inp" placeholder="e.g., long hair, blue eyes, muscular build..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();go()}"></textarea>
+    <button class="btn-go" id="btnGo" onclick="go()">
+      <span class="btn-text">Add to Figure ✨</span>
+      <span class="spinner"></span>
+    </button>
+    <button class="btn-clear" onclick="clearAll()">Clear All</button>
+    <div class="counter">
+      <span class="c-num" id="cNum">0</span>
+      <span class="c-lbl">traits found!</span>
+    </div>
+    <div class="err" id="err"></div>
+    <div class="chips">
+      <h3>Try these</h3>
+      <span class="chip" onclick="tryEx(this)">tall stature</span>
+      <span class="chip" onclick="tryEx(this)">broad shoulders</span>
+      <span class="chip" onclick="tryEx(this)">defined jawline</span>
+      <span class="chip" onclick="tryEx(this)">muscular arms</span>
+      <span class="chip" onclick="tryEx(this)">six-pack abs</span>
+      <span class="chip" onclick="tryEx(this)">thick hair</span>
+      <span class="chip" onclick="tryEx(this)">strong legs</span>
+      <span class="chip" onclick="tryEx(this)">clear skin</span>
     </div>
   </div>
 </div>
 
-<!-- ═══════════ MILESTONE TOAST ═══════════ -->
-<div id="milestoneToast"><span class="toast-emoji"></span><span class="toast-text"></span></div>
+<div id="toast"><span id="tEmoji"></span><span id="tText"></span></div>
 
 <script>
-/* ═══════════════════════════════════════════════
-   SOUND ENGINE (Web Audio API - no external files)
-   ═══════════════════════════════════════════════ */
-let audioCtx;
-function initAudio() {
-  if (audioCtx) return;
-  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+/* ═══════ AUDIO ═══════ */
+let ac;
+function initA(){if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)()}
+function tone(f,dur,t,vol,delay){
+  if(!ac)return;const o=ac.createOscillator(),g=ac.createGain();
+  o.connect(g);g.connect(ac.destination);o.type=t||'sine';
+  o.frequency.setValueAtTime(f,ac.currentTime+(delay||0));
+  g.gain.setValueAtTime(vol||0.2,ac.currentTime+(delay||0));
+  g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+(delay||0)+dur);
+  o.start(ac.currentTime+(delay||0));o.stop(ac.currentTime+(delay||0)+dur);
+}
+function sndPop(){tone(880,0.1,'sine',0.25);tone(440,0.08,'sine',0.15,0.04)}
+function sndDing(){tone(523,0.25,'sine',0.2);tone(659,0.25,'sine',0.18,0.08)}
+function sndCeleb(){[523,659,784,1047].forEach((f,i)=>tone(f,0.3,'triangle',0.18,i*0.1))}
+function sndWhoosh(){
+  if(!ac)return;const b=ac.createBuffer(1,ac.sampleRate*0.25,ac.sampleRate),d=b.getChannelData(0);
+  for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*0.25;
+  const s=ac.createBufferSource();s.buffer=b;
+  const f=ac.createBiquadFilter();f.type='bandpass';f.frequency.setValueAtTime(1200,ac.currentTime);
+  f.frequency.exponentialRampToValueAtTime(200,ac.currentTime+0.2);f.Q.value=2;
+  const g=ac.createGain();g.gain.setValueAtTime(0.25,ac.currentTime);
+  g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.25);
+  s.connect(f);f.connect(g);g.connect(ac.destination);s.start();s.stop(ac.currentTime+0.25);
 }
 
-function playPop() {
-  if (!audioCtx) return;
-  const o = audioCtx.createOscillator();
-  const g = audioCtx.createGain();
-  o.connect(g); g.connect(audioCtx.destination);
-  o.type = 'sine';
-  o.frequency.setValueAtTime(880, audioCtx.currentTime);
-  o.frequency.exponentialRampToValueAtTime(440, audioCtx.currentTime + 0.08);
-  g.gain.setValueAtTime(0.25, audioCtx.currentTime);
-  g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
-  o.start(); o.stop(audioCtx.currentTime + 0.12);
+/* ═══════ CONFETTI ═══════ */
+const cv=document.getElementById('confetti'),cx=cv.getContext('2d');
+let cp=[],cr=false;
+const cc=['#F47B6C','#3EA66B','#F7DC6F','#7EDDC3','#1B3D6F','#58a6ff','#FF87B2'];
+function burst(x,y,n){
+  cv.width=innerWidth;cv.height=innerHeight;
+  for(let i=0;i<n;i++)cp.push({x,y,vx:(Math.random()-.5)*20,vy:(Math.random()-.8)*16,
+    w:Math.random()*10+4,h:Math.random()*6+3,c:cc[Math.random()*cc.length|0],
+    r:Math.random()*360,rv:(Math.random()-.5)*14,l:1,d:Math.random()*.008+.005});
+  if(!cr)aniC();
+}
+function aniC(){
+  cr=true;cx.clearRect(0,0,cv.width,cv.height);
+  cp=cp.filter(p=>p.l>0);
+  cp.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.35;p.r+=p.rv;p.l-=p.d;p.vx*=.99;
+    cx.save();cx.translate(p.x,p.y);cx.rotate(p.r*Math.PI/180);
+    cx.globalAlpha=Math.min(p.l*2,1);cx.fillStyle=p.c;
+    cx.fillRect(-p.w/2,-p.h/2,p.w,p.h);cx.restore()});
+  cp.length?requestAnimationFrame(aniC):cr=false;
 }
 
-function playDing() {
-  if (!audioCtx) return;
-  [523, 659].forEach((f, i) => {
-    const o = audioCtx.createOscillator();
-    const g = audioCtx.createGain();
-    o.connect(g); g.connect(audioCtx.destination);
-    o.type = 'sine';
-    o.frequency.setValueAtTime(f, audioCtx.currentTime + i * 0.08);
-    g.gain.setValueAtTime(0.2, audioCtx.currentTime + i * 0.08);
-    g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + i * 0.08 + 0.3);
-    o.start(audioCtx.currentTime + i * 0.08);
-    o.stop(audioCtx.currentTime + i * 0.08 + 0.3);
-  });
+/* ═══════ MILESTONES ═══════ */
+const MS={3:{e:'⭐',t:'Great start!'},5:{e:'🔥',t:'On fire! 5 traits!'},
+  10:{e:'🎉',t:'Amazing! 10 traits!'},15:{e:'🚀',t:'Incredible! 15!'},
+  20:{e:'💪',t:'Unstoppable! 20!'},25:{e:'🌟',t:'Superstar! 25!'},30:{e:'🏆',t:'Champion! 30!'}};
+function checkMS(n){
+  const m=MS[n];if(!m)return;
+  document.getElementById('tEmoji').textContent=m.e;
+  document.getElementById('tText').textContent=m.t;
+  const t=document.getElementById('toast');t.classList.add('show');
+  sndCeleb();burst(innerWidth/2,innerHeight/3,90);
+  setTimeout(()=>t.classList.remove('show'),3000);
 }
 
-function playCelebration() {
-  if (!audioCtx) return;
-  [523, 659, 784, 1047].forEach((f, i) => {
-    const o = audioCtx.createOscillator();
-    const g = audioCtx.createGain();
-    o.connect(g); g.connect(audioCtx.destination);
-    o.type = 'triangle';
-    o.frequency.setValueAtTime(f, audioCtx.currentTime + i * 0.1);
-    g.gain.setValueAtTime(0.2, audioCtx.currentTime + i * 0.1);
-    g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + i * 0.1 + 0.35);
-    o.start(audioCtx.currentTime + i * 0.1);
-    o.stop(audioCtx.currentTime + i * 0.1 + 0.35);
-  });
-}
-
-function playWhoosh() {
-  if (!audioCtx) return;
-  const bufSize = audioCtx.sampleRate * 0.3;
-  const buf = audioCtx.createBuffer(1, bufSize, audioCtx.sampleRate);
-  const data = buf.getChannelData(0);
-  for (let i = 0; i < bufSize; i++) data[i] = (Math.random() * 2 - 1) * 0.3;
-  const src = audioCtx.createBufferSource();
-  src.buffer = buf;
-  const filt = audioCtx.createBiquadFilter();
-  filt.type = 'bandpass'; filt.frequency.setValueAtTime(1000, audioCtx.currentTime);
-  filt.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.25);
-  filt.Q.value = 2;
-  const g = audioCtx.createGain();
-  g.gain.setValueAtTime(0.3, audioCtx.currentTime);
-  g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
-  src.connect(filt); filt.connect(g); g.connect(audioCtx.destination);
-  src.start(); src.stop(audioCtx.currentTime + 0.3);
-}
-
-/* ═══════════════════════════════════════════════
-   CONFETTI SYSTEM
-   ═══════════════════════════════════════════════ */
-const confettiCanvas = document.getElementById('confettiCanvas');
-const confettiCtx = confettiCanvas.getContext('2d');
-let confettiParticles = [];
-let confettiRunning = false;
-const confettiColors = ['#F47B6C','#3EA66B','#F7DC6F','#7EDDC3','#1B3D6F','#58a6ff','#FF87B2'];
-
-function confettiBurst(cx, cy, count) {
-  confettiCanvas.width = window.innerWidth;
-  confettiCanvas.height = window.innerHeight;
-  for (let i = 0; i < count; i++) {
-    confettiParticles.push({
-      x: cx, y: cy,
-      vx: (Math.random() - 0.5) * 18,
-      vy: (Math.random() - 0.8) * 14,
-      w: Math.random() * 10 + 4, h: Math.random() * 6 + 3,
-      color: confettiColors[Math.floor(Math.random() * confettiColors.length)],
-      rot: Math.random() * 360, rotV: (Math.random() - 0.5) * 12,
-      life: 1, decay: Math.random() * 0.008 + 0.005
-    });
+/* ═══════ FLOATING PARTICLES ═══════ */
+function spawnParticles(){
+  const types=[
+    {cls:'p-plus',content:'+',colors:['var(--mint)','var(--coral)','var(--yellow)','var(--navy)'],sizes:[16,20,24]},
+    {cls:'p-dot',colors:['var(--mint)','var(--coral)','var(--yellow)'],sizes:[4,6,8]},
+    {cls:'p-ring',colors:['var(--coral)','var(--navy)','var(--mint)'],sizes:[10,14]},
+    {cls:'p-diamond',colors:['var(--navy)','var(--mint)'],sizes:[8,12]}
+  ];
+  for(let i=0;i<12;i++){
+    const t=types[Math.random()*types.length|0];
+    const el=document.createElement('div');
+    el.className='particle '+t.cls;
+    const sz=t.sizes[Math.random()*t.sizes.length|0];
+    const c=t.colors[Math.random()*t.colors.length|0];
+    el.style.cssText=`left:${Math.random()*90+5}%;top:${Math.random()*85+5}%;opacity:0.08;
+      animation:gentleFloat ${6+Math.random()*8}s ease-in-out infinite;
+      animation-delay:${Math.random()*5}s;`;
+    if(t.cls==='p-plus'){el.textContent='+';el.style.fontSize=sz+'px';el.style.color=c}
+    else if(t.cls==='p-dot'){el.style.width=sz+'px';el.style.height=sz+'px';el.style.background=c}
+    else if(t.cls==='p-ring'){el.style.width=sz+'px';el.style.height=sz+'px';el.style.borderColor=c}
+    else{el.style.width=sz+'px';el.style.height=sz+'px';el.style.borderColor=c}
+    document.body.appendChild(el);
+    setTimeout(()=>{el.classList.add('active')},500+i*100);
   }
-  if (!confettiRunning) animateConfetti();
 }
 
-function animateConfetti() {
-  confettiRunning = true;
-  confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
-  confettiParticles = confettiParticles.filter(p => p.life > 0);
-  confettiParticles.forEach(p => {
-    p.x += p.vx; p.y += p.vy; p.vy += 0.35;
-    p.rot += p.rotV; p.life -= p.decay; p.vx *= 0.99;
-    confettiCtx.save();
-    confettiCtx.translate(p.x, p.y);
-    confettiCtx.rotate(p.rot * Math.PI / 180);
-    confettiCtx.globalAlpha = Math.min(p.life * 2, 1);
-    confettiCtx.fillStyle = p.color;
-    confettiCtx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
-    confettiCtx.restore();
-  });
-  if (confettiParticles.length > 0) requestAnimationFrame(animateConfetti);
-  else confettiRunning = false;
+/* ═══════ INTRO ═══════ */
+function startGame(){
+  initA();sndWhoosh();
+  document.querySelectorAll('.i-deco').forEach(d=>d.classList.add('id-show'));
+  const intro=document.getElementById('intro');
+  intro.classList.add('hidden');
+  setTimeout(()=>{
+    intro.style.display='none';
+    document.getElementById('page').classList.add('on');
+    document.querySelectorAll('.bg-blob').forEach(b=>b.classList.add('show'));
+    spawnParticles();
+    setTimeout(()=>sndPop(),500);
+  },700);
 }
 
-/* ═══════════════════════════════════════════════
-   MILESTONE SYSTEM
-   ═══════════════════════════════════════════════ */
-const milestones = {
-  3: { emoji: '⭐', text: 'Great start! 3 traits!' },
-  5: { emoji: '🔥', text: 'On fire! 5 traits found!' },
-  10: { emoji: '🎉', text: 'Amazing! 10 traits!' },
-  15: { emoji: '🚀', text: 'Incredible! 15 traits!' },
-  20: { emoji: '💪', text: 'Unstoppable! 20 traits!' },
-  25: { emoji: '🌟', text: 'Superstar! 25 traits!' },
-  30: { emoji: '🏆', text: 'Champion! 30 traits!' }
-};
+/* ═══════ ANNOTATION ENGINE ═══════ */
+const AE='https://nesoi-resource.openai.azure.com';
+const AK='89bry3528qMUbZnFK77ExyBjS7W02IbOFj35UwU6yjKTE0yiJRMCJQQJ99CCACHYHv6XJ3w3AAAAACOGJj4V';
+const AV='2025-04-01-preview';
+let anns=[],busy=false;
 
-function checkMilestone(count) {
-  const m = milestones[count];
-  if (!m) return;
-  const toast = document.getElementById('milestoneToast');
-  toast.querySelector('.toast-emoji').textContent = m.emoji;
-  toast.querySelector('.toast-text').textContent = m.text;
-  toast.classList.add('show');
-  playCelebration();
-  confettiBurst(window.innerWidth / 2, window.innerHeight / 3, 80);
-  setTimeout(() => toast.classList.remove('show'), 3000);
-}
+const BM=`BODY COORDINATES (viewBox 0 0 200 440):
+HEAD: hair(100,8) forehead(100,18) L-eye(88,30) R-eye(112,30) nose(100,36) mouth(100,44) chin(100,52) L-ear(74,34) R-ear(126,34) jaw-L(80,48) jaw-R(120,48) beard(100,50)
+UPPER: neck(100,68) L-shoulder(42,82) R-shoulder(158,82) chest(100,92) L-pec(86,104) R-pec(114,104) L-arm(38,140) R-arm(162,140) upper-abs(100,128) core(100,150) six-pack(100,178) waist(100,200) navel(100,170)
+LOWER: L-hip(80,242) R-hip(120,242) groin(100,252) L-thigh(84,295) R-thigh(116,295) L-knee(84,335) R-knee(116,335) L-calf(84,360) R-calf(116,360) L-foot(84,394) R-foot(116,394)
+GENERAL: height(100,250) build(100,155) skin(100,140) posture(100,185)`;
 
-/* ═══════════════════════════════════════════════
-   INTRO / GAME START
-   ═══════════════════════════════════════════════ */
-function startGame() {
-  initAudio();
-  playWhoosh();
-  const overlay = document.getElementById('introOverlay');
-  overlay.classList.add('hidden');
-  setTimeout(() => {
-    overlay.style.display = 'none';
-    document.getElementById('mainPage').classList.add('revealed');
-    setTimeout(() => playPop(), 400);
-  }, 600);
-}
+const SYS=`You annotate a male human pictogram for a kids' educational game about appearance ideals.
+Given traits, extract each one and return coordinates from this map (viewBox 0 0 200 440):
+${BM}
 
-/* ═══════════════════════════════════════════════
-   ANNOTATION ENGINE
-   ═══════════════════════════════════════════════ */
-const AZURE_ENDPOINT = 'https://nesoi-resource.openai.azure.com';
-const AZURE_API_KEY = '89bry3528qMUbZnFK77ExyBjS7W02IbOFj35UwU6yjKTE0yiJRMCJQQJ99CCACHYHv6XJ3w3AAAAACOGJj4V';
-const AZURE_API_VERSION = '2025-04-01-preview';
-const DEPLOYMENT = 'gpt-5.4';
+EXISTING: {{EX}}
 
-let annotations = [];
-let processing = false;
+Return ONLY JSON: {"annotations":[{"text":"Label","targetX":100,"targetY":36,"side":"left"}]}
+Rules: each trait=separate annotation. 2-4 word labels, title case. Balance left/right. 1-5 per input. Avoid duplicate positions.`;
 
-const BODY_MAP = `BODY REGION COORDINATE MAP (SVG viewBox: 0 0 200 440):
+function ex(){return anns.length?anns.map(a=>`"${a.text}"(${a.targetX},${a.targetY})${a.side}`).join(';'):'None'}
 
-HEAD & FACE (circle cx=100 cy=34 r=26):
-- Top of head / hair: (100, 8)
-- Forehead: (100, 18)
-- Left eye: (88, 30), Right eye: (112, 30)
-- Nose: (100, 36)
-- Mouth / lips: (100, 44)
-- Chin: (100, 52)
-- Left ear: (74, 34), Right ear: (126, 34)
-- Jawline: left (80, 48), right (120, 48)
-- Beard: (100, 50)
-
-UPPER BODY (body y=76 to y=246):
-- Neck: (100, 68)
-- Left shoulder: (42, 82), Right shoulder: (158, 82)
-- Upper chest: (100, 92)
-- Left pec: (86, 104), Right pec: (114, 104)
-- Left arm / bicep: (38, 140), Right arm: (162, 140)
-- Upper abs: (100, 128)
-- Core: (100, 150)
-- Lower abs / six-pack: (100, 178)
-- Waist: (100, 200)
-- Navel: (100, 170)
-
-LOWER BODY (legs y=256 to y=394):
-- Left hip: (80, 242), Right hip: (120, 242)
-- Groin: (100, 252)
-- Left thigh: (84, 295), Right thigh: (116, 295)
-- Left knee: (84, 335), Right knee: (116, 335)
-- Left calf: (84, 360), Right calf: (116, 360)
-- Left foot: (84, 394), Right foot: (116, 394)
-
-GENERAL:
-- Height: (100, 250)
-- Build: (100, 155)
-- Skin: (100, 140)
-- Posture: (100, 185)`;
-
-const SYS = `You annotate a male human pictogram for an educational game about appearance ideals.
-Given text about physical traits, extract each trait and map to body coordinates (viewBox 0 0 200 440):
-${BODY_MAP}
-
-EXISTING ANNOTATIONS:
-{{EXISTING}}
-
-Return ONLY JSON:
-{"annotations":[{"text":"Label","targetX":100,"targetY":36,"side":"left"}]}
-
-RULES:
-- Each distinct trait = separate annotation. "long hair and blue eyes" = 2 annotations.
-- 2-4 word labels, title case.
-- Pick accurate coordinates from the map.
-- Balance left/right sides.
-- 1-5 annotations per input. targetX: 0-200, targetY: 0-440.
-- Avoid duplicate positions with existing annotations.`;
-
-function existingText() {
-  return annotations.length
-    ? annotations.map(a => `"${a.text}" at (${a.targetX},${a.targetY}) ${a.side}`).join('; ')
-    : 'None';
-}
-
-async function addAnnotation() {
-  if (processing) return;
-  const input = document.getElementById('userInput');
-  const text = input.value.trim();
-  if (!text) return;
-
-  processing = true;
-  const btn = document.getElementById('btnAdd');
-  btn.disabled = true; btn.classList.add('loading'); btn.textContent = 'Thinking...';
-
-  try {
-    const resp = await fetch(
-      `${AZURE_ENDPOINT}/openai/deployments/${DEPLOYMENT}/chat/completions?api-version=${AZURE_API_VERSION}`,
-      { method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'api-key': AZURE_API_KEY },
-        body: JSON.stringify({
-          messages: [
-            { role: 'system', content: SYS.replace('{{EXISTING}}', existingText()) },
-            { role: 'user', content: text }
-          ],
-          max_completion_tokens: 1024, temperature: 0.2
-        })
+async function go(){
+  if(busy)return;
+  const inp=document.getElementById('inp'),txt=inp.value.trim();
+  if(!txt)return;
+  busy=true;const btn=document.getElementById('btnGo');
+  btn.disabled=true;btn.classList.add('loading');
+  try{
+    const r=await fetch(`${AE}/openai/deployments/gpt-5.4/chat/completions?api-version=${AV}`,{
+      method:'POST',headers:{'Content-Type':'application/json','api-key':AK},
+      body:JSON.stringify({messages:[{role:'system',content:SYS.replace('{{EX}}',ex())},{role:'user',content:txt}],max_completion_tokens:1024,temperature:0.2})
+    });
+    if(!r.ok)throw new Error(r.status);
+    const d=await r.json(),c=d.choices?.[0]?.message?.content||'';
+    const p=JSON.parse(c.replace(/```json\s*/g,'').replace(/```/g,'').trim());
+    if(p.annotations?.length){
+      const ni=[];
+      for(const a of p.annotations){
+        const i=anns.length;
+        anns.push({text:String(a.text||'').slice(0,40),targetX:Math.max(0,Math.min(200,+a.targetX||100)),
+          targetY:Math.max(0,Math.min(440,+a.targetY||220)),side:a.side==='left'?'left':'right'});
+        ni.push(i);
       }
-    );
-    if (!resp.ok) throw new Error(`API ${resp.status}`);
-    const data = await resp.json();
-    const content = data.choices?.[0]?.message?.content || '';
-    const parsed = JSON.parse(content.replace(/```json\s*/g, '').replace(/```/g, '').trim());
-
-    if (parsed.annotations?.length) {
-      const newIdx = [];
-      for (const a of parsed.annotations) {
-        const idx = annotations.length;
-        annotations.push({
-          text: String(a.text || '').slice(0, 40),
-          targetX: Math.max(0, Math.min(200, Number(a.targetX) || 100)),
-          targetY: Math.max(0, Math.min(440, Number(a.targetY) || 220)),
-          side: a.side === 'left' ? 'left' : 'right'
-        });
-        newIdx.push(idx);
-      }
-      renderAll(newIdx);
-      input.value = '';
-      playDing();
-      checkMilestone(annotations.length);
+      render(ni);inp.value='';sndDing();checkMS(anns.length);
     }
-  } catch (err) {
-    console.error(err);
-    const el = document.getElementById('errorMsg');
-    el.textContent = 'Oops! Try again.'; el.classList.add('show');
-    setTimeout(() => el.classList.remove('show'), 3000);
-  } finally {
-    processing = false; btn.disabled = false;
-    btn.classList.remove('loading'); btn.textContent = 'Add to Figure ✨';
-  }
+  }catch(e){
+    console.error(e);const el=document.getElementById('err');
+    el.textContent='Oops! Try again.';el.classList.add('show');
+    setTimeout(()=>el.classList.remove('show'),3000);
+  }finally{busy=false;btn.disabled=false;btn.classList.remove('loading')}
 }
 
-function renderAll(newIdx) {
-  const area = document.getElementById('figureArea');
-  const body = document.getElementById('bodySvg');
-  const svg = document.getElementById('lineSvg');
-  const cont = document.getElementById('labelsContainer');
-  cont.innerHTML = ''; svg.innerHTML = '';
-  if (!annotations.length) { updateCounter(); return; }
+function render(ni){
+  const area=document.getElementById('figArea'),body=document.getElementById('bodySvg');
+  const svg=document.getElementById('lineSvg'),cont=document.getElementById('labels');
+  cont.innerHTML='';svg.innerHTML='';
+  if(!anns.length){updC();return}
+  const aR=area.getBoundingClientRect(),bR=body.getBoundingClientRect();
+  const bL=bR.left-aR.left,bT=bR.top-aR.top,sx=bR.width/200,sy=bR.height/440;
+  svg.setAttribute('viewBox',`0 0 ${aR.width} ${aR.height}`);
+  const tot=anns.length,fs=Math.max(9,Math.min(13,13-Math.max(0,tot-8)*0.35));
+  const pad=Math.max(2,Math.min(4,4-Math.max(0,tot-12)*0.2)),itH=fs+pad*2+5,mg=12;
+  const L=[],R=[];
+  anns.forEach((a,i)=>{const e={...a,idx:i};(a.side==='left'?L:R).push(e)});
+  L.sort((a,b)=>a.targetY-b.targetY);R.sort((a,b)=>a.targetY-b.targetY);
 
-  const aR = area.getBoundingClientRect();
-  const bR = body.getBoundingClientRect();
-  const bL = bR.left - aR.left, bT = bR.top - aR.top;
-  const sx = bR.width / 200, sy = bR.height / 440;
-  svg.setAttribute('viewBox', `0 0 ${aR.width} ${aR.height}`);
-
-  const total = annotations.length;
-  const fs = Math.max(9, Math.min(13, 13 - Math.max(0, total - 8) * 0.35));
-  const pad = Math.max(2, Math.min(4, 4 - Math.max(0, total - 12) * 0.2));
-  const itemH = fs + pad * 2 + 5;
-  const margin = 12;
-
-  const left = [], right = [];
-  annotations.forEach((a, i) => {
-    const e = { ...a, idx: i };
-    (a.side === 'left' ? left : right).push(e);
-  });
-  left.sort((a, b) => a.targetY - b.targetY);
-  right.sort((a, b) => a.targetY - b.targetY);
-
-  function layout(anns, side) {
-    if (!anns.length) return;
-    const gap = Math.max(1, Math.min(8, (aR.height - 20 - anns.length * itemH) / Math.max(anns.length, 1)));
-    const totH = anns.length * itemH + (anns.length - 1) * gap;
-    const startY = Math.max(10, (aR.height - totH) / 2);
-
-    anns.forEach((a, i) => {
-      const el = document.createElement('div');
-      el.className = 'label-tag';
-      el.textContent = a.text;
-      el.dataset.idx = a.idx;
-      el.style.fontSize = fs + 'px';
-      el.style.padding = `${pad}px 0`;
-      el.style.top = (startY + i * (itemH + gap)) + 'px';
-      if (side === 'left') el.style.right = (aR.width - bL + margin) + 'px';
-      else el.style.left = (bL + bR.width + margin) + 'px';
+  function lay(arr,side){
+    if(!arr.length)return;
+    const gap=Math.max(1,Math.min(8,(aR.height-20-arr.length*itH)/Math.max(arr.length,1)));
+    const tH=arr.length*itH+(arr.length-1)*gap;
+    const sY=Math.max(10,(aR.height-tH)/2);
+    arr.forEach((a,i)=>{
+      const el=document.createElement('div');el.className='lbl';el.textContent=a.text;
+      el.dataset.i=a.idx;el.style.fontSize=fs+'px';el.style.padding=`${pad}px 0`;
+      el.style.top=(sY+i*(itH+gap))+'px';
+      if(side==='left')el.style.right=(aR.width-bL+mg)+'px';
+      else el.style.left=(bL+bR.width+mg)+'px';
       cont.appendChild(el);
-
-      const isNew = newIdx && newIdx.includes(a.idx);
-      const delay = isNew ? (newIdx.indexOf(a.idx) * 150) : 0;
-      setTimeout(() => el.classList.add('pop-in'), delay);
+      const isN=ni&&ni.includes(a.idx),dl=isN?ni.indexOf(a.idx)*150:0;
+      setTimeout(()=>el.classList.add('pop'),dl);
     });
   }
-  layout(left, 'left');
-  layout(right, 'right');
+  lay(L,'left');lay(R,'right');
 
-  requestAnimationFrame(() => {
-    cont.querySelectorAll('.label-tag').forEach(el => {
-      const idx = parseInt(el.dataset.idx);
-      const a = annotations[idx];
-      if (!a) return;
-      const lR = el.getBoundingClientRect();
-      const lY = lR.top - aR.top + lR.height / 2;
-      const lX = a.side === 'left' ? lR.right - aR.left + 5 : lR.left - aR.left - 5;
-      const tX = bL + a.targetX * sx, tY = bT + a.targetY * sy;
-
-      const isNew = newIdx && newIdx.includes(idx);
-
-      const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-      line.setAttribute('x1', tX); line.setAttribute('y1', tY);
-      line.setAttribute('x2', lX); line.setAttribute('y2', lY);
-      line.setAttribute('stroke', 'var(--green-line)'); line.setAttribute('stroke-width', '1.5');
-      if (isNew) { line.classList.add('line-draw'); line.style.animationDelay = (newIdx.indexOf(idx) * 0.15) + 's'; }
-      svg.appendChild(line);
-
-      const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-      dot.setAttribute('cx', tX); dot.setAttribute('cy', tY);
-      dot.setAttribute('r', '4'); dot.setAttribute('fill', 'var(--green-dot)');
-      if (isNew) { dot.classList.add('dot-pop'); dot.style.animationDelay = (newIdx.indexOf(idx) * 0.15 + 0.1) + 's'; }
-      svg.appendChild(dot);
-
-      if (isNew) {
-        setTimeout(() => {
-          const dotScreen = { x: tX + aR.left, y: tY + aR.top };
-          for (let j = 0; j < 6; j++) {
-            const spark = document.createElement('div');
-            spark.style.cssText = `position:fixed;left:${dotScreen.x}px;top:${dotScreen.y}px;width:4px;height:4px;border-radius:50%;background:var(--green);pointer-events:none;z-index:100;`;
-            const angle = (j / 6) * Math.PI * 2;
-            const dist = 20 + Math.random() * 15;
-            spark.animate([
-              { transform: 'translate(0,0) scale(1)', opacity: 1 },
-              { transform: `translate(${Math.cos(angle) * dist}px,${Math.sin(angle) * dist}px) scale(0)`, opacity: 0 }
-            ], { duration: 400, easing: 'ease-out' }).onfinish = () => spark.remove();
-            document.body.appendChild(spark);
-          }
-        }, newIdx.indexOf(idx) * 150 + 200);
-      }
+  requestAnimationFrame(()=>{
+    cont.querySelectorAll('.lbl').forEach(el=>{
+      const i=+el.dataset.i,a=anns[i];if(!a)return;
+      const lR=el.getBoundingClientRect(),lY=lR.top-aR.top+lR.height/2;
+      const lX=a.side==='left'?lR.right-aR.left+5:lR.left-aR.left-5;
+      const tX=bL+a.targetX*sx,tY=bT+a.targetY*sy;
+      const isN=ni&&ni.includes(i);
+      const ln=document.createElementNS('http://www.w3.org/2000/svg','line');
+      ln.setAttribute('x1',tX);ln.setAttribute('y1',tY);ln.setAttribute('x2',lX);ln.setAttribute('y2',lY);
+      ln.setAttribute('stroke','var(--green-line)');ln.setAttribute('stroke-width','1.5');
+      if(isN){ln.classList.add('line-draw');ln.style.animationDelay=(ni.indexOf(i)*0.15)+'s'}
+      svg.appendChild(ln);
+      const dt=document.createElementNS('http://www.w3.org/2000/svg','circle');
+      dt.setAttribute('cx',tX);dt.setAttribute('cy',tY);dt.setAttribute('r','4');dt.setAttribute('fill','var(--green-dot)');
+      if(isN){dt.classList.add('dot-pop');dt.style.animationDelay=(ni.indexOf(i)*0.15+0.1)+'s'}
+      svg.appendChild(dt);
+      if(isN)setTimeout(()=>{
+        const dx=tX+aR.left,dy=tY+aR.top;
+        for(let j=0;j<8;j++){
+          const sp=document.createElement('div');
+          const ang=(j/8)*Math.PI*2,dist=18+Math.random()*14;
+          sp.style.cssText=`position:fixed;left:${dx}px;top:${dy}px;width:5px;height:5px;border-radius:50%;background:var(--green);pointer-events:none;z-index:100;`;
+          sp.animate([{transform:'translate(0,0) scale(1)',opacity:1},
+            {transform:`translate(${Math.cos(ang)*dist}px,${Math.sin(ang)*dist}px) scale(0)`,opacity:0}],
+            {duration:450,easing:'ease-out'}).onfinish=()=>sp.remove();
+          document.body.appendChild(sp);
+        }
+      },ni.indexOf(i)*150+250);
     });
   });
-  updateCounter();
+  updC();
 }
 
-function updateCounter() {
-  const el = document.getElementById('counterNum');
-  el.textContent = annotations.length;
-  el.classList.remove('bounce');
-  void el.offsetWidth;
-  if (annotations.length > 0) el.classList.add('bounce');
+function updC(){
+  const el=document.getElementById('cNum');el.textContent=anns.length;
+  el.classList.remove('bounce');void el.offsetWidth;
+  if(anns.length)el.classList.add('bounce');
 }
+function clearAll(){anns=[];render([]);sndPop()}
+function tryEx(el){document.getElementById('inp').value=el.textContent;go()}
 
-function clearAll() {
-  annotations = [];
-  renderAll([]); playPop();
-}
+let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{if(anns.length)render(null)},250);cv.width=innerWidth;cv.height=innerHeight});
 
-function tryExample(el) {
-  document.getElementById('userInput').value = el.textContent;
-  addAnnotation();
-}
-
-let resizeT;
-window.addEventListener('resize', () => {
-  clearTimeout(resizeT);
-  resizeT = setTimeout(() => { if (annotations.length) renderAll(null); }, 250);
-  confettiCanvas.width = window.innerWidth;
-  confettiCanvas.height = window.innerHeight;
-});
-
-// Floating page decorations
-['12%,85%,+,36px,navy,6s','88%,20%,+,28px,mint,8s','5%,45%,+,24px,coral,7s','92%,70%,+,20px,yellow,9s'].forEach(d => {
-  const [l,t,ch,sz,c,dur] = d.split(',');
-  const el = document.createElement('div');
-  el.className = 'page-deco';
-  el.textContent = ch;
-  el.style.cssText = `left:${l};top:${t};font-size:${sz};color:var(--${c});animation:gentleFloat ${dur} ease-in-out infinite;animation-delay:${Math.random()*3}s`;
-  document.body.appendChild(el);
-});
+// Auto-show intro decos
+setTimeout(()=>document.querySelectorAll('.i-deco').forEach((d,i)=>{d.style.animationDelay=(0.3+i*0.12)+'s';d.classList.add('id-show')}),100);
 </script>
 </body>
 </html>
