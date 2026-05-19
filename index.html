@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Appearance Ideals for Males</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d1117;
+  --surface:#161b22;
+  --border:#30363d;
+  --text:#e6edf3;
+  --text-dim:#8b949e;
+  --text-muted:#484f58;
+  --accent:#58a6ff;
+  --accent-soft:rgba(88,166,255,0.12);
+  --accent-border:rgba(88,166,255,0.3);
+  --accent-line:rgba(88,166,255,0.3);
+  --accent-dot:rgba(88,166,255,0.7);
+  --figure-fill:rgba(255,255,255,0.045);
+  --figure-stroke:rgba(255,255,255,0.1);
+}
+html,body{height:100%;font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);overflow:hidden}
+
+/* Page layout */
+.page{display:flex;flex-direction:column;height:100vh}
+.header{padding:24px 32px 8px;text-align:center;flex-shrink:0}
+.header h1{font-size:24px;font-weight:700;letter-spacing:-0.5px;color:var(--text)}
+.header p{font-size:13px;color:var(--text-muted);margin-top:4px}
+.workspace{flex:1;display:flex;padding:8px 16px 16px;min-height:0;gap:16px}
+
+/* Figure area */
+.figure-area{flex:1;position:relative;overflow:hidden}
+#bodySvg{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  height:88%;max-height:580px;
+  filter:drop-shadow(0 0 40px rgba(88,166,255,0.03));
+}
+#lineSvg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}
+#labelsContainer{position:absolute;inset:0;pointer-events:none;z-index:3}
+
+/* Labels */
+.label-tag{
+  position:absolute;pointer-events:auto;
+  padding:5px 12px;
+  background:var(--accent-soft);
+  border:1px solid var(--accent-border);
+  border-radius:6px;
+  font-size:13px;font-weight:500;
+  color:var(--accent);
+  white-space:nowrap;
+  opacity:0;
+  transition:opacity 0.4s ease,transform 0.4s ease,font-size 0.3s ease,padding 0.3s ease;
+}
+.label-tag.visible{opacity:1}
+.label-tag.left-side{text-align:right}
+.label-tag.right-side{text-align:left}
+
+/* Input panel */
+.input-panel{
+  width:280px;flex-shrink:0;
+  display:flex;flex-direction:column;gap:12px;
+  padding:12px 0;
+}
+.input-panel h2{font-size:14px;font-weight:600;color:var(--text-dim);margin-bottom:2px}
+.input-panel textarea{
+  width:100%;min-height:90px;padding:12px 14px;
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;
+  color:var(--text);font-family:'Inter',sans-serif;font-size:14px;line-height:1.5;
+  resize:vertical;outline:none;transition:border-color 0.2s;
+}
+.input-panel textarea:focus{border-color:var(--accent)}
+.input-panel textarea::placeholder{color:var(--text-muted)}
+
+.btn-primary{
+  width:100%;padding:12px;
+  background:var(--accent);color:#fff;
+  border:none;border-radius:10px;
+  font-size:14px;font-weight:600;cursor:pointer;
+  font-family:'Inter',sans-serif;transition:all 0.2s;
+}
+.btn-primary:hover{filter:brightness(1.1)}
+.btn-primary:disabled{opacity:0.5;cursor:not-allowed}
+.btn-primary.loading{
+  background:var(--surface);border:1px solid var(--border);
+  color:var(--text-muted);
+}
+.btn-secondary{
+  width:100%;padding:9px;
+  background:none;border:1px solid var(--border);border-radius:8px;
+  color:var(--text-muted);font-size:12px;cursor:pointer;
+  font-family:'Inter',sans-serif;transition:all 0.2s;
+}
+.btn-secondary:hover{border-color:var(--text-dim);color:var(--text-dim)}
+
+.annot-count{font-size:11px;color:var(--text-muted);text-align:center;padding:2px}
+.error-msg{font-size:12px;color:#f85149;padding:4px 0;display:none}
+.error-msg.show{display:block}
+
+/* Example chips */
+.examples{margin-top:auto;padding-top:12px;border-top:1px solid var(--border)}
+.examples h3{font-size:11px;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px}
+.example-chip{
+  display:inline-block;padding:5px 10px;margin:2px;
+  background:var(--surface);border:1px solid var(--border);border-radius:16px;
+  font-size:11px;color:var(--text-dim);cursor:pointer;transition:all 0.2s;
+}
+.example-chip:hover{border-color:var(--accent);color:var(--accent)}
+
+/* Animations */
+@keyframes dotPulse{
+  0%,100%{r:3.5;opacity:0.7}
+  50%{r:5;opacity:1}
+}
+.dot-new{animation:dotPulse 0.6s ease-out}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="header">
+    <h1>What are appearance ideals for males?</h1>
+    <p>Type a trait below to annotate the figure</p>
+  </div>
+
+  <div class="workspace">
+    <div class="figure-area" id="figureArea">
+
+      <!-- Male silhouette (composite shapes) -->
+      <svg id="bodySvg" viewBox="0 0 300 500" xmlns="http://www.w3.org/2000/svg">
+        <g fill="var(--figure-fill)" stroke="var(--figure-stroke)" stroke-width="1.2" stroke-linejoin="round">
+          <!-- Head -->
+          <ellipse cx="150" cy="42" rx="28" ry="34"/>
+          <!-- Neck -->
+          <rect x="139" y="74" width="22" height="22" rx="8"/>
+          <!-- Shoulders + upper torso -->
+          <rect x="76" y="93" width="148" height="46" rx="22"/>
+          <!-- Torso -->
+          <rect x="92" y="120" width="116" height="100" rx="14"/>
+          <!-- Left upper arm -->
+          <rect x="52" y="96" width="28" height="78" rx="13" transform="rotate(-8 66 135)"/>
+          <!-- Right upper arm -->
+          <rect x="220" y="96" width="28" height="78" rx="13" transform="rotate(8 234 135)"/>
+          <!-- Left forearm -->
+          <rect x="38" y="170" width="22" height="72" rx="10" transform="rotate(-5 49 206)"/>
+          <!-- Right forearm -->
+          <rect x="240" y="170" width="22" height="72" rx="10" transform="rotate(5 251 206)"/>
+          <!-- Left hand -->
+          <ellipse cx="43" cy="248" rx="12" ry="14"/>
+          <!-- Right hand -->
+          <ellipse cx="257" cy="248" rx="12" ry="14"/>
+          <!-- Hips -->
+          <ellipse cx="150" cy="224" rx="50" ry="18"/>
+          <!-- Left thigh -->
+          <rect x="110" y="236" width="36" height="105" rx="17"/>
+          <!-- Right thigh -->
+          <rect x="154" y="236" width="36" height="105" rx="17"/>
+          <!-- Left calf -->
+          <rect x="114" y="335" width="28" height="100" rx="13"/>
+          <!-- Right calf -->
+          <rect x="158" y="335" width="28" height="100" rx="13"/>
+          <!-- Left foot -->
+          <ellipse cx="127" cy="440" rx="18" ry="9"/>
+          <!-- Right foot -->
+          <ellipse cx="173" cy="440" rx="18" ry="9"/>
+        </g>
+      </svg>
+
+      <!-- Line overlay for connecting annotations -->
+      <svg id="lineSvg" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="glow" x="-100%" y="-100%" width="300%" height="300%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+      </svg>
+
+      <!-- Label elements -->
+      <div id="labelsContainer"></div>
+    </div>
+
+    <div class="input-panel">
+      <h2>Add appearance traits</h2>
+      <textarea id="userInput" placeholder="e.g., long hair, blue eyes, muscular build..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();addAnnotation()}"></textarea>
+      <button class="btn-primary" id="btnAdd" onclick="addAnnotation()">Add to Figure</button>
+      <button class="btn-secondary" onclick="clearAll()">Clear All</button>
+      <div class="annot-count" id="annotCount"></div>
+      <div class="error-msg" id="errorMsg"></div>
+
+      <div class="examples">
+        <h3>Try these</h3>
+        <span class="example-chip" onclick="tryExample(this)">tall stature</span>
+        <span class="example-chip" onclick="tryExample(this)">broad shoulders</span>
+        <span class="example-chip" onclick="tryExample(this)">defined jawline</span>
+        <span class="example-chip" onclick="tryExample(this)">muscular arms</span>
+        <span class="example-chip" onclick="tryExample(this)">six-pack abs</span>
+        <span class="example-chip" onclick="tryExample(this)">thick hair</span>
+        <span class="example-chip" onclick="tryExample(this)">strong legs</span>
+        <span class="example-chip" onclick="tryExample(this)">clear skin</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const AZURE_ENDPOINT = 'https://nesoi-resource.openai.azure.com';
+const AZURE_API_KEY = '89bry3528qMUbZnFK77ExyBjS7W02IbOFj35UwU6yjKTE0yiJRMCJQQJ99CCACHYHv6XJ3w3AAAAACOGJj4V';
+const AZURE_API_VERSION = '2025-04-01-preview';
+const DEPLOYMENT = 'gpt-5.4';
+
+let annotations = [];
+let processing = false;
+
+/* ───── Body coordinate map (matches SVG viewBox 0 0 300 500) ───── */
+const BODY_MAP = `BODY REGION COORDINATE MAP (SVG viewBox: 0 0 300 500, origin top-left):
+
+HEAD & FACE:
+- Top of head / crown: (150, 8)
+- Hair: (150, 16)
+- Forehead: (150, 26)
+- Left eye: (139, 36), Right eye: (161, 36)
+- Nose: (150, 44)
+- Mouth / lips: (150, 52)
+- Chin: (150, 60)
+- Left ear: (122, 38), Right ear: (178, 38)
+- Left jawline: (127, 54), Right jawline: (173, 54)
+- Facial hair / beard area: (150, 58)
+
+UPPER BODY:
+- Neck: (150, 80)
+- Left shoulder: (88, 104), Right shoulder: (212, 104)
+- Collarbone area: (150, 96)
+- Upper chest: (150, 112)
+- Left pectoral: (120, 124), Right pectoral: (180, 124)
+- Left bicep/upper arm: (62, 128), Right bicep: (238, 128)
+- Left elbow: (50, 170), Right elbow: (250, 170)
+- Left forearm: (44, 200), Right forearm: (256, 200)
+- Left wrist: (42, 235), Right wrist: (258, 235)
+- Left hand/fingers: (43, 248), Right hand: (257, 248)
+- Upper abs: (150, 145)
+- Core / midsection: (150, 165)
+- Lower abs: (150, 185)
+- Waist: (150, 200)
+- Navel: (150, 190)
+- Left oblique: (102, 185), Right oblique: (198, 185)
+
+LOWER BODY:
+- Left hip: (118, 224), Right hip: (182, 224)
+- Groin / pelvis: (150, 238)
+- Left thigh (quad): (128, 280), Right thigh: (172, 280)
+- Left inner thigh: (140, 290), Right inner thigh: (160, 290)
+- Left knee: (128, 338), Right knee: (172, 338)
+- Left shin: (128, 370), Right shin: (172, 370)
+- Left calf: (128, 390), Right calf: (172, 390)
+- Left ankle: (127, 430), Right ankle: (173, 430)
+- Left foot/toes: (127, 440), Right foot: (173, 440)
+
+GENERAL / WHOLE-BODY:
+- Overall height / stature: (150, 240)
+- Posture: (150, 180)
+- Overall build / physique: (150, 170)
+- Skin (general): (150, 160)
+- Body hair (torso): (150, 155)`;
+
+const SYSTEM_PROMPT = `You annotate a front-facing male human figure for an educational tool about appearance ideals.
+
+Given user text describing physical traits, extract each distinct trait and map it to the correct body region. Return precise SVG coordinates for placing annotation arrows.
+
+The figure uses an SVG coordinate system (viewBox 0 0 300 500):
+${BODY_MAP}
+
+EXISTING ANNOTATIONS ON THE FIGURE (avoid placing new labels at the same target positions):
+{{EXISTING}}
+
+Return ONLY valid JSON. No markdown fences, no explanation.
+
+{
+  "annotations": [
+    {
+      "text": "concise label (2-4 words)",
+      "targetX": 150,
+      "targetY": 44,
+      "side": "left"
+    }
+  ]
+}
+
+RULES:
+- Extract EVERY distinct trait as a separate annotation
+- "long hair and blue eyes" = 2 separate annotations
+- Keep label text SHORT (2-4 words). Use title case.
+- Choose the most anatomically accurate target point from the coordinate map
+- Alternate sides for visual balance. Check existing annotations and try to balance left vs right count.
+- If a trait refers to paired body parts (eyes, arms, legs), pick ONE side
+- For general traits (height, build, skin), use center coordinates
+- Return 1-5 annotations per input
+- targetX must be 0-300, targetY must be 0-500
+- Do NOT place two annotations at the exact same target coordinates. Offset slightly if needed.`;
+
+function existingText() {
+  if (!annotations.length) return 'None yet.';
+  return annotations.map(a => `- "${a.text}" at (${a.targetX}, ${a.targetY}) on ${a.side}`).join('\n');
+}
+
+function showError(msg) {
+  const el = document.getElementById('errorMsg');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 4000);
+}
+
+async function addAnnotation() {
+  if (processing) return;
+  const input = document.getElementById('userInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  processing = true;
+  const btn = document.getElementById('btnAdd');
+  btn.disabled = true;
+  btn.classList.add('loading');
+  btn.textContent = 'Thinking...';
+
+  try {
+    const prompt = SYSTEM_PROMPT.replace('{{EXISTING}}', existingText());
+    const url = `${AZURE_ENDPOINT}/openai/deployments/${DEPLOYMENT}/chat/completions?api-version=${AZURE_API_VERSION}`;
+
+    const resp = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'api-key': AZURE_API_KEY },
+      body: JSON.stringify({
+        messages: [
+          { role: 'system', content: prompt },
+          { role: 'user', content: text }
+        ],
+        max_completion_tokens: 1024,
+        temperature: 0.2
+      })
+    });
+
+    if (!resp.ok) {
+      const errText = await resp.text();
+      throw new Error(`API ${resp.status}: ${errText.slice(0, 200)}`);
+    }
+
+    const data = await resp.json();
+    const content = data.choices?.[0]?.message?.content || '';
+    const cleaned = content.replace(/```json\s*/g, '').replace(/```/g, '').trim();
+    const parsed = JSON.parse(cleaned);
+
+    if (parsed.annotations && parsed.annotations.length > 0) {
+      const newIndices = [];
+      for (const ann of parsed.annotations) {
+        const idx = annotations.length;
+        annotations.push({
+          text: String(ann.text || '').slice(0, 40),
+          targetX: Math.max(0, Math.min(300, Number(ann.targetX) || 150)),
+          targetY: Math.max(0, Math.min(500, Number(ann.targetY) || 250)),
+          side: ann.side === 'left' ? 'left' : 'right'
+        });
+        newIndices.push(idx);
+      }
+      renderAll(newIndices);
+      input.value = '';
+    } else {
+      showError('No annotations returned. Try a different description.');
+    }
+  } catch (err) {
+    console.error('Annotation error:', err);
+    showError('Something went wrong. Please try again.');
+  } finally {
+    processing = false;
+    btn.disabled = false;
+    btn.classList.remove('loading');
+    btn.textContent = 'Add to Figure';
+  }
+}
+
+function renderAll(newIndices) {
+  const area = document.getElementById('figureArea');
+  const body = document.getElementById('bodySvg');
+  const lineSvg = document.getElementById('lineSvg');
+  const container = document.getElementById('labelsContainer');
+
+  container.innerHTML = '';
+  while (lineSvg.children.length > 1) lineSvg.removeChild(lineSvg.lastChild);
+
+  if (!annotations.length) {
+    document.getElementById('annotCount').textContent = '';
+    return;
+  }
+
+  const aRect = area.getBoundingClientRect();
+  const bRect = body.getBoundingClientRect();
+
+  const bLeft = bRect.left - aRect.left;
+  const bTop = bRect.top - aRect.top;
+  const bW = bRect.width;
+  const bH = bRect.height;
+  const sx = bW / 300;
+  const sy = bH / 500;
+
+  lineSvg.setAttribute('viewBox', `0 0 ${aRect.width} ${aRect.height}`);
+
+  const total = annotations.length;
+  const fontSize = Math.max(9, Math.min(13, 13 - Math.max(0, total - 8) * 0.35));
+  const padV = Math.max(2, Math.min(5, 5 - Math.max(0, total - 12) * 0.25));
+  const padH = Math.max(6, Math.min(12, 12 - Math.max(0, total - 12) * 0.4));
+  const itemH = fontSize + padV * 2 + 4;
+  const margin = 14;
+
+  const leftAnns = [];
+  const rightAnns = [];
+  annotations.forEach((a, i) => {
+    const entry = { ...a, idx: i };
+    if (a.side === 'left') leftAnns.push(entry);
+    else rightAnns.push(entry);
+  });
+  leftAnns.sort((a, b) => a.targetY - b.targetY);
+  rightAnns.sort((a, b) => a.targetY - b.targetY);
+
+  function layoutSide(anns, side) {
+    const count = anns.length;
+    if (!count) return;
+    const availH = aRect.height - 30;
+    const gap = Math.max(1, Math.min(8, (availH - count * itemH) / Math.max(count, 1)));
+    const totalH = count * itemH + (count - 1) * gap;
+    const startY = Math.max(15, (aRect.height - totalH) / 2);
+
+    anns.forEach((ann, i) => {
+      const label = document.createElement('div');
+      label.className = 'label-tag ' + (side === 'left' ? 'left-side' : 'right-side');
+      label.textContent = ann.text;
+      label.dataset.idx = ann.idx;
+      label.style.fontSize = fontSize + 'px';
+      label.style.padding = `${padV}px ${padH}px`;
+      label.style.top = (startY + i * (itemH + gap)) + 'px';
+
+      if (side === 'left') {
+        const rightPos = aRect.width - bLeft + margin;
+        label.style.right = rightPos + 'px';
+      } else {
+        label.style.left = (bLeft + bW + margin) + 'px';
+      }
+
+      container.appendChild(label);
+
+      const isNew = newIndices && newIndices.includes(ann.idx);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          label.classList.add('visible');
+        });
+      });
+    });
+  }
+
+  layoutSide(leftAnns, 'left');
+  layoutSide(rightAnns, 'right');
+
+  requestAnimationFrame(() => {
+    container.querySelectorAll('.label-tag').forEach(label => {
+      const idx = parseInt(label.dataset.idx);
+      const ann = annotations[idx];
+      if (!ann) return;
+
+      const lRect = label.getBoundingClientRect();
+      const lCenterY = lRect.top - aRect.top + lRect.height / 2;
+      let lEdgeX;
+      if (ann.side === 'left') {
+        lEdgeX = lRect.right - aRect.left + 3;
+      } else {
+        lEdgeX = lRect.left - aRect.left - 3;
+      }
+
+      const tX = bLeft + ann.targetX * sx;
+      const tY = bTop + ann.targetY * sy;
+
+      const midX = ann.side === 'left'
+        ? lEdgeX + (tX - lEdgeX) * 0.35
+        : lEdgeX - (lEdgeX - tX) * 0.35;
+
+      const polyline = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+      polyline.setAttribute('points', `${lEdgeX},${lCenterY} ${midX},${lCenterY} ${tX},${tY}`);
+      polyline.setAttribute('fill', 'none');
+      polyline.setAttribute('stroke', 'var(--accent-line)');
+      polyline.setAttribute('stroke-width', '1.2');
+      lineSvg.appendChild(polyline);
+
+      const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      dot.setAttribute('cx', tX);
+      dot.setAttribute('cy', tY);
+      dot.setAttribute('r', '3.5');
+      dot.setAttribute('fill', 'var(--accent-dot)');
+      dot.setAttribute('filter', 'url(#glow)');
+      if (newIndices && newIndices.includes(idx)) {
+        dot.classList.add('dot-new');
+      }
+      lineSvg.appendChild(dot);
+    });
+  });
+
+  document.getElementById('annotCount').textContent =
+    `${total} annotation${total !== 1 ? 's' : ''}`;
+}
+
+function clearAll() {
+  annotations = [];
+  renderAll([]);
+}
+
+function tryExample(el) {
+  document.getElementById('userInput').value = el.textContent;
+  addAnnotation();
+}
+
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    if (annotations.length) renderAll(null);
+  }, 250);
+});
+</script>
+</body>
+</html>
