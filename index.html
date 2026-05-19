@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Appearance Ideals</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -13,59 +13,63 @@
   --navy-light:#2A5298;
   --green:#3EA66B;
   --green-light:#48C278;
-  --green-dim:rgba(62,166,107,0.12);
-  --green-line:rgba(62,166,107,0.55);
-  --green-dot:rgba(62,166,107,0.85);
+  --green-line:rgba(62,166,107,0.6);
+  --green-dot:rgba(62,166,107,0.9);
+  --mint:#8CE8D0;
+  --mint-light:#D4F7ED;
+  --coral:#F47B6C;
+  --yellow:#F7DC6F;
   --bg:#FFFFFF;
-  --border-dash:#B8C9DD;
+  --border-dash:#9BB8D6;
   --text:#1B3D6F;
   --text-dim:#5A7A9E;
   --text-muted:#8FA4BC;
   --input-bg:#F5F8FC;
 }
-html,body{height:100%;font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);overflow:hidden}
+html,body{height:100%;font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);overflow:hidden}
 
 /* Page */
-.page{display:flex;flex-direction:column;height:100vh;max-width:1400px;margin:0 auto;border-left:3px dashed var(--border-dash);border-right:3px dashed var(--border-dash)}
+.page{display:flex;flex-direction:column;height:100vh;max-width:1400px;margin:0 auto;
+  border-left:3px dashed var(--border-dash);border-right:3px dashed var(--border-dash)}
 
 /* Header */
 .header{
-  padding:28px 40px 16px;
-  display:flex;align-items:center;gap:16px;
+  padding:22px 36px 14px;
+  display:flex;align-items:center;gap:14px;
   border-bottom:3px dashed var(--border-dash);
   flex-shrink:0;
 }
-.chevrons{display:flex;gap:4px;flex-shrink:0}
+.chevrons{display:flex;gap:2px;flex-shrink:0}
 .chevron{
   width:0;height:0;
-  border-top:14px solid transparent;
-  border-bottom:14px solid transparent;
-  border-left:16px solid var(--navy);
+  border-top:13px solid transparent;
+  border-bottom:13px solid transparent;
+  border-left:14px solid var(--navy);
 }
 .header h1{
-  font-size:32px;font-weight:800;color:var(--navy);
-  letter-spacing:-0.5px;line-height:1.1;
+  font-size:30px;font-weight:800;color:var(--navy);
+  letter-spacing:-0.3px;line-height:1.1;
 }
 
 /* Instruction box */
 .instruction-box{
-  margin:16px 40px;
-  padding:16px 22px;
+  margin:12px 36px;
+  padding:14px 20px;
   border:2.5px dashed var(--navy);
-  border-radius:6px;
+  border-radius:4px;
   flex-shrink:0;
 }
-.instruction-box p{font-size:14px;line-height:1.6;color:var(--navy);font-weight:400}
-.instruction-box p strong{font-weight:700}
+.instruction-box p{font-size:13.5px;line-height:1.55;color:var(--navy);font-weight:500}
+.instruction-box p strong{font-weight:800}
 
 /* Workspace */
-.workspace{flex:1;display:flex;padding:8px 20px 20px;min-height:0;gap:12px}
+.workspace{flex:1;display:flex;padding:4px 16px 16px;min-height:0;gap:12px}
 
 /* Figure area */
 .figure-area{flex:1;position:relative;overflow:hidden}
 #bodySvg{
   position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  height:90%;max-height:520px;
+  height:92%;max-height:560px;
 }
 #lineSvg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}
 #labelsContainer{position:absolute;inset:0;pointer-events:none;z-index:3}
@@ -73,8 +77,8 @@ html,body{height:100%;font-family:'Poppins',sans-serif;background:var(--bg);colo
 /* Annotation labels */
 .label-tag{
   position:absolute;pointer-events:auto;
-  padding:4px 0;
-  font-size:13px;font-weight:600;
+  padding:3px 0;
+  font-size:13px;font-weight:700;
   color:var(--navy);
   white-space:nowrap;
   border-bottom:2.5px solid var(--green);
@@ -87,17 +91,17 @@ html,body{height:100%;font-family:'Poppins',sans-serif;background:var(--bg);colo
 
 /* Input panel */
 .input-panel{
-  width:280px;flex-shrink:0;
+  width:270px;flex-shrink:0;
   display:flex;flex-direction:column;gap:10px;
   padding:8px 0;
-  border-left:2px dashed var(--border-dash);
-  padding-left:20px;
+  border-left:2.5px dashed var(--border-dash);
+  padding-left:18px;
 }
-.input-panel h2{font-size:13px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:0.5px}
+.input-panel h2{font-size:13px;font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:0.5px}
 .input-panel textarea{
-  width:100%;min-height:80px;padding:12px 14px;
-  background:var(--input-bg);border:2px solid var(--border-dash);border-radius:8px;
-  color:var(--navy);font-family:'Poppins',sans-serif;font-size:13px;line-height:1.5;
+  width:100%;min-height:80px;padding:11px 13px;
+  background:var(--input-bg);border:2px solid var(--border-dash);border-radius:6px;
+  color:var(--navy);font-family:'Nunito',sans-serif;font-size:13px;line-height:1.5;
   resize:vertical;outline:none;transition:border-color 0.2s;
 }
 .input-panel textarea:focus{border-color:var(--navy)}
@@ -106,49 +110,43 @@ html,body{height:100%;font-family:'Poppins',sans-serif;background:var(--bg);colo
 .btn-primary{
   width:100%;padding:11px;
   background:var(--green);color:#fff;
-  border:none;border-radius:8px;
-  font-size:13px;font-weight:700;cursor:pointer;
-  font-family:'Poppins',sans-serif;transition:all 0.2s;
-  text-transform:uppercase;letter-spacing:0.5px;
+  border:none;border-radius:6px;
+  font-size:13px;font-weight:800;cursor:pointer;
+  font-family:'Nunito',sans-serif;transition:all 0.2s;
+  text-transform:uppercase;letter-spacing:0.4px;
 }
 .btn-primary:hover{background:var(--green-light)}
 .btn-primary:disabled{opacity:0.5;cursor:not-allowed}
 .btn-primary.loading{background:var(--input-bg);border:2px solid var(--border-dash);color:var(--text-muted)}
 
 .btn-secondary{
-  width:100%;padding:8px;
-  background:none;border:2px solid var(--border-dash);border-radius:8px;
-  color:var(--text-dim);font-size:11px;font-weight:600;cursor:pointer;
-  font-family:'Poppins',sans-serif;transition:all 0.2s;
+  width:100%;padding:7px;
+  background:none;border:2px solid var(--border-dash);border-radius:6px;
+  color:var(--text-dim);font-size:11px;font-weight:700;cursor:pointer;
+  font-family:'Nunito',sans-serif;transition:all 0.2s;
 }
 .btn-secondary:hover{border-color:var(--navy);color:var(--navy)}
 
-.annot-count{font-size:11px;color:var(--text-muted);text-align:center;padding:2px;font-weight:500}
-.error-msg{font-size:11px;color:#D32F2F;padding:4px 0;display:none;font-weight:500}
+.annot-count{font-size:11px;color:var(--text-muted);text-align:center;padding:2px;font-weight:600}
+.error-msg{font-size:11px;color:#D32F2F;padding:4px 0;display:none;font-weight:600}
 .error-msg.show{display:block}
 
 /* Example chips */
-.examples{margin-top:auto;padding-top:12px;border-top:2px dashed var(--border-dash)}
-.examples h3{font-size:10px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.examples{margin-top:auto;padding-top:10px;border-top:2px dashed var(--border-dash)}
+.examples h3{font-size:10px;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px}
 .example-chip{
-  display:inline-block;padding:4px 10px;margin:2px;
-  background:var(--input-bg);border:1.5px solid var(--border-dash);border-radius:14px;
-  font-size:11px;font-weight:500;color:var(--text-dim);cursor:pointer;transition:all 0.2s;
+  display:inline-block;padding:4px 9px;margin:2px;
+  background:var(--mint-light);border:1.5px solid var(--mint);border-radius:14px;
+  font-size:11px;font-weight:600;color:var(--navy);cursor:pointer;transition:all 0.2s;
 }
-.example-chip:hover{border-color:var(--green);color:var(--green)}
-
-/* Animations */
-@keyframes dotPulse{
-  0%,100%{r:4;opacity:0.85}
-  50%{r:6;opacity:1}
-}
-.dot-new{animation:dotPulse 0.6s ease-out}
+.example-chip:hover{border-color:var(--green);background:rgba(62,166,107,0.1)}
 </style>
 </head>
 <body>
 <div class="page">
   <div class="header">
     <div class="chevrons">
+      <div class="chevron"></div>
       <div class="chevron"></div>
       <div class="chevron"></div>
     </div>
@@ -163,21 +161,43 @@ html,body{height:100%;font-family:'Poppins',sans-serif;background:var(--bg);colo
   <div class="workspace">
     <div class="figure-area" id="figureArea">
 
-      <!-- Simple pictogram human figure (bathroom-sign style) -->
-      <svg id="bodySvg" viewBox="0 0 200 420" xmlns="http://www.w3.org/2000/svg">
-        <g fill="#1B3D6F">
-          <!-- Head -->
-          <circle cx="100" cy="36" r="28"/>
-          <!-- Body / torso -->
-          <rect x="66" y="70" width="68" height="128" rx="10"/>
-          <!-- Left arm -->
-          <rect x="18" y="80" width="52" height="26" rx="13"/>
-          <!-- Right arm -->
-          <rect x="130" y="80" width="52" height="26" rx="13"/>
+      <!-- Human figure: OUTLINE ONLY, matching Dove Confident Me worksheet -->
+      <svg id="bodySvg" viewBox="0 0 200 440" xmlns="http://www.w3.org/2000/svg">
+        <g fill="none" stroke="#1B3D6F" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+          <!-- Head (separate circle) -->
+          <circle cx="100" cy="34" r="26"/>
+
+          <!-- Body: shoulders + arms (U-shape indents) + torso -->
+          <path d="
+            M 30,88
+            Q 30,76 42,76
+            L 158,76
+            Q 170,76 170,88
+            L 170,186
+            Q 170,200 157,200
+            Q 146,200 146,186
+            L 146,112
+            Q 146,102 138,102
+            L 134,102
+            Q 128,102 128,110
+            L 128,234
+            Q 128,246 116,246
+            L 84,246
+            Q 72,246 72,234
+            L 72,110
+            Q 72,102 66,102
+            L 62,102
+            Q 54,102 54,112
+            L 54,186
+            Q 54,200 43,200
+            Q 30,200 30,186
+            Z
+          "/>
+
           <!-- Left leg -->
-          <rect x="62" y="202" width="30" height="138" rx="14"/>
+          <rect x="72" y="256" width="24" height="138" rx="12"/>
           <!-- Right leg -->
-          <rect x="108" y="202" width="30" height="138" rx="14"/>
+          <rect x="104" y="256" width="24" height="138" rx="12"/>
         </g>
       </svg>
 
@@ -190,7 +210,7 @@ html,body{height:100%;font-family:'Poppins',sans-serif;background:var(--bg);colo
         </defs>
       </svg>
 
-      <!-- Label elements -->
+      <!-- Labels -->
       <div id="labelsContainer"></div>
     </div>
 
@@ -226,54 +246,53 @@ const DEPLOYMENT = 'gpt-5.4';
 let annotations = [];
 let processing = false;
 
-/* Body coordinate map matching the pictogram SVG (viewBox 0 0 200 420) */
-const BODY_MAP = `BODY REGION COORDINATE MAP (SVG viewBox: 0 0 200 420, origin = top-left):
+const BODY_MAP = `BODY REGION COORDINATE MAP (SVG viewBox: 0 0 200 440, origin = top-left):
 
-HEAD & FACE:
-- Top of head / crown / hair: (100, 10)
-- Forehead: (100, 22)
-- Left eye: (88, 32), Right eye: (112, 32)
-- Nose: (100, 38)
-- Mouth / lips / smile / teeth: (100, 44)
+HEAD & FACE (outline circle at cx=100, cy=34, r=26):
+- Top of head / crown / hair: (100, 8)
+- Forehead: (100, 18)
+- Left eye: (88, 30), Right eye: (112, 30)
+- Nose: (100, 36)
+- Mouth / lips / teeth / smile: (100, 44)
 - Chin: (100, 52)
-- Left ear: (72, 35), Right ear: (128, 35)
-- Left jawline: (78, 48), Right jawline: (122, 48)
+- Left ear: (74, 34), Right ear: (126, 34)
+- Left jawline: (80, 48), Right jawline: (120, 48)
 - Facial hair / beard: (100, 50)
 
-UPPER BODY:
-- Neck: (100, 64)
-- Left shoulder: (44, 88), Right shoulder: (156, 88)
-- Upper chest: (100, 90)
-- Left pectoral: (80, 100), Right pectoral: (120, 100)
-- Left arm / bicep: (32, 92), Right arm / bicep: (168, 92)
-- Upper abs: (100, 118)
-- Core / midsection: (100, 138)
-- Lower abs / six-pack: (100, 155)
-- Waist: (100, 170)
-- Navel: (100, 152)
-- Left oblique / side: (72, 148), Right oblique: (128, 148)
+UPPER BODY (outline body shape from y=76 to y=246):
+- Neck: (100, 68)
+- Left shoulder: (42, 82), Right shoulder: (158, 82)
+- Upper chest: (100, 92)
+- Left pectoral: (86, 104), Right pectoral: (114, 104)
+- Left arm / bicep: (38, 140), Right arm / bicep: (162, 140)
+- Upper abs: (100, 128)
+- Core / midsection: (100, 150)
+- Lower abs / six-pack: (100, 178)
+- Waist: (100, 200)
+- Navel: (100, 170)
+- Left oblique / side: (78, 168), Right oblique: (122, 168)
 
-LOWER BODY:
-- Left hip: (76, 200), Right hip: (124, 200)
-- Groin / pelvis: (100, 206)
-- Left thigh: (77, 245), Right thigh: (123, 245)
-- Left knee: (77, 280), Right knee: (123, 280)
-- Left shin / calf: (77, 310), Right shin / calf: (123, 310)
-- Left ankle: (77, 335), Right ankle: (123, 335)
-- Left foot: (77, 340), Right foot: (123, 340)
+LOWER BODY (two outline leg rectangles from y=256 to y=394):
+- Left hip: (80, 242), Right hip: (120, 242)
+- Groin / pelvis: (100, 252)
+- Left thigh: (84, 295), Right thigh: (116, 295)
+- Left knee: (84, 335), Right knee: (116, 335)
+- Left shin / calf: (84, 360), Right shin / calf: (116, 360)
+- Left ankle: (84, 386), Right ankle: (116, 386)
+- Left foot: (84, 394), Right foot: (116, 394)
 
-GENERAL / WHOLE-BODY:
-- Overall height / stature: (100, 210)
-- Posture: (100, 160)
-- Overall build / physique: (100, 135)
-- Skin (general): (100, 128)
-- Body hair (torso): (100, 130)`;
+GENERAL / WHOLE BODY:
+- Overall height / stature: (100, 250)
+- Posture: (100, 185)
+- Overall build / physique: (100, 155)
+- Skin (general): (100, 140)
+- Body hair (torso): (100, 148)`;
 
 const SYSTEM_PROMPT = `You annotate a front-facing male human pictogram for an educational tool about appearance ideals.
 
 Given user text describing physical traits, extract each distinct trait and map it to the correct body region. Return precise SVG coordinates for placing annotation arrows.
 
-The figure uses an SVG coordinate system (viewBox 0 0 200 420):
+The figure uses an SVG coordinate system (viewBox 0 0 200 440):
 ${BODY_MAP}
 
 EXISTING ANNOTATIONS ON THE FIGURE (avoid placing new labels at the same target positions):
@@ -286,7 +305,7 @@ Return ONLY valid JSON. No markdown fences, no explanation.
     {
       "text": "concise label (2-4 words)",
       "targetX": 100,
-      "targetY": 38,
+      "targetY": 36,
       "side": "left"
     }
   ]
@@ -301,7 +320,7 @@ RULES:
 - If a trait refers to paired body parts (eyes, arms, legs), pick ONE side
 - For general traits (height, build, skin), use center coordinates
 - Return 1-5 annotations per input
-- targetX must be 0-200, targetY must be 0-420
+- targetX must be 0-200, targetY must be 0-440
 - Do NOT place two annotations at the exact same target coordinates. Offset slightly if needed.`;
 
 function existingText() {
@@ -362,7 +381,7 @@ async function addAnnotation() {
         annotations.push({
           text: String(ann.text || '').slice(0, 40),
           targetX: Math.max(0, Math.min(200, Number(ann.targetX) || 100)),
-          targetY: Math.max(0, Math.min(420, Number(ann.targetY) || 210)),
+          targetY: Math.max(0, Math.min(440, Number(ann.targetY) || 220)),
           side: ann.side === 'left' ? 'left' : 'right'
         });
         newIndices.push(idx);
@@ -405,7 +424,7 @@ function renderAll(newIndices) {
   const bW = bRect.width;
   const bH = bRect.height;
   const sx = bW / 200;
-  const sy = bH / 420;
+  const sy = bH / 440;
 
   lineSvg.setAttribute('viewBox', `0 0 ${aRect.width} ${aRect.height}`);
 
@@ -413,7 +432,7 @@ function renderAll(newIndices) {
   const fontSize = Math.max(9, Math.min(13, 13 - Math.max(0, total - 8) * 0.35));
   const padV = Math.max(2, Math.min(4, 4 - Math.max(0, total - 12) * 0.2));
   const itemH = fontSize + padV * 2 + 5;
-  const margin = 14;
+  const margin = 12;
 
   const leftAnns = [];
   const rightAnns = [];
@@ -443,8 +462,7 @@ function renderAll(newIndices) {
       label.style.top = (startY + i * (itemH + gap)) + 'px';
 
       if (side === 'left') {
-        const rightPos = aRect.width - bLeft + margin;
-        label.style.right = rightPos + 'px';
+        label.style.right = (aRect.width - bLeft + margin) + 'px';
       } else {
         label.style.left = (bLeft + bW + margin) + 'px';
       }
@@ -452,9 +470,7 @@ function renderAll(newIndices) {
       container.appendChild(label);
 
       requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          label.classList.add('visible');
-        });
+        requestAnimationFrame(() => { label.classList.add('visible'); });
       });
     });
   }
@@ -472,33 +488,35 @@ function renderAll(newIndices) {
       const lCenterY = lRect.top - aRect.top + lRect.height / 2;
       let lEdgeX;
       if (ann.side === 'left') {
-        lEdgeX = lRect.right - aRect.left + 6;
+        lEdgeX = lRect.right - aRect.left + 5;
       } else {
-        lEdgeX = lRect.left - aRect.left - 6;
+        lEdgeX = lRect.left - aRect.left - 5;
       }
 
       const tX = bLeft + ann.targetX * sx;
       const tY = bTop + ann.targetY * sy;
 
-      const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-      line.setAttribute('x1', lEdgeX);
-      line.setAttribute('y1', lCenterY);
-      line.setAttribute('x2', tX);
-      line.setAttribute('y2', tY);
-      line.setAttribute('stroke', 'var(--green-line)');
-      line.setAttribute('stroke-width', '1.5');
-      line.setAttribute('marker-end', 'url(#arrowhead)');
-      lineSvg.appendChild(line);
-
+      // Small dot at target
       const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
       dot.setAttribute('cx', tX);
       dot.setAttribute('cy', tY);
-      dot.setAttribute('r', '4');
+      dot.setAttribute('r', '3.5');
       dot.setAttribute('fill', 'var(--green-dot)');
-      if (newIndices && newIndices.includes(idx)) {
-        dot.classList.add('dot-new');
-      }
       lineSvg.appendChild(dot);
+
+      // Horizontal line from dot, then connect to label
+      const midX = ann.side === 'left'
+        ? tX + (lEdgeX - tX) * 0.6
+        : tX - (tX - lEdgeX) * 0.6;
+
+      const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      line.setAttribute('x1', tX);
+      line.setAttribute('y1', tY);
+      line.setAttribute('x2', lEdgeX);
+      line.setAttribute('y2', lCenterY);
+      line.setAttribute('stroke', 'var(--green-line)');
+      line.setAttribute('stroke-width', '1.5');
+      lineSvg.appendChild(line);
     });
   });
 
