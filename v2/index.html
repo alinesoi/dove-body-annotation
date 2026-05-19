@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Appearance Ideals for Males</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d1117;
+  --surface:#161b22;
+  --surface-hover:#1c2129;
+  --border:#30363d;
+  --text:#e6edf3;
+  --text-dim:#8b949e;
+  --text-muted:#484f58;
+  --accent:#58a6ff;
+  --accent-soft:rgba(88,166,255,0.10);
+  --accent-border:rgba(88,166,255,0.25);
+  --accent-glow:rgba(88,166,255,0.35);
+  --figure-fill:rgba(255,255,255,0.045);
+  --figure-stroke:rgba(255,255,255,0.10);
+  --dot-idle:rgba(88,166,255,0.18);
+  --dot-active:rgba(88,166,255,0.85);
+  --ring-stroke:rgba(88,166,255,0.65);
+  --ring-fill:rgba(88,166,255,0.06);
+}
+html,body{height:100%;font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);overflow:hidden}
+
+/* ── Page layout ── */
+.page{display:flex;flex-direction:column;height:100vh}
+.header{padding:22px 32px 6px;text-align:center;flex-shrink:0}
+.header h1{font-size:24px;font-weight:700;letter-spacing:-0.5px}
+.workspace{flex:1;display:flex;min-height:0}
+
+/* ── Body panel (left) ── */
+.body-panel{flex:1;position:relative;display:flex;align-items:center;justify-content:center}
+#bodySvg{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  height:88%;max-height:580px;
+  transition:filter 0.3s;
+}
+#overlaySvg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}
+
+/* ── List panel (right) ── */
+.list-panel{
+  width:370px;flex-shrink:0;
+  display:flex;flex-direction:column;
+  background:var(--surface);
+  border-left:1px solid var(--border);
+}
+.list-header{
+  padding:18px 20px 12px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--border);flex-shrink:0;
+}
+.list-header h2{font-size:15px;font-weight:600;color:var(--text-dim)}
+.list-header .count{font-size:12px;color:var(--text-muted)}
+.list-header .clear-btn{
+  font-size:11px;color:var(--text-muted);background:none;border:1px solid var(--border);
+  border-radius:6px;padding:4px 10px;cursor:pointer;font-family:'Inter',sans-serif;
+  transition:all 0.2s;
+}
+.list-header .clear-btn:hover{border-color:var(--text-dim);color:var(--text-dim)}
+
+/* Scrollable trait list */
+.list-items{flex:1;overflow-y:auto;padding:8px 12px}
+.list-items::-webkit-scrollbar{width:5px}
+.list-items::-webkit-scrollbar-track{background:transparent}
+.list-items::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+/* Empty state */
+.empty-state{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  height:100%;gap:6px;
+}
+.empty-state p{font-size:14px;color:var(--text-muted)}
+.empty-state .hint{font-size:12px;color:var(--text-muted);opacity:0.6}
+
+/* Trait item */
+.trait-item{
+  display:flex;align-items:center;gap:12px;
+  padding:11px 14px;margin-bottom:4px;
+  border-radius:8px;cursor:pointer;
+  transition:background 0.2s,box-shadow 0.2s;
+  position:relative;
+}
+.trait-item:hover{background:var(--accent-soft);box-shadow:inset 3px 0 0 var(--accent)}
+.trait-item .dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--accent);flex-shrink:0;opacity:0.5;
+  transition:opacity 0.2s,transform 0.2s;
+}
+.trait-item:hover .dot{opacity:1;transform:scale(1.3)}
+.trait-item .trait-text{flex:1;font-size:14px;color:var(--text);font-weight:400}
+.trait-item .remove-btn{
+  opacity:0;background:none;border:none;color:var(--text-muted);
+  font-size:16px;cursor:pointer;padding:0 4px;line-height:1;
+  transition:opacity 0.2s,color 0.2s;font-family:'Inter',sans-serif;
+}
+.trait-item:hover .remove-btn{opacity:1}
+.trait-item .remove-btn:hover{color:#f85149}
+
+/* New item animation */
+@keyframes slideIn{
+  from{opacity:0;transform:translateX(16px)}
+  to{opacity:1;transform:translateX(0)}
+}
+.trait-item.new{animation:slideIn 0.35s ease-out}
+
+/* ── Input bar ── */
+.input-bar{
+  padding:12px 14px;border-top:1px solid var(--border);flex-shrink:0;
+  display:flex;gap:8px;align-items:flex-end;
+}
+.input-bar textarea{
+  flex:1;padding:9px 12px;
+  background:var(--bg);border:1px solid var(--border);border-radius:8px;
+  color:var(--text);font-family:'Inter',sans-serif;font-size:13px;line-height:1.4;
+  resize:none;outline:none;transition:border-color 0.2s;
+}
+.input-bar textarea:focus{border-color:var(--accent)}
+.input-bar textarea::placeholder{color:var(--text-muted)}
+.input-bar .btn-add{
+  padding:9px 18px;
+  background:var(--accent);color:#fff;border:none;border-radius:8px;
+  font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;
+  transition:all 0.2s;white-space:nowrap;
+}
+.input-bar .btn-add:hover{filter:brightness(1.1)}
+.input-bar .btn-add:disabled{opacity:0.4;cursor:not-allowed}
+.input-bar .btn-add.loading{background:var(--border);color:var(--text-muted)}
+
+/* Example chips */
+.examples{
+  padding:10px 14px 14px;flex-shrink:0;
+  border-top:1px solid var(--border);
+}
+.examples-label{font-size:10px;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:6px}
+.chip{
+  display:inline-block;padding:4px 9px;margin:2px;
+  background:var(--bg);border:1px solid var(--border);border-radius:14px;
+  font-size:11px;color:var(--text-dim);cursor:pointer;transition:all 0.2s;
+}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+
+/* Error message */
+.error-toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
+  background:#2d1214;border:1px solid #5c2327;color:#f85149;
+  padding:10px 20px;border-radius:8px;font-size:13px;
+  opacity:0;pointer-events:none;transition:opacity 0.3s;z-index:99;
+}
+.error-toast.show{opacity:1}
+
+/* ── SVG highlight effects ── */
+@keyframes ringPulse{
+  0%,100%{stroke-opacity:0.6;r:20}
+  50%{stroke-opacity:1;r:24}
+}
+@keyframes bloomIn{
+  0%{r:0;opacity:0}
+  60%{opacity:1}
+  100%{r:22;opacity:0.8}
+}
+@keyframes bloomOut{
+  0%{r:22;opacity:0.8}
+  100%{r:4;opacity:0.18}
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="header">
+    <h1>What are appearance ideals for males?</h1>
+  </div>
+
+  <div class="workspace">
+    <!-- LEFT: Body figure -->
+    <div class="body-panel" id="bodyPanel">
+      <svg id="bodySvg" viewBox="0 0 300 500" xmlns="http://www.w3.org/2000/svg">
+        <g fill="var(--figure-fill)" stroke="var(--figure-stroke)" stroke-width="1.2" stroke-linejoin="round">
+          <ellipse cx="150" cy="42" rx="28" ry="34"/>
+          <rect x="139" y="74" width="22" height="22" rx="8"/>
+          <rect x="76" y="93" width="148" height="46" rx="22"/>
+          <rect x="92" y="120" width="116" height="100" rx="14"/>
+          <rect x="52" y="96" width="28" height="78" rx="13" transform="rotate(-8 66 135)"/>
+          <rect x="220" y="96" width="28" height="78" rx="13" transform="rotate(8 234 135)"/>
+          <rect x="38" y="170" width="22" height="72" rx="10" transform="rotate(-5 49 206)"/>
+          <rect x="240" y="170" width="22" height="72" rx="10" transform="rotate(5 251 206)"/>
+          <ellipse cx="43" cy="248" rx="12" ry="14"/>
+          <ellipse cx="257" cy="248" rx="12" ry="14"/>
+          <ellipse cx="150" cy="224" rx="50" ry="18"/>
+          <rect x="110" y="236" width="36" height="105" rx="17"/>
+          <rect x="154" y="236" width="36" height="105" rx="17"/>
+          <rect x="114" y="335" width="28" height="100" rx="13"/>
+          <rect x="158" y="335" width="28" height="100" rx="13"/>
+          <ellipse cx="127" cy="440" rx="18" ry="9"/>
+          <ellipse cx="173" cy="440" rx="18" ry="9"/>
+        </g>
+      </svg>
+
+      <svg id="overlaySvg" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="glow" x="-100%" y="-100%" width="300%" height="300%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="2"/>
+          </filter>
+        </defs>
+        <g id="dotsGroup"></g>
+        <g id="highlightGroup"></g>
+      </svg>
+    </div>
+
+    <!-- RIGHT: List panel -->
+    <div class="list-panel">
+      <div class="list-header">
+        <h2>Appearance Traits</h2>
+        <span class="count" id="traitCount"></span>
+        <button class="clear-btn" id="clearBtn" onclick="clearAll()" style="display:none">Clear all</button>
+      </div>
+
+      <div class="list-items" id="listItems">
+        <div class="empty-state" id="emptyState">
+          <p>No traits added yet</p>
+          <p class="hint">Type below to annotate the figure</p>
+        </div>
+      </div>
+
+      <div class="input-bar">
+        <textarea id="userInput" rows="2" placeholder="e.g., long hair, blue eyes..."
+          onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();addAnnotation()}"></textarea>
+        <button class="btn-add" id="btnAdd" onclick="addAnnotation()">Add</button>
+      </div>
+
+      <div class="examples">
+        <div class="examples-label">Try these</div>
+        <span class="chip" onclick="tryExample(this)">tall stature</span>
+        <span class="chip" onclick="tryExample(this)">broad shoulders</span>
+        <span class="chip" onclick="tryExample(this)">defined jawline</span>
+        <span class="chip" onclick="tryExample(this)">muscular arms</span>
+        <span class="chip" onclick="tryExample(this)">six-pack abs</span>
+        <span class="chip" onclick="tryExample(this)">thick hair</span>
+        <span class="chip" onclick="tryExample(this)">strong legs</span>
+        <span class="chip" onclick="tryExample(this)">blue eyes</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="error-toast" id="errorToast"></div>
+
+<script>
+/* ───── Config ───── */
+const AZURE_ENDPOINT = 'https://nesoi-resource.openai.azure.com';
+const AZURE_API_KEY = '89bry3528qMUbZnFK77ExyBjS7W02IbOFj35UwU6yjKTE0yiJRMCJQQJ99CCACHYHv6XJ3w3AAAAACOGJj4V';
+const AZURE_API_VERSION = '2025-04-01-preview';
+const DEPLOYMENT = 'gpt-5.4';
+
+let annotations = []; // {text, targetX, targetY, side}
+let processing = false;
+let introTimeout = null;
+
+/* ───── Body coordinate map (viewBox 0 0 300 500) ───── */
+const BODY_MAP = `BODY REGION COORDINATE MAP (SVG viewBox: 0 0 300 500, origin top-left):
+
+HEAD & FACE:
+- Top of head / crown: (150, 8)
+- Hair: (150, 16)
+- Forehead: (150, 26)
+- Left eye: (139, 36), Right eye: (161, 36)
+- Nose: (150, 44)
+- Mouth / lips: (150, 52)
+- Chin: (150, 60)
+- Left ear: (122, 38), Right ear: (178, 38)
+- Left jawline: (127, 54), Right jawline: (173, 54)
+- Facial hair / beard area: (150, 58)
+
+UPPER BODY:
+- Neck: (150, 80)
+- Left shoulder: (88, 104), Right shoulder: (212, 104)
+- Collarbone area: (150, 96)
+- Upper chest: (150, 112)
+- Left pectoral: (120, 124), Right pectoral: (180, 124)
+- Left bicep/upper arm: (62, 128), Right bicep: (238, 128)
+- Left elbow: (50, 170), Right elbow: (250, 170)
+- Left forearm: (44, 200), Right forearm: (256, 200)
+- Left wrist: (42, 235), Right wrist: (258, 235)
+- Left hand/fingers: (43, 248), Right hand: (257, 248)
+- Upper abs: (150, 145)
+- Core / midsection: (150, 165)
+- Lower abs: (150, 185)
+- Waist: (150, 200)
+- Navel: (150, 190)
+- Left oblique: (102, 185), Right oblique: (198, 185)
+
+LOWER BODY:
+- Left hip: (118, 224), Right hip: (182, 224)
+- Groin / pelvis: (150, 238)
+- Left thigh (quad): (128, 280), Right thigh: (172, 280)
+- Left inner thigh: (140, 290), Right inner thigh: (160, 290)
+- Left knee: (128, 338), Right knee: (172, 338)
+- Left shin: (128, 370), Right shin: (172, 370)
+- Left calf: (128, 390), Right calf: (172, 390)
+- Left ankle: (127, 430), Right ankle: (173, 430)
+- Left foot/toes: (127, 440), Right foot: (173, 440)
+
+GENERAL / WHOLE-BODY:
+- Overall height / stature: (150, 240)
+- Posture: (150, 180)
+- Overall build / physique: (150, 170)
+- Skin (general): (150, 160)
+- Body hair (torso): (150, 155)`;
+
+const SYSTEM_PROMPT = `You annotate a front-facing male human figure for an educational tool about appearance ideals.
+
+Given user text describing physical traits, extract each distinct trait and map it to the correct body region. Return precise SVG coordinates for placing annotation markers.
+
+The figure uses an SVG coordinate system (viewBox 0 0 300 500):
+${BODY_MAP}
+
+EXISTING ANNOTATIONS ON THE FIGURE (do not duplicate, avoid identical coordinates):
+{{EXISTING}}
+
+Return ONLY valid JSON. No markdown fences, no explanation.
+
+{
+  "annotations": [
+    {
+      "text": "concise label (2-4 words)",
+      "targetX": 150,
+      "targetY": 44
+    }
+  ]
+}
+
+RULES:
+- Extract EVERY distinct trait as a separate annotation
+- "long hair and blue eyes" = 2 separate annotations
+- Keep label text SHORT (2-4 words). Use title case.
+- Choose the most anatomically accurate target point from the map
+- Return 1-5 annotations per input
+- targetX must be 0-300, targetY must be 0-500
+- Do NOT duplicate an existing annotation's text or coordinates`;
+
+/* ───── Coordinate helpers ───── */
+function getBodyTransform() {
+  const panel = document.getElementById('bodyPanel');
+  const body = document.getElementById('bodySvg');
+  const pRect = panel.getBoundingClientRect();
+  const bRect = body.getBoundingClientRect();
+  return {
+    offsetX: bRect.left - pRect.left,
+    offsetY: bRect.top - pRect.top,
+    scaleX: bRect.width / 300,
+    scaleY: bRect.height / 500,
+    panelW: pRect.width,
+    panelH: pRect.height
+  };
+}
+
+function toPixel(ann, t) {
+  return {
+    x: t.offsetX + ann.targetX * t.scaleX,
+    y: t.offsetY + ann.targetY * t.scaleY
+  };
+}
+
+/* ───── Dot rendering (subtle markers always visible) ───── */
+function renderDots() {
+  const group = document.getElementById('dotsGroup');
+  group.innerHTML = '';
+  if (!annotations.length) return;
+
+  const panel = document.getElementById('bodyPanel');
+  const pRect = panel.getBoundingClientRect();
+  const overlay = document.getElementById('overlaySvg');
+  overlay.setAttribute('viewBox', `0 0 ${pRect.width} ${pRect.height}`);
+
+  const t = getBodyTransform();
+
+  annotations.forEach((ann, i) => {
+    const p = toPixel(ann, t);
+    const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    c.setAttribute('cx', p.x);
+    c.setAttribute('cy', p.y);
+    c.setAttribute('r', '4');
+    c.setAttribute('fill', 'var(--dot-idle)');
+    c.setAttribute('data-idx', i);
+    c.style.transition = 'fill 0.3s, r 0.3s';
+    group.appendChild(c);
+  });
+}
+
+/* ───── Highlight on hover ───── */
+let activeHighlight = -1;
+
+function highlightAnnotation(idx) {
+  if (idx === activeHighlight) return;
+  activeHighlight = idx;
+  const ann = annotations[idx];
+  if (!ann) return;
+
+  const panel = document.getElementById('bodyPanel');
+  const pRect = panel.getBoundingClientRect();
+  const overlay = document.getElementById('overlaySvg');
+  overlay.setAttribute('viewBox', `0 0 ${pRect.width} ${pRect.height}`);
+
+  const t = getBodyTransform();
+  const p = toPixel(ann, t);
+
+  const group = document.getElementById('highlightGroup');
+  group.innerHTML = '';
+
+  // Outer glow ring
+  const outerRing = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  outerRing.setAttribute('cx', p.x);
+  outerRing.setAttribute('cy', p.y);
+  outerRing.setAttribute('r', '28');
+  outerRing.setAttribute('fill', 'none');
+  outerRing.setAttribute('stroke', 'var(--ring-stroke)');
+  outerRing.setAttribute('stroke-width', '1');
+  outerRing.setAttribute('opacity', '0.3');
+  outerRing.setAttribute('filter', 'url(#softGlow)');
+  group.appendChild(outerRing);
+
+  // Main ring
+  const ring = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  ring.setAttribute('cx', p.x);
+  ring.setAttribute('cy', p.y);
+  ring.setAttribute('r', '20');
+  ring.setAttribute('fill', 'var(--ring-fill)');
+  ring.setAttribute('stroke', 'var(--ring-stroke)');
+  ring.setAttribute('stroke-width', '2');
+  ring.style.animation = 'ringPulse 1.5s ease-in-out infinite';
+  group.appendChild(ring);
+
+  // Center dot
+  const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  dot.setAttribute('cx', p.x);
+  dot.setAttribute('cy', p.y);
+  dot.setAttribute('r', '5');
+  dot.setAttribute('fill', 'var(--dot-active)');
+  dot.setAttribute('filter', 'url(#glow)');
+  group.appendChild(dot);
+
+  // Label text above the ring
+  const labelBg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+  const labelText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+  labelText.setAttribute('x', p.x);
+  labelText.setAttribute('y', p.y - 32);
+  labelText.setAttribute('text-anchor', 'middle');
+  labelText.setAttribute('font-family', 'Inter, sans-serif');
+  labelText.setAttribute('font-size', '12');
+  labelText.setAttribute('font-weight', '600');
+  labelText.setAttribute('fill', 'var(--accent)');
+  labelText.textContent = ann.text;
+  group.appendChild(labelText);
+
+  // Make corresponding idle dot brighter
+  document.querySelectorAll('#dotsGroup circle').forEach(c => {
+    if (parseInt(c.getAttribute('data-idx')) === idx) {
+      c.setAttribute('fill', 'var(--dot-active)');
+      c.setAttribute('r', '6');
+    } else {
+      c.setAttribute('fill', 'var(--dot-idle)');
+      c.setAttribute('r', '4');
+    }
+  });
+}
+
+function clearHighlight() {
+  activeHighlight = -1;
+  document.getElementById('highlightGroup').innerHTML = '';
+  document.querySelectorAll('#dotsGroup circle').forEach(c => {
+    c.setAttribute('fill', 'var(--dot-idle)');
+    c.setAttribute('r', '4');
+  });
+}
+
+/* ───── Intro animation (shows highlights briefly on add) ───── */
+function playIntro(newIndices) {
+  if (introTimeout) clearTimeout(introTimeout);
+
+  const panel = document.getElementById('bodyPanel');
+  const pRect = panel.getBoundingClientRect();
+  const overlay = document.getElementById('overlaySvg');
+  overlay.setAttribute('viewBox', `0 0 ${pRect.width} ${pRect.height}`);
+  const t = getBodyTransform();
+
+  const group = document.getElementById('highlightGroup');
+  group.innerHTML = '';
+
+  newIndices.forEach((idx, i) => {
+    const ann = annotations[idx];
+    if (!ann) return;
+    const p = toPixel(ann, t);
+
+    const ring = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    ring.setAttribute('cx', p.x);
+    ring.setAttribute('cy', p.y);
+    ring.setAttribute('r', '0');
+    ring.setAttribute('fill', 'var(--ring-fill)');
+    ring.setAttribute('stroke', 'var(--ring-stroke)');
+    ring.setAttribute('stroke-width', '2');
+    ring.setAttribute('filter', 'url(#glow)');
+    ring.style.animation = `bloomIn 0.5s ${i * 0.15}s ease-out forwards`;
+    group.appendChild(ring);
+
+    const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    dot.setAttribute('cx', p.x);
+    dot.setAttribute('cy', p.y);
+    dot.setAttribute('r', '4');
+    dot.setAttribute('fill', 'var(--dot-active)');
+    dot.style.opacity = '0';
+    dot.style.animation = `bloomIn 0.3s ${i * 0.15 + 0.2}s ease-out forwards`;
+    group.appendChild(dot);
+
+    const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    label.setAttribute('x', p.x);
+    label.setAttribute('y', p.y - 30);
+    label.setAttribute('text-anchor', 'middle');
+    label.setAttribute('font-family', 'Inter, sans-serif');
+    label.setAttribute('font-size', '11');
+    label.setAttribute('font-weight', '600');
+    label.setAttribute('fill', 'var(--accent)');
+    label.textContent = ann.text;
+    label.style.opacity = '0';
+    label.style.animation = `bloomIn 0.3s ${i * 0.15 + 0.3}s ease-out forwards`;
+    group.appendChild(label);
+  });
+
+  introTimeout = setTimeout(() => {
+    group.innerHTML = '';
+  }, 2800);
+}
+
+/* ───── List rendering ───── */
+function renderList(newIndices) {
+  const listEl = document.getElementById('listItems');
+  const empty = document.getElementById('emptyState');
+
+  if (!annotations.length) {
+    listEl.innerHTML = '';
+    listEl.appendChild(empty);
+    empty.style.display = 'flex';
+    document.getElementById('traitCount').textContent = '';
+    document.getElementById('clearBtn').style.display = 'none';
+    return;
+  }
+
+  empty.style.display = 'none';
+  listEl.innerHTML = '';
+
+  annotations.forEach((ann, i) => {
+    const item = document.createElement('div');
+    item.className = 'trait-item' + (newIndices && newIndices.includes(i) ? ' new' : '');
+    item.setAttribute('data-idx', i);
+    item.onmouseenter = () => highlightAnnotation(i);
+    item.onmouseleave = () => clearHighlight();
+
+    const dot = document.createElement('span');
+    dot.className = 'dot';
+
+    const text = document.createElement('span');
+    text.className = 'trait-text';
+    text.textContent = ann.text;
+
+    const rm = document.createElement('button');
+    rm.className = 'remove-btn';
+    rm.innerHTML = '&times;';
+    rm.onclick = (e) => { e.stopPropagation(); removeAnnotation(i); };
+
+    item.appendChild(dot);
+    item.appendChild(text);
+    item.appendChild(rm);
+    listEl.appendChild(item);
+  });
+
+  document.getElementById('traitCount').textContent = annotations.length + ' trait' + (annotations.length !== 1 ? 's' : '');
+  document.getElementById('clearBtn').style.display = 'inline-block';
+
+  if (newIndices && newIndices.length) {
+    const lastNew = listEl.querySelector(`[data-idx="${newIndices[newIndices.length - 1]}"]`);
+    if (lastNew) lastNew.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
+function removeAnnotation(idx) {
+  annotations.splice(idx, 1);
+  clearHighlight();
+  renderList(null);
+  renderDots();
+}
+
+function clearAll() {
+  annotations = [];
+  clearHighlight();
+  renderList(null);
+  renderDots();
+}
+
+/* ───── AI call ───── */
+function existingText() {
+  if (!annotations.length) return 'None yet.';
+  return annotations.map(a => `- "${a.text}" at (${a.targetX}, ${a.targetY})`).join('\n');
+}
+
+function showError(msg) {
+  const el = document.getElementById('errorToast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 3500);
+}
+
+async function addAnnotation() {
+  if (processing) return;
+  const input = document.getElementById('userInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  processing = true;
+  const btn = document.getElementById('btnAdd');
+  btn.disabled = true;
+  btn.classList.add('loading');
+  btn.textContent = 'Thinking...';
+
+  try {
+    const prompt = SYSTEM_PROMPT.replace('{{EXISTING}}', existingText());
+    const url = `${AZURE_ENDPOINT}/openai/deployments/${DEPLOYMENT}/chat/completions?api-version=${AZURE_API_VERSION}`;
+
+    const resp = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'api-key': AZURE_API_KEY },
+      body: JSON.stringify({
+        messages: [
+          { role: 'system', content: prompt },
+          { role: 'user', content: text }
+        ],
+        max_completion_tokens: 1024,
+        temperature: 0.2
+      })
+    });
+
+    if (!resp.ok) throw new Error(`API error ${resp.status}`);
+
+    const data = await resp.json();
+    const content = data.choices?.[0]?.message?.content || '';
+    const cleaned = content.replace(/```json\s*/g, '').replace(/```/g, '').trim();
+    const parsed = JSON.parse(cleaned);
+
+    if (parsed.annotations && parsed.annotations.length > 0) {
+      const newIndices = [];
+      for (const ann of parsed.annotations) {
+        const idx = annotations.length;
+        annotations.push({
+          text: String(ann.text || '').slice(0, 40),
+          targetX: Math.max(0, Math.min(300, Number(ann.targetX) || 150)),
+          targetY: Math.max(0, Math.min(500, Number(ann.targetY) || 250))
+        });
+        newIndices.push(idx);
+      }
+      renderList(newIndices);
+      renderDots();
+      playIntro(newIndices);
+      input.value = '';
+    } else {
+      showError('No traits recognized. Try a different description.');
+    }
+  } catch (err) {
+    console.error('Error:', err);
+    showError('Something went wrong. Please try again.');
+  } finally {
+    processing = false;
+    btn.disabled = false;
+    btn.classList.remove('loading');
+    btn.textContent = 'Add';
+  }
+}
+
+function tryExample(el) {
+  document.getElementById('userInput').value = el.textContent;
+  addAnnotation();
+}
+
+/* ───── Resize handling ───── */
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    renderDots();
+    clearHighlight();
+  }, 200);
+});
+</script>
+</body>
+</html>
