@@ -19,7 +19,7 @@
 }
 html,body{height:100%;font-family:'Nunito',sans-serif;background:#fff;color:var(--text);overflow:hidden}
 
-/* ═══ BG ═══ */
+/* BG */
 .bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 .blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:0;transition:opacity 1.5s}
 .blob.on{opacity:1}
@@ -30,7 +30,7 @@ html,body{height:100%;font-family:'Nunito',sans-serif;background:#fff;color:var(
 @keyframes bd2{0%,100%{transform:translate(0,0)}50%{transform:translate(-50px,-30px)}}
 @keyframes bd3{0%,100%{transform:translate(0,0)}50%{transform:translate(-40px,50px)}}
 
-/* ═══ INTRO ═══ */
+/* INTRO */
 #intro{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;flex-direction:column;
   background:linear-gradient(145deg,#E8FBF4 0%,#FFF 35%,#FFF4CC 70%,#FDE8E5 100%);background-size:200% 200%;
   animation:gShift 6s ease infinite;transition:opacity .8s,transform .8s}
@@ -40,126 +40,123 @@ html,body{height:100%;font-family:'Nunito',sans-serif;background:#fff;color:var(
 .it{font-family:'Fredoka';font-size:clamp(52px,9vw,90px);font-weight:700;color:var(--navy);margin:18px 0 6px;line-height:.95;letter-spacing:-2px;opacity:0;animation:pop .7s .6s cubic-bezier(.34,1.56,.64,1) forwards}
 .is{font-family:'Fredoka';font-size:clamp(22px,3.5vw,32px);font-weight:600;color:var(--coral);opacity:0;animation:su .6s 1s ease-out forwards}
 .ibtn{margin-top:40px;padding:18px 56px;background:var(--coral);color:#fff;border:none;border-radius:60px;font-family:'Fredoka';font-size:22px;font-weight:600;cursor:pointer;opacity:0;animation:pop .6s 1.4s cubic-bezier(.34,1.56,.64,1) forwards;box-shadow:0 8px 30px rgba(244,123,108,.4);transition:transform .2s,box-shadow .2s;position:relative}
-.ibtn:hover{transform:scale(1.06);box-shadow:0 10px 36px rgba(244,123,108,.5)}
+.ibtn:hover{transform:scale(1.06)}
 .ibtn::after{content:'';position:absolute;inset:-3px;border-radius:63px;border:3px solid var(--coral-light);animation:pulse 2s 1.8s ease-out infinite}
 .ideco{position:fixed;pointer-events:none;z-index:999;opacity:0}.ideco.on{animation:fdeco .8s ease-out forwards}
 .dp{font-family:'Fredoka';font-weight:700}.dr{border-radius:50%;border:3px solid}.dd{border:2px solid;transform:rotate(45deg)}
 
-/* ═══ CANVAS ═══ */
 #conf{position:fixed;inset:0;z-index:9999;pointer-events:none}
 
-/* ═══ MAIN ═══ */
+/* MAIN PAGE */
 .page{position:relative;z-index:2;display:flex;height:100vh;opacity:0;transform:translateY(20px)}
 .page.on{opacity:1;transform:none;transition:all .9s cubic-bezier(.23,1,.32,1)}
 
-/* Trait sidebar */
-.sidebar{width:220px;flex-shrink:0;display:flex;flex-direction:column;padding:16px;
-  border-right:2px solid var(--dash);background:rgba(255,255,255,.8);backdrop-filter:blur(10px);
-  opacity:0;overflow-y:auto}
-.page.on .sidebar{animation:sfr .6s .4s ease-out forwards}
-.sidebar h2{font-family:'Fredoka';font-size:15px;font-weight:600;color:var(--navy);margin-bottom:8px;display:flex;align-items:center;gap:6px}
-.trait-item{padding:8px 12px;margin-bottom:4px;background:var(--mint-light);border:2px solid var(--mint);border-radius:10px;
+/* Figure area */
+.fig{flex:1;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;opacity:0}
+.page.on .fig{animation:bu .9s .6s cubic-bezier(.34,1.56,.64,1) forwards}
+.fig-title{position:absolute;top:10px;left:50%;transform:translateX(-50%);z-index:5;opacity:0}
+.page.on .fig-title{animation:fsd .6s .5s ease-out forwards}
+.fig-title h1{font-family:'Fredoka';font-size:17px;font-weight:600;color:var(--navy);background:rgba(255,255,255,.85);backdrop-filter:blur(8px);padding:7px 20px;border-radius:30px;border:2px solid var(--dash);display:inline-block}
+#bodySvg{height:88%;max-height:530px;transition:opacity .5s}
+#lineSvg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:3}
+
+/* Hotspots */
+.hotspot{fill:transparent;cursor:pointer;transition:fill .2s,stroke .2s;stroke:transparent;stroke-width:2}
+.hotspot:hover{fill:rgba(62,166,107,.08);stroke:rgba(62,166,107,.3)}
+.hs-label{position:absolute;pointer-events:none;z-index:10;background:var(--navy);color:#fff;font-family:'Fredoka';font-size:11px;font-weight:600;padding:3px 10px;border-radius:12px;white-space:nowrap;opacity:0;transition:opacity .2s;transform:translateX(-50%)}
+
+/* Hotspot popup */
+#hsPopup{position:absolute;z-index:20;background:#fff;border:2px solid var(--green);border-radius:16px;padding:14px 16px;box-shadow:0 8px 30px rgba(27,61,111,.15);display:none;width:240px}
+#hsPopup.active{display:block;animation:pop .4s cubic-bezier(.34,1.56,.64,1)}
+#hsPopup h3{font-family:'Fredoka';font-size:14px;font-weight:600;color:var(--navy);margin-bottom:8px}
+#hsPopup h3 span{color:var(--coral)}
+.hs-row{display:flex;gap:6px}
+.hs-row input{flex:1;padding:8px 10px;border:2px solid var(--dash);border-radius:10px;font-family:'Nunito';font-size:12px;color:var(--navy);outline:none;transition:border .2s}
+.hs-row input:focus{border-color:var(--green)}
+.hs-row button{padding:8px 14px;background:var(--green);color:#fff;border:none;border-radius:10px;font-family:'Fredoka';font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}
+.hs-row button:hover{transform:scale(1.05)}
+
+/* Right panel: combined traits + input */
+.panel{width:300px;flex-shrink:0;display:flex;flex-direction:column;
+  background:rgba(255,255,255,.7);backdrop-filter:blur(12px);border-left:2px solid var(--dash);
+  opacity:0;position:relative;z-index:5;overflow:hidden}
+.page.on .panel{animation:sfr2 .7s .8s ease-out forwards}
+
+.traits-section{flex:1;overflow-y:auto;padding:14px 16px 8px;min-height:0}
+.traits-section h2{font-family:'Fredoka';font-size:15px;font-weight:600;color:var(--navy);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.trait-item{padding:8px 12px;margin-bottom:5px;background:var(--mint-light);border:2px solid var(--mint);border-radius:10px;
   font-size:12px;font-weight:700;color:var(--navy);cursor:pointer;transition:all .2s;opacity:0;transform:translateX(-20px)}
 .trait-item.in{opacity:1;transform:none;transition:all .4s cubic-bezier(.34,1.56,.64,1)}
 .trait-item:hover{transform:scale(1.03);border-color:var(--green);background:rgba(62,166,107,.1)}
 .trait-item .sub{font-size:10px;font-weight:600;color:var(--text-dim);margin-top:2px}
-.empty-msg{font-size:12px;color:var(--text-muted);text-align:center;padding:24px 8px;font-style:italic}
+.empty-msg{font-size:12px;color:var(--text-muted);text-align:center;padding:20px 8px;font-style:italic}
 
-/* Figure area */
-.fig{flex:1;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;opacity:0}
-.page.on .fig{animation:bu .9s .7s cubic-bezier(.34,1.56,.64,1) forwards}
-.fig-title{position:absolute;top:10px;left:50%;transform:translateX(-50%);z-index:5;opacity:0}
-.page.on .fig-title{animation:fsd .6s .5s ease-out forwards}
-.fig-title h1{font-family:'Fredoka';font-size:18px;font-weight:600;color:var(--navy);background:rgba(255,255,255,.85);backdrop-filter:blur(8px);padding:7px 20px;border-radius:30px;border:2px solid var(--dash);display:inline-block;box-shadow:0 4px 16px rgba(27,61,111,.06)}
-#bodySvg{height:88%;max-height:530px;transition:opacity .5s}
-#lineSvg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:3}
-
-/* Right panel */
-.rpanel{width:280px;flex-shrink:0;display:flex;flex-direction:column;gap:8px;padding:16px;
-  background:rgba(255,255,255,.7);backdrop-filter:blur(12px);border-left:2px solid var(--dash);opacity:0;position:relative;z-index:5}
-.page.on .rpanel{animation:sfr2 .7s .9s ease-out forwards}
-.rpanel h2{font-family:'Fredoka';font-size:15px;font-weight:600;color:var(--navy);display:flex;align-items:center;gap:6px}
-.rpanel textarea{width:100%;min-height:60px;padding:10px 12px;background:#F5F9FE;border:2px solid var(--dash);border-radius:12px;color:var(--navy);font-family:'Nunito';font-size:13px;line-height:1.5;resize:none;outline:none;transition:all .2s}
-.rpanel textarea:focus{border-color:var(--green);box-shadow:0 0 0 4px var(--green-glow)}
-.rpanel textarea::placeholder{color:var(--text-muted)}
-.rpanel textarea.shake{animation:shake .5s}
-.bg1{width:100%;padding:12px;background:var(--coral);color:#fff;border:none;border-radius:14px;font-family:'Fredoka';font-size:15px;font-weight:600;cursor:pointer;transition:all .2s;box-shadow:0 5px 18px rgba(244,123,108,.35);display:flex;align-items:center;justify-content:center;gap:6px}
-.bg1:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(244,123,108,.45)}
-.bg1:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.input-section{padding:10px 16px 14px;border-top:2px dashed var(--dash);flex-shrink:0}
+.input-section h2{font-family:'Fredoka';font-size:14px;font-weight:600;color:var(--navy);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.input-section textarea{width:100%;min-height:54px;padding:9px 12px;background:#F5F9FE;border:2px solid var(--dash);border-radius:10px;color:var(--navy);font-family:'Nunito';font-size:13px;line-height:1.4;resize:none;outline:none;transition:all .2s}
+.input-section textarea:focus{border-color:var(--green);box-shadow:0 0 0 3px var(--green-glow)}
+.input-section textarea::placeholder{color:var(--text-muted)}
+.input-section textarea.shake{animation:shake .5s}
+.btn-row{display:flex;gap:6px;margin-top:6px}
+.bg1{flex:1;padding:10px;background:var(--coral);color:#fff;border:none;border-radius:10px;font-family:'Fredoka';font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;box-shadow:0 4px 14px rgba(244,123,108,.3);display:flex;align-items:center;justify-content:center;gap:5px}
+.bg1:hover{transform:translateY(-1px)}.bg1:disabled{opacity:.5;cursor:not-allowed;transform:none}
 .bg1.loading{background:#E8EDF4;color:var(--text-muted);box-shadow:none}
-.bg1 .sp{display:none;width:16px;height:16px;border:2px solid #ccc;border-top-color:var(--navy);border-radius:50%;animation:spin .6s linear infinite}
+.bg1 .sp{display:none;width:14px;height:14px;border:2px solid #ccc;border-top-color:var(--navy);border-radius:50%;animation:spin .6s linear infinite}
 .bg1.loading .sp{display:inline-block}.bg1.loading .bt{display:none}
-.bdone{width:100%;padding:10px;background:var(--navy);color:#fff;border:none;border-radius:12px;font-family:'Fredoka';font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;margin-top:auto}
-.bdone:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(27,61,111,.3)}
-.bclear{width:100%;padding:6px;background:none;border:2px solid var(--dash);border-radius:8px;color:var(--text-dim);font-size:11px;font-weight:700;cursor:pointer;font-family:'Nunito';transition:all .2s}
-.bclear:hover{border-color:var(--coral);color:var(--coral)}
-.counter{text-align:center;padding:8px;background:linear-gradient(135deg,var(--yellow-light),#FFF);border-radius:12px;border:2px solid var(--yellow)}
-.cnum{font-family:'Fredoka';font-size:28px;font-weight:700;color:var(--coral);display:block;line-height:1}
+.bdone{padding:10px 16px;background:var(--navy);color:#fff;border:none;border-radius:10px;font-family:'Fredoka';font-size:14px;font-weight:600;cursor:pointer;transition:all .2s}
+.bdone:hover{transform:translateY(-1px)}
+.counter{display:flex;align-items:center;gap:8px;margin-top:6px;padding:6px 10px;background:var(--yellow-light);border-radius:10px;border:2px solid var(--yellow)}
+.cnum{font-family:'Fredoka';font-size:22px;font-weight:700;color:var(--coral);line-height:1}
 .cnum.bo{animation:cb .4s cubic-bezier(.34,1.56,.64,1)}
 .clbl{font-size:10px;font-weight:800;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px}
-.err{font-size:11px;color:var(--coral);padding:2px;display:none;font-weight:700}.err.show{display:block}
-.chips{padding-top:6px;border-top:2px dashed var(--dash)}
-.chips h3{font-size:9px;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px}
-.chip{display:inline-block;padding:3px 9px;margin:2px;background:var(--mint-light);border:2px solid var(--mint);border-radius:14px;font-size:10px;font-weight:700;color:var(--navy);cursor:pointer;transition:all .2s}
-.chip:hover{transform:scale(1.06);border-color:var(--green)}
+.err{font-size:11px;color:var(--coral);padding:2px;display:none;font-weight:700;margin-top:2px}.err.show{display:block}
 
-/* ═══ ZOOM OVERLAY ═══ */
+/* ZOOM (only for smile) */
 #zoomOverlay{position:fixed;inset:0;z-index:100;display:none;background:rgba(255,255,255,.95);backdrop-filter:blur(16px)}
 #zoomOverlay.active{display:flex}
 .zoom-content{display:flex;width:100%;height:100%;align-items:center;justify-content:center;gap:40px;padding:40px}
-.zoom-left{flex:0 0 40%;display:flex;align-items:center;justify-content:center;position:relative}
-.zoom-left svg{width:100%;max-width:320px;height:auto}
-.zoom-ring{position:absolute;border:3px solid var(--green);border-radius:50%;opacity:0;pointer-events:none;animation:zring 1.5s ease-out forwards}
-@keyframes zring{0%{transform:scale(.5);opacity:0}30%{opacity:.6}100%{transform:scale(1.8);opacity:0}}
-.zoom-right{flex:0 0 45%;max-width:480px;display:flex;flex-direction:column;gap:16px}
+.zoom-left{flex:0 0 38%;display:flex;align-items:center;justify-content:center;position:relative}
+.zoom-left svg{width:100%;max-width:300px;height:auto}
+.zoom-ring{position:absolute;border:3px solid var(--green);border-radius:50%;pointer-events:none;width:60px;height:60px;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0;animation:zring 1.5s ease-out forwards}
+@keyframes zring{0%{transform:translate(-50%,-50%) scale(.5);opacity:0}30%{opacity:.6}100%{transform:translate(-50%,-50%) scale(2);opacity:0}}
+.zoom-right{flex:0 0 50%;max-width:500px;display:flex;flex-direction:column;gap:14px}
 .zq{font-family:'Fredoka';font-size:24px;font-weight:700;color:var(--navy);opacity:0;animation:su .5s .2s ease-out forwards}
 .zq span{color:var(--coral)}
-.zimages{display:flex;flex-direction:column;gap:12px}
-.zimg-card{display:flex;align-items:center;gap:14px;padding:12px;background:#fff;border:3px solid var(--dash);border-radius:16px;cursor:pointer;transition:all .25s;opacity:0}
-.zimg-card:hover{border-color:var(--green);transform:scale(1.02);box-shadow:0 6px 20px rgba(62,166,107,.15)}
-.zimg-card:active{transform:scale(.98)}
-.zimg-card img{width:80px;height:80px;border-radius:12px;object-fit:cover;background:#F0F4F8}
-.zimg-card .zimg-placeholder{width:80px;height:80px;border-radius:12px;background:linear-gradient(135deg,#E8EDF4,#F5F8FC);display:flex;align-items:center;justify-content:center}
-.zimg-card .zimg-placeholder .sp2{width:20px;height:20px;border:3px solid var(--dash);border-top-color:var(--navy);border-radius:50%;animation:spin .8s linear infinite}
-.zimg-label{font-family:'Fredoka';font-size:15px;font-weight:600;color:var(--navy)}
-.zimg-desc{font-size:12px;color:var(--text-dim);margin-top:2px}
-.zor{text-align:center;font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;opacity:0;animation:su .4s .8s ease-out forwards}
-.zcustom{display:flex;gap:8px;opacity:0;animation:su .4s .9s ease-out forwards}
-.zcustom input{flex:1;padding:10px 14px;border:2px solid var(--dash);border-radius:12px;font-family:'Nunito';font-size:13px;color:var(--navy);outline:none;transition:border .2s}
-.zcustom input:focus{border-color:var(--green)}
-.zcustom button{padding:10px 20px;background:var(--green);color:#fff;border:none;border-radius:12px;font-family:'Fredoka';font-size:14px;font-weight:600;cursor:pointer;transition:all .2s}
-.zcustom button:hover{transform:scale(1.05)}
+.zimages{display:flex;gap:14px}
+.zimg-card{flex:1;padding:12px;background:#fff;border:3px solid var(--dash);border-radius:16px;cursor:pointer;transition:all .25s;opacity:0;text-align:center}
+.zimg-card:hover{border-color:var(--green);transform:translateY(-4px);box-shadow:0 8px 24px rgba(62,166,107,.15)}
+.zimg-card img{width:100%;aspect-ratio:1;border-radius:10px;object-fit:cover;background:#F0F4F8;display:block;margin-bottom:8px}
+.zimg-placeholder{width:100%;aspect-ratio:1;border-radius:10px;background:linear-gradient(135deg,#E8EDF4,#F5F8FC);display:flex;align-items:center;justify-content:center;margin-bottom:8px}
+.zimg-placeholder .sp2{width:24px;height:24px;border:3px solid var(--dash);border-top-color:var(--navy);border-radius:50%;animation:spin .8s linear infinite}
+.zimg-label{font-family:'Fredoka';font-size:14px;font-weight:600;color:var(--navy)}
 
-/* IDK overlay */
+/* IDK */
 #idkOverlay{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;background:rgba(231,76,60,.08);backdrop-filter:blur(4px)}
 #idkOverlay.active{display:flex}
 .idk-content{text-align:center;animation:pop .5s cubic-bezier(.34,1.56,.64,1)}
-.idk-x{font-size:120px;color:var(--red);line-height:1;text-shadow:0 8px 30px rgba(231,76,60,.3)}
+.idk-x{font-size:120px;color:var(--red);line-height:1}
 .idk-msg{font-family:'Fredoka';font-size:22px;color:var(--navy);margin-top:12px}
 
-/* DONE overlay */
+/* DONE */
 #doneOverlay{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;background:rgba(255,255,255,.95);backdrop-filter:blur(16px)}
 #doneOverlay.active{display:flex}
 .done-content{text-align:center;max-width:500px;padding:40px}
 .done-emoji{font-size:80px;animation:pop .6s cubic-bezier(.34,1.56,.64,1)}
 .done-title{font-family:'Fredoka';font-size:36px;font-weight:700;color:var(--navy);margin:12px 0}
 .done-count{font-family:'Fredoka';font-size:48px;font-weight:700;color:var(--coral)}
-.done-label{font-size:14px;color:var(--text-dim);font-weight:700;margin-bottom:20px}
-.done-list{text-align:left;max-height:200px;overflow-y:auto;margin:16px 0}
+.done-label{font-size:14px;color:var(--text-dim);font-weight:700;margin-bottom:16px}
+.done-list{text-align:left;max-height:200px;overflow-y:auto;margin:12px 0}
 .done-list .trait-item{opacity:1;transform:none;margin-bottom:6px}
 .done-back{padding:14px 40px;background:var(--coral);color:#fff;border:none;border-radius:50px;font-family:'Fredoka';font-size:18px;font-weight:600;cursor:pointer;transition:all .2s;box-shadow:0 6px 24px rgba(244,123,108,.3)}
 .done-back:hover{transform:scale(1.05)}
 
-/* Toast */
 #toast{position:fixed;top:-80px;left:50%;transform:translateX(-50%);z-index:8000;padding:14px 30px;background:var(--navy);color:#fff;border-radius:18px;font-family:'Fredoka';font-size:17px;font-weight:600;box-shadow:0 10px 40px rgba(27,61,111,.3);display:flex;align-items:center;gap:10px;white-space:nowrap;transition:top .6s cubic-bezier(.34,1.56,.64,1)}
 #toast.show{top:20px}
 
-/* ═══ KEYFRAMES ═══ */
 @keyframes pop{0%{opacity:0;transform:scale(.5) translateY(20px)}100%{opacity:1;transform:scale(1) translateY(0)}}
 @keyframes su{0%{opacity:0;transform:translateY(20px)}100%{opacity:1;transform:none}}
 @keyframes bu{0%{opacity:0;transform:translateY(50px)}60%{transform:translateY(-8px)}100%{opacity:1;transform:none}}
 @keyframes fsd{0%{opacity:0;transform:translateX(-50%) translateY(-15px)}100%{opacity:1;transform:translateX(-50%) translateY(0)}}
-@keyframes sfr{0%{opacity:0;transform:translateX(-30px)}100%{opacity:1;transform:none}}
 @keyframes sfr2{0%{opacity:0;transform:translateX(30px)}100%{opacity:1;transform:none}}
 @keyframes fdeco{0%{opacity:0;transform:scale(.4)}100%{opacity:.15;transform:scale(1)}}
 @keyframes pulse{0%{transform:scale(1);opacity:.5}100%{transform:scale(1.5);opacity:0}}
@@ -189,13 +186,7 @@ html,body{height:100%;font-family:'Nunito',sans-serif;background:#fff;color:var(
 
 <!-- MAIN -->
 <div class="page" id="page">
-  <!-- Trait list sidebar -->
-  <div class="sidebar" id="sidebar">
-    <h2>📋 Your Traits</h2>
-    <div id="traitList"><div class="empty-msg">Type a trait to get started!</div></div>
-  </div>
-
-  <!-- Figure -->
+  <!-- Figure with hotspots -->
   <div class="fig" id="figArea">
     <div class="fig-title"><h1>What are appearance ideals for males?</h1></div>
     <svg id="bodySvg" viewBox="0 0 200 440" xmlns="http://www.w3.org/2000/svg">
@@ -205,33 +196,53 @@ html,body{height:100%;font-family:'Nunito',sans-serif;background:#fff;color:var(
         <rect x="72" y="256" width="24" height="138" rx="12"/>
         <rect x="104" y="256" width="24" height="138" rx="12"/>
       </g>
+      <!-- Clickable hotspots -->
+      <g id="hotspots">
+        <circle cx="100" cy="34" r="32" class="hotspot" data-region="head" data-label="Head"/>
+        <rect x="28" y="74" width="144" height="30" rx="8" class="hotspot" data-region="shoulders" data-label="Shoulders"/>
+        <rect x="68" y="100" width="64" height="46" rx="6" class="hotspot" data-region="chest" data-label="Chest"/>
+        <rect x="24" y="96" width="36" height="100" rx="10" class="hotspot" data-region="arms" data-label="Arms"/>
+        <rect x="140" y="96" width="36" height="100" rx="10" class="hotspot" data-region="arms" data-label="Arms"/>
+        <rect x="68" y="142" width="64" height="60" rx="6" class="hotspot" data-region="abs" data-label="Abs / Core"/>
+        <rect x="62" y="198" width="76" height="52" rx="6" class="hotspot" data-region="hips" data-label="Hips / Waist"/>
+        <rect x="68" y="254" width="64" height="90" rx="6" class="hotspot" data-region="legs" data-label="Legs"/>
+        <rect x="68" y="340" width="64" height="60" rx="6" class="hotspot" data-region="feet" data-label="Feet / Ankles"/>
+      </g>
     </svg>
     <svg id="lineSvg" xmlns="http://www.w3.org/2000/svg"></svg>
+    <!-- Hotspot popup -->
+    <div id="hsPopup">
+      <h3>Add trait for <span id="hsRegionLabel">Head</span></h3>
+      <div class="hs-row">
+        <input id="hsInput" placeholder="e.g., thick hair" onkeydown="if(event.key==='Enter')hsSubmit()"/>
+        <button onclick="hsSubmit()">Add</button>
+      </div>
+    </div>
+    <!-- Hotspot hover label -->
+    <div class="hs-label" id="hsLabel"></div>
   </div>
 
-  <!-- Input panel -->
-  <div class="rpanel" id="rpanel">
-    <h2>✏️ Add traits</h2>
-    <textarea id="inp" placeholder="e.g., nice smile, blue eyes, muscular build..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();submitTrait()}"></textarea>
-    <button class="bg1" id="btnGo" onclick="submitTrait()"><span class="bt">Add to Figure ✨</span><span class="sp"></span></button>
-    <button class="bclear" onclick="clearAll()">Clear All</button>
-    <div class="counter"><span class="cnum" id="cnum">0</span><span class="clbl">traits found!</span></div>
-    <div class="err" id="errMsg"></div>
-    <div class="chips">
-      <h3>Try these</h3>
-      <span class="chip" onclick="tryEx(this)">nice smile</span>
-      <span class="chip" onclick="tryEx(this)">broad shoulders</span>
-      <span class="chip" onclick="tryEx(this)">defined jawline</span>
-      <span class="chip" onclick="tryEx(this)">muscular arms</span>
-      <span class="chip" onclick="tryEx(this)">six-pack abs</span>
-      <span class="chip" onclick="tryEx(this)">thick hair</span>
-      <span class="chip" onclick="tryEx(this)">strong legs</span>
+  <!-- Combined panel: traits + input -->
+  <div class="panel" id="panel">
+    <div class="traits-section">
+      <h2>📋 Your Traits</h2>
+      <div id="traitList"><div class="empty-msg">Type below or click on the body!</div></div>
     </div>
-    <button class="bdone" onclick="showDone()">Done ✅</button>
+    <div class="input-section">
+      <h2>✏️ Add a trait</h2>
+      <textarea id="inp" placeholder="e.g., nice smile, blue eyes..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();submitTrait()}"></textarea>
+      <div class="btn-row">
+        <button class="bg1" id="btnGo" onclick="submitTrait()"><span class="bt">Add ✨</span><span class="sp"></span></button>
+        <button class="bdone" onclick="showDone()">Done ✅</button>
+      </div>
+      <div class="counter"><span class="cnum" id="cnum">0</span><span class="clbl">traits found</span></div>
+      <div class="err" id="errMsg"></div>
+      <button class="bg1" style="background:none;border:2px solid var(--dash);color:var(--text-dim);box-shadow:none;font-size:11px;padding:6px;margin-top:4px;font-family:Nunito;font-weight:700" onclick="clearAll()">Clear All</button>
+    </div>
   </div>
 </div>
 
-<!-- ZOOM OVERLAY -->
+<!-- ZOOM (smile only) -->
 <div id="zoomOverlay">
   <div class="zoom-content">
     <div class="zoom-left" id="zoomLeft"></div>
@@ -239,23 +250,12 @@ html,body{height:100%;font-family:'Nunito',sans-serif;background:#fff;color:var(
   </div>
 </div>
 
-<!-- IDK OVERLAY -->
-<div id="idkOverlay">
-  <div class="idk-content">
-    <div class="idk-x">✕</div>
-    <div class="idk-msg">Think harder! What comes to mind?</div>
-  </div>
-</div>
-
-<!-- DONE OVERLAY -->
-<div id="doneOverlay">
-  <div class="done-content" id="doneContent"></div>
-</div>
-
+<div id="idkOverlay"><div class="idk-content"><div class="idk-x">✕</div><div class="idk-msg">Think harder! What comes to mind?</div></div></div>
+<div id="doneOverlay"><div class="done-content" id="doneContent"></div></div>
 <div id="toast"><span id="tE"></span><span id="tT"></span></div>
 
 <script>
-/* ═══ AUDIO ═══ */
+/* AUDIO */
 let ac;
 function initA(){if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)()}
 function tone(f,d,t,v,dl){if(!ac)return;const o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.type=t||'sine';o.frequency.setValueAtTime(f,ac.currentTime+(dl||0));g.gain.setValueAtTime(v||.2,ac.currentTime+(dl||0));g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+(dl||0)+d);o.start(ac.currentTime+(dl||0));o.stop(ac.currentTime+(dl||0)+d)}
@@ -265,52 +265,49 @@ function sndCeleb(){[523,659,784,1047].forEach((f,i)=>tone(f,.3,'triangle',.18,i
 function sndWhoosh(){if(!ac)return;const b=ac.createBuffer(1,ac.sampleRate*.25,ac.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*.25;const s=ac.createBufferSource();s.buffer=b;const f=ac.createBiquadFilter();f.type='bandpass';f.frequency.setValueAtTime(1200,ac.currentTime);f.frequency.exponentialRampToValueAtTime(200,ac.currentTime+.2);f.Q.value=2;const g=ac.createGain();g.gain.setValueAtTime(.25,ac.currentTime);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+.25);s.connect(f);f.connect(g);g.connect(ac.destination);s.start();s.stop(ac.currentTime+.25)}
 function sndErr(){tone(200,.3,'square',.15);tone(150,.3,'square',.1,.1)}
 
-/* ═══ CONFETTI ═══ */
+/* CONFETTI */
 const cv=document.getElementById('conf'),cx=cv.getContext('2d');let cp=[],cr=false;
 const clrs=['#F47B6C','#3EA66B','#F7DC6F','#7EDDC3','#1B3D6F','#FF87B2'];
 function burst(x,y,n){cv.width=innerWidth;cv.height=innerHeight;for(let i=0;i<n;i++)cp.push({x,y,vx:(Math.random()-.5)*20,vy:(Math.random()-.8)*16,w:Math.random()*10+4,h:Math.random()*6+3,c:clrs[Math.random()*clrs.length|0],r:Math.random()*360,rv:(Math.random()-.5)*14,l:1,d:Math.random()*.008+.005});if(!cr)aniC()}
 function aniC(){cr=true;cx.clearRect(0,0,cv.width,cv.height);cp=cp.filter(p=>p.l>0);cp.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.35;p.r+=p.rv;p.l-=p.d;p.vx*=.99;cx.save();cx.translate(p.x,p.y);cx.rotate(p.r*Math.PI/180);cx.globalAlpha=Math.min(p.l*2,1);cx.fillStyle=p.c;cx.fillRect(-p.w/2,-p.h/2,p.w,p.h);cx.restore()});cp.length?requestAnimationFrame(aniC):cr=false}
 
-/* ═══ MILESTONES ═══ */
-const MS={3:{e:'⭐',t:'Great start!'},5:{e:'🔥',t:'On fire! 5!'},10:{e:'🎉',t:'Amazing! 10!'},15:{e:'🚀',t:'15 traits!'},20:{e:'💪',t:'20! Unstoppable!'},25:{e:'🌟',t:'Superstar!'},30:{e:'🏆',t:'Champion!'}};
+/* MILESTONES */
+const MS={3:{e:'⭐',t:'Great start!'},5:{e:'🔥',t:'On fire! 5!'},10:{e:'🎉',t:'Amazing! 10!'},15:{e:'🚀',t:'15 traits!'},20:{e:'💪',t:'Unstoppable!'},25:{e:'🌟',t:'Superstar!'},30:{e:'🏆',t:'Champion!'}};
 function checkMS(n){const m=MS[n];if(!m)return;document.getElementById('tE').textContent=m.e;document.getElementById('tT').textContent=m.t;const t=document.getElementById('toast');t.classList.add('show');sndCeleb();burst(innerWidth/2,innerHeight/3,90);setTimeout(()=>t.classList.remove('show'),3000)}
 
-/* ═══ INTRO ═══ */
+/* INTRO */
 function startGame(){initA();sndWhoosh();document.querySelectorAll('.ideco').forEach(d=>d.classList.add('on'));const i=document.getElementById('intro');i.classList.add('hidden');setTimeout(()=>{i.style.display='none';document.getElementById('page').classList.add('on');document.querySelectorAll('.blob').forEach(b=>b.classList.add('on'));setTimeout(()=>sndPop(),500)},700)}
 
-/* ═══ BODY REGIONS FOR ZOOM ═══ */
-const REGIONS = {
-  head:   { vb: '55 -10 90 90',  cx: 100, cy: 34 },
-  face:   { vb: '65 5 70 70',    cx: 100, cy: 40 },
-  eyes:   { vb: '70 15 60 40',   cx: 100, cy: 32 },
-  mouth:  { vb: '70 25 60 45',   cx: 100, cy: 48 },
-  neck:   { vb: '60 45 80 60',   cx: 100, cy: 70 },
-  shoulders: { vb: '10 55 180 70', cx: 100, cy: 88 },
-  chest:  { vb: '55 70 90 80',   cx: 100, cy: 100 },
-  arms:   { vb: '10 70 80 110',  cx: 45, cy: 140 },
-  abs:    { vb: '55 110 90 90',  cx: 100, cy: 155 },
-  waist:  { vb: '55 160 90 70',  cx: 100, cy: 195 },
-  hips:   { vb: '50 200 100 70', cx: 100, cy: 240 },
-  legs:   { vb: '50 240 100 120',cx: 100, cy: 300 },
-  knees:  { vb: '55 300 90 80',  cx: 100, cy: 340 },
-  feet:   { vb: '50 370 100 70', cx: 100, cy: 400 },
-  full:   { vb: '10 60 180 180', cx: 100, cy: 150 }
+/* REGIONS */
+const REGIONS={
+  head:{vb:'55 -10 90 90',cx:100,cy:34},face:{vb:'65 5 70 70',cx:100,cy:40},
+  mouth:{vb:'70 25 60 45',cx:100,cy:48},shoulders:{vb:'10 55 180 70',cx:100,cy:88},
+  chest:{vb:'55 70 90 80',cx:100,cy:100},arms:{vb:'10 70 80 130',cx:45,cy:140},
+  abs:{vb:'55 110 90 90',cx:100,cy:155},hips:{vb:'50 180 100 80',cx:100,cy:230},
+  legs:{vb:'50 240 100 120',cx:100,cy:300},feet:{vb:'50 340 100 80',cx:100,cy:380},
+  full:{vb:'10 60 180 180',cx:100,cy:150}
 };
 
-/* ═══ API ═══ */
+/* API */
 const AE='https://nesoi-resource.openai.azure.com';
 const AK='89bry3528qMUbZnFK77ExyBjS7W02IbOFj35UwU6yjKTE0yiJRMCJQQJ99CCACHYHv6XJ3w3AAAAACOGJj4V';
 const AV='2025-04-01-preview';
 let traits=[],busy=false;
 
-const IDK_PATTERNS = /^(idk|i\s*don'?t\s*know|no\s*idea|not\s*sure|nothing|none|no|nah|dunno|idc|whatever|i\s*give\s*up)$/i;
+const IDK_RE=/^(idk|i\s*don'?t\s*know|no\s*idea|not\s*sure|nothing|none|no|nah|dunno|idc|whatever|i\s*give\s*up)$/i;
+const SMILE_RE=/smile|smiling|grin|teeth|happy face/i;
 
 async function submitTrait(){
   if(busy)return;
   const inp=document.getElementById('inp'),txt=inp.value.trim();
   if(!txt)return;
+  if(IDK_RE.test(txt)){showIDK();inp.value='';return}
 
-  if(IDK_PATTERNS.test(txt)){showIDK();inp.value='';return}
+  if(SMILE_RE.test(txt)){
+    inp.value='';
+    showSmileZoom(txt);
+    return;
+  }
 
   busy=true;
   const btn=document.getElementById('btnGo');
@@ -320,226 +317,208 @@ async function submitTrait(){
     const r=await fetch(`${AE}/openai/deployments/gpt-5.4/chat/completions?api-version=${AV}`,{
       method:'POST',headers:{'Content-Type':'application/json','api-key':AK},
       body:JSON.stringify({messages:[
-        {role:'system',content:`You help kids explore appearance ideals. Given a physical trait, return JSON with:
-1. "trait": the cleaned-up trait name (title case, 2-4 words)
-2. "region": one of: head, face, eyes, mouth, neck, shoulders, chest, arms, abs, waist, hips, legs, knees, feet, full
-3. "question": a friendly question like "What do you mean by [trait]?"
-4. "variations": array of 3 objects, each with:
-   - "label": short name of variation (2-4 words)
-   - "description": one sentence explaining this variation
-   - "imagePrompt": a detailed prompt for generating an illustration of this variation on a person, in a clean flat illustration style with navy blue outlines on white background
-
-Return ONLY JSON, no markdown.
-
-Example for "nice smile":
-{"trait":"Nice Smile","region":"mouth","question":"What do you mean by nice smile?","variations":[
-  {"label":"Bright White Teeth","description":"A smile showing perfectly white, straight teeth","imagePrompt":"Close-up illustration of a person's lower face showing a bright smile with perfectly white straight teeth, clean flat navy blue line art style, white background, minimal and friendly"},
-  {"label":"Wide Cheerful Grin","description":"A big, wide grin that shows lots of happiness","imagePrompt":"Close-up illustration of a person's lower face with a wide cheerful toothy grin, clean flat navy blue line art style, white background, warm and friendly"},
-  {"label":"Gentle Smile","description":"A soft, closed-lip smile that looks kind","imagePrompt":"Close-up illustration of a person's lower face with a gentle closed-lip smile, clean flat navy blue line art style, white background, kind and warm"}
-]}`},
+        {role:'system',content:`Given a physical appearance trait, return JSON with "trait" (cleaned title case 2-4 words) and "region" (one of: head,face,mouth,shoulders,chest,arms,abs,hips,legs,feet,full). Return ONLY JSON, no markdown.`},
         {role:'user',content:txt}
-      ],max_completion_tokens:1024,temperature:0.3})
+      ],max_completion_tokens:200,temperature:0.2})
     });
     if(!r.ok)throw new Error(r.status);
     const d=await r.json(),c=d.choices?.[0]?.message?.content||'';
-    const parsed=JSON.parse(c.replace(/```json\s*/g,'').replace(/```/g,'').trim());
+    const p=JSON.parse(c.replace(/```json\s*/g,'').replace(/```/g,'').trim());
     inp.value='';
-    showZoom(parsed);
+    addTrait(p.trait||txt,null,p.region||'full');
+    flashRegion(p.region||'full');
   }catch(e){
     console.error(e);
-    const el=document.getElementById('errMsg');
-    el.textContent='Oops! Try again.';el.classList.add('show');
-    setTimeout(()=>el.classList.remove('show'),3000);
+    showErr('Oops! Try again.');
   }finally{busy=false;btn.disabled=false;btn.classList.remove('loading')}
 }
 
-/* ═══ ZOOM VIEW ═══ */
-function showZoom(data){
+function showErr(msg){const el=document.getElementById('errMsg');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),3000)}
+
+/* SMILE ZOOM */
+function showSmileZoom(txt){
   sndPop();
   const overlay=document.getElementById('zoomOverlay');
   const leftEl=document.getElementById('zoomLeft');
   const rightEl=document.getElementById('zoomRight');
 
-  const region=REGIONS[data.region]||REGIONS.full;
-
-  // Clone SVG and zoom to region
   const svg=document.getElementById('bodySvg').cloneNode(true);
-  svg.setAttribute('viewBox',region.vb);
-  svg.style.height='auto';svg.style.maxHeight='350px';svg.id='';
-  leftEl.innerHTML='';
-  leftEl.appendChild(svg);
+  svg.setAttribute('viewBox','65 5 70 70');
+  svg.style.height='auto';svg.style.maxHeight='320px';svg.id='';
+  svg.querySelectorAll('.hotspot').forEach(h=>h.remove());
+  leftEl.innerHTML='';leftEl.appendChild(svg);
+  const ring=document.createElement('div');ring.className='zoom-ring';leftEl.appendChild(ring);
+  setTimeout(()=>{const r2=document.createElement('div');r2.className='zoom-ring';leftEl.appendChild(r2)},500);
 
-  // Add pulsing ring at target
-  const ring=document.createElement('div');
-  ring.className='zoom-ring';
-  ring.style.cssText=`width:60px;height:60px;top:50%;left:50%;transform:translate(-50%,-50%);position:absolute`;
-  leftEl.appendChild(ring);
-  setTimeout(()=>{const r2=ring.cloneNode();leftEl.appendChild(r2)},500);
+  const variations=[
+    {label:'Bright White Teeth',prompt:'Cute cartoon illustration of a young person smiling showing bright perfectly white straight teeth, colorful children book illustration style, friendly warm, clean simple background, no text'},
+    {label:'Wide Happy Grin',prompt:'Cute cartoon illustration of a young person with a big wide cheerful toothy grin, colorful children book illustration style, joyful energetic, clean simple background, no text'},
+    {label:'Gentle Soft Smile',prompt:'Cute cartoon illustration of a young person with a gentle closed-lip soft smile, colorful children book illustration style, calm kind expression, clean simple background, no text'}
+  ];
 
-  // Build right panel
-  rightEl.innerHTML=`
-    <div class="zq">${data.question.replace(data.trait.toLowerCase(),`<span>${data.trait}</span>`)}</div>
-    <div class="zimages" id="zimages"></div>
-    <div class="zor">- or type your own -</div>
-    <div class="zcustom">
-      <input id="zcInput" placeholder="Your own description..." onkeydown="if(event.key==='Enter')selectCustom('${esc(data.trait)}','${data.region}')"/>
-      <button onclick="selectCustom('${esc(data.trait)}','${data.region}')">Add</button>
-    </div>
-  `;
-
-  overlay.classList.add('active');
-
-  // Generate images for each variation
+  rightEl.innerHTML=`<div class="zq">What do you mean by <span>Nice Smile</span>?</div><div class="zimages" id="zimages"></div>`;
   const container=document.getElementById('zimages');
-  data.variations.forEach((v,i)=>{
+
+  variations.forEach((v,i)=>{
     const card=document.createElement('div');
     card.className='zimg-card';
-    card.style.animationDelay=(0.3+i*0.15)+'s';
     card.style.animation=`su 0.5s ${0.3+i*0.15}s ease-out forwards`;
-    card.innerHTML=`
-      <div class="zimg-placeholder"><div class="sp2"></div></div>
-      <div><div class="zimg-label">${esc(v.label)}</div><div class="zimg-desc">${esc(v.description)}</div></div>
-    `;
-    card.onclick=()=>selectVariation(data.trait,v.label,data.region);
+    card.innerHTML=`<div class="zimg-placeholder"><div class="sp2"></div></div><div class="zimg-label">${v.label}</div>`;
+    card.onclick=()=>{addTrait('Nice Smile',v.label,'mouth');closeZoom();flashRegion('mouth')};
     container.appendChild(card);
 
-    generateImage(v.imagePrompt).then(url=>{
-      if(url){
-        const img=document.createElement('img');
-        img.src=url;img.alt=v.label;
-        const ph=card.querySelector('.zimg-placeholder');
-        if(ph)ph.replaceWith(img);
-      }else{
-        const ph=card.querySelector('.zimg-placeholder');
-        if(ph)ph.innerHTML=`<span style="font-size:32px">🎨</span>`;
-      }
+    genImg(v.prompt).then(url=>{
+      const ph=card.querySelector('.zimg-placeholder');
+      if(url){const img=document.createElement('img');img.src=url;img.alt=v.label;if(ph)ph.replaceWith(img)}
+      else if(ph){ph.innerHTML='<span style="font-size:40px">😊</span>'}
     });
   });
+
+  overlay.classList.add('active');
 }
 
-function esc(s){return s.replace(/'/g,"\\'").replace(/"/g,'&quot;').replace(/</g,'&lt;')}
-
-async function generateImage(prompt){
+async function genImg(prompt){
   try{
     const r=await fetch(`${AE}/openai/deployments/gpt-image-2-1/images/generations?api-version=${AV}`,{
       method:'POST',headers:{'Content-Type':'application/json','api-key':AK},
-      body:JSON.stringify({prompt:prompt,n:1,size:'1024x1024'})
+      body:JSON.stringify({prompt,n:1,size:'1024x1024'})
     });
     if(!r.ok)return null;
     const d=await r.json();
     if(d.data?.[0]?.url)return d.data[0].url;
-    if(d.data?.[0]?.b64_json)return 'data:image/png;base64,'+d.data[0].b64_json;
+    if(d.data?.[0]?.b64_json)return'data:image/png;base64,'+d.data[0].b64_json;
     return null;
   }catch{return null}
 }
 
-function selectVariation(trait,variation,region){
-  addTrait(trait,variation,region);
-  closeZoom();
-}
+function closeZoom(){document.getElementById('zoomOverlay').classList.remove('active')}
 
-function selectCustom(trait,region){
-  const inp=document.getElementById('zcInput');
-  const val=inp.value.trim();
-  if(!val)return;
-  if(IDK_PATTERNS.test(val)){closeZoom();showIDK();return}
-  addTrait(trait,val,region);
-  closeZoom();
-}
-
-function closeZoom(){
-  document.getElementById('zoomOverlay').classList.remove('active');
-}
-
-function addTrait(trait,detail,region){
-  traits.push({trait,detail,region});
-  sndDing();
-  renderTraitList();
-  updateCounter();
-  checkMS(traits.length);
-}
-
-function renderTraitList(){
-  const list=document.getElementById('traitList');
-  list.innerHTML='';
-  if(!traits.length){list.innerHTML='<div class="empty-msg">Type a trait to get started!</div>';return}
-  traits.forEach((t,i)=>{
-    const el=document.createElement('div');
-    el.className='trait-item';
-    el.innerHTML=`<div>${t.trait}</div><div class="sub">${t.detail}</div>`;
-    el.onmouseenter=()=>highlightRegion(t.region);
-    el.onmouseleave=()=>clearHighlight();
-    list.appendChild(el);
-    setTimeout(()=>el.classList.add('in'),50+i*60);
-  });
-}
-
-function highlightRegion(region){
-  const svg=document.getElementById('lineSvg');
-  svg.innerHTML='';
+/* FLASH REGION highlight on body */
+function flashRegion(region){
   const r=REGIONS[region];if(!r)return;
+  const svg=document.getElementById('lineSvg');
   const area=document.getElementById('figArea').getBoundingClientRect();
   const body=document.getElementById('bodySvg').getBoundingClientRect();
   const sx=body.width/200,sy=body.height/440;
   const bL=body.left-area.left,bT=body.top-area.top;
   svg.setAttribute('viewBox',`0 0 ${area.width} ${area.height}`);
-  const cx=bL+r.cx*sx,cy=bT+r.cy*sy;
-  const circle=document.createElementNS('http://www.w3.org/2000/svg','circle');
-  circle.setAttribute('cx',cx);circle.setAttribute('cy',cy);circle.setAttribute('r','25');
-  circle.setAttribute('fill','none');circle.setAttribute('stroke','var(--green)');
-  circle.setAttribute('stroke-width','3');circle.setAttribute('stroke-dasharray','8 4');
-  circle.setAttribute('opacity','0.6');
-  circle.innerHTML='<animate attributeName="r" values="20;30;20" dur="1.5s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.6;0.3;0.6" dur="1.5s" repeatCount="indefinite"/>';
-  svg.appendChild(circle);
+  const px=bL+r.cx*sx,py=bT+r.cy*sy;
+  svg.innerHTML=`<circle cx="${px}" cy="${py}" r="20" fill="none" stroke="var(--green)" stroke-width="3" stroke-dasharray="6 4" opacity="0.7">
+    <animate attributeName="r" values="15;35;15" dur="1s" repeatCount="1"/>
+    <animate attributeName="opacity" values="0.7;0.2;0" dur="1s" repeatCount="1" fill="freeze"/>
+  </circle>`;
+  setTimeout(()=>svg.innerHTML='',1200);
 }
 
-function clearHighlight(){document.getElementById('lineSvg').innerHTML=''}
-
-function updateCounter(){
-  const el=document.getElementById('cnum');
-  el.textContent=traits.length;
-  el.classList.remove('bo');void el.offsetWidth;
-  if(traits.length)el.classList.add('bo');
+/* ADD TRAIT */
+function addTrait(trait,detail,region){
+  traits.push({trait,detail:detail||'',region});
+  sndDing();renderTraitList();updateCounter();checkMS(traits.length);
 }
 
-/* ═══ IDK ═══ */
-function showIDK(){
-  sndErr();
-  const o=document.getElementById('idkOverlay');
-  o.classList.add('active');
-  const ta=document.getElementById('inp');
-  ta.classList.add('shake');
-  setTimeout(()=>ta.classList.remove('shake'),500);
-  setTimeout(()=>o.classList.remove('active'),1800);
+function renderTraitList(){
+  const list=document.getElementById('traitList');
+  list.innerHTML='';
+  if(!traits.length){list.innerHTML='<div class="empty-msg">Type below or click on the body!</div>';return}
+  traits.forEach((t,i)=>{
+    const el=document.createElement('div');
+    el.className='trait-item';
+    el.innerHTML=`<div>${t.trait}</div>${t.detail?`<div class="sub">${t.detail}</div>`:''}`;
+    el.onmouseenter=()=>highlightRegion(t.region);
+    el.onmouseleave=()=>clearHL();
+    list.appendChild(el);
+    setTimeout(()=>el.classList.add('in'),50+i*40);
+  });
+  list.scrollTop=list.scrollHeight;
 }
 
-/* ═══ DONE ═══ */
+function highlightRegion(region){
+  const r=REGIONS[region];if(!r)return;
+  const svg=document.getElementById('lineSvg');
+  const area=document.getElementById('figArea').getBoundingClientRect();
+  const body=document.getElementById('bodySvg').getBoundingClientRect();
+  const sx=body.width/200,sy=body.height/440;
+  const bL=body.left-area.left,bT=body.top-area.top;
+  svg.setAttribute('viewBox',`0 0 ${area.width} ${area.height}`);
+  const px=bL+r.cx*sx,py=bT+r.cy*sy;
+  svg.innerHTML=`<circle cx="${px}" cy="${py}" r="22" fill="none" stroke="var(--green)" stroke-width="3" stroke-dasharray="8 4" opacity="0.6">
+    <animate attributeName="r" values="18;28;18" dur="1.5s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.6;0.3;0.6" dur="1.5s" repeatCount="indefinite"/>
+  </circle>`;
+}
+function clearHL(){document.getElementById('lineSvg').innerHTML=''}
+
+function updateCounter(){const el=document.getElementById('cnum');el.textContent=traits.length;el.classList.remove('bo');void el.offsetWidth;if(traits.length)el.classList.add('bo')}
+
+/* HOTSPOTS */
+let activeHS=null;
+document.querySelectorAll('.hotspot').forEach(hs=>{
+  hs.addEventListener('click',e=>{
+    e.stopPropagation();
+    const region=hs.dataset.region;
+    const label=hs.dataset.label;
+    const popup=document.getElementById('hsPopup');
+    const input=document.getElementById('hsInput');
+    document.getElementById('hsRegionLabel').textContent=label;
+    activeHS=region;
+
+    const svg=document.getElementById('bodySvg');
+    const svgRect=svg.getBoundingClientRect();
+    const figRect=document.getElementById('figArea').getBoundingClientRect();
+    const bbox=hs.getBoundingClientRect();
+    const px=bbox.left+bbox.width/2-figRect.left;
+    const py=bbox.top+bbox.height/2-figRect.top;
+
+    popup.style.left=Math.min(px+20,figRect.width-260)+'px';
+    popup.style.top=Math.max(py-40,10)+'px';
+    popup.classList.add('active');
+    input.value='';
+    setTimeout(()=>input.focus(),100);
+  });
+
+  hs.addEventListener('mouseenter',e=>{
+    const lbl=document.getElementById('hsLabel');
+    lbl.textContent=hs.dataset.label;
+    const figRect=document.getElementById('figArea').getBoundingClientRect();
+    const bbox=hs.getBoundingClientRect();
+    lbl.style.left=(bbox.left+bbox.width/2-figRect.left)+'px';
+    lbl.style.top=(bbox.top-figRect.top-24)+'px';
+    lbl.style.opacity='1';
+  });
+  hs.addEventListener('mouseleave',()=>{document.getElementById('hsLabel').style.opacity='0'});
+});
+
+function hsSubmit(){
+  const inp=document.getElementById('hsInput');
+  const txt=inp.value.trim();
+  if(!txt)return;
+  if(IDK_RE.test(txt)){closeHsPopup();showIDK();return}
+  addTrait(txt,null,activeHS||'full');
+  flashRegion(activeHS||'full');
+  closeHsPopup();
+}
+
+function closeHsPopup(){document.getElementById('hsPopup').classList.remove('active');activeHS=null}
+document.getElementById('figArea').addEventListener('click',e=>{
+  if(!e.target.closest('.hotspot')&&!e.target.closest('#hsPopup'))closeHsPopup();
+});
+
+/* IDK */
+function showIDK(){sndErr();const o=document.getElementById('idkOverlay');o.classList.add('active');const ta=document.getElementById('inp');ta.classList.add('shake');setTimeout(()=>ta.classList.remove('shake'),500);setTimeout(()=>o.classList.remove('active'),1800)}
+
+/* DONE */
 function showDone(){
   sndCeleb();burst(innerWidth/2,innerHeight/3,120);
-  const o=document.getElementById('doneOverlay');
   const c=document.getElementById('doneContent');
-  let listHtml='';
-  traits.forEach(t=>{listHtml+=`<div class="trait-item" style="opacity:1;transform:none"><div>${t.trait}</div><div class="sub">${t.detail}</div></div>`});
-  c.innerHTML=`
-    <div class="done-emoji">🎉</div>
-    <div class="done-title">Great Job!</div>
-    <div class="done-count">${traits.length}</div>
-    <div class="done-label">appearance ideals identified</div>
-    ${listHtml?`<div class="done-list">${listHtml}</div>`:'<div class="done-label" style="color:var(--coral)">You haven\'t added any traits yet!</div>'}
-    <button class="done-back" onclick="closeDone()">Back to Activity</button>
-  `;
-  o.classList.add('active');
+  let h='';traits.forEach(t=>{h+=`<div class="trait-item" style="opacity:1;transform:none"><div>${t.trait}</div>${t.detail?`<div class="sub">${t.detail}</div>`:''}</div>`});
+  c.innerHTML=`<div class="done-emoji">🎉</div><div class="done-title">Great Job!</div><div class="done-count">${traits.length}</div><div class="done-label">appearance ideals identified</div>${h?`<div class="done-list">${h}</div>`:'<div class="done-label" style="color:var(--coral)">No traits added yet!</div>'}<button class="done-back" onclick="closeDone()">Back to Activity</button>`;
+  document.getElementById('doneOverlay').classList.add('active');
 }
-
 function closeDone(){document.getElementById('doneOverlay').classList.remove('active')}
 
-function clearAll(){traits=[];renderTraitList();updateCounter();clearHighlight();sndPop()}
-function tryEx(el){document.getElementById('inp').value=el.textContent;submitTrait()}
+function clearAll(){traits=[];renderTraitList();updateCounter();clearHL();sndPop()}
 
-// Intro deco auto-show
 setTimeout(()=>document.querySelectorAll('.ideco').forEach((d,i)=>{d.style.animationDelay=(.3+i*.12)+'s';d.classList.add('on')}),100);
-
-// Floating particles
 ['12%,85%,+,32px,navy','88%,18%,+,24px,mint','6%,40%,+,20px,coral','90%,65%,+,18px,yellow'].forEach(d=>{
   const[l,t,ch,sz,c]=d.split(',');const el=document.createElement('div');
   el.style.cssText=`position:fixed;pointer-events:none;z-index:0;opacity:.06;font-family:Fredoka;font-weight:700;left:${l};top:${t};font-size:${sz};color:var(--${c});animation:gentleFloat ${6+Math.random()*8}s ease-in-out infinite;animation-delay:${Math.random()*3}s`;
