@@ -61,8 +61,10 @@ html,body{height:100%;font-family:'Nunito',sans-serif;background:#fff;color:var(
 #lineSvg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:3}
 
 /* Hotspots */
-.hotspot{fill:transparent;cursor:pointer;transition:fill .2s,stroke .2s;stroke:transparent;stroke-width:2}
-.hotspot:hover{fill:rgba(62,166,107,.08);stroke:rgba(62,166,107,.3)}
+.hotspot{fill:rgba(62,166,107,.03);cursor:pointer;transition:fill .3s,stroke .3s;stroke:rgba(62,166,107,.15);stroke-width:1.5;stroke-dasharray:4 3}
+.hotspot:hover{fill:rgba(62,166,107,.1);stroke:rgba(62,166,107,.4);stroke-width:2;stroke-dasharray:none}
+@keyframes hsGentlePulse{0%,100%{opacity:1}50%{opacity:.6}}
+.hotspot{animation:hsGentlePulse 3s ease-in-out infinite}
 .hs-label{position:absolute;pointer-events:none;z-index:10;background:var(--navy);color:#fff;font-family:'Fredoka';font-size:11px;font-weight:600;padding:3px 10px;border-radius:12px;white-space:nowrap;opacity:0;transition:opacity .2s;transform:translateX(-50%)}
 
 /* Hotspot popup */
@@ -351,9 +353,9 @@ function showSmileZoom(txt){
   setTimeout(()=>{const r2=document.createElement('div');r2.className='zoom-ring';leftEl.appendChild(r2)},500);
 
   const variations=[
-    {label:'Bright White Teeth',prompt:'Cute cartoon illustration of a young person smiling showing bright perfectly white straight teeth, colorful children book illustration style, friendly warm, clean simple background, no text'},
-    {label:'Wide Happy Grin',prompt:'Cute cartoon illustration of a young person with a big wide cheerful toothy grin, colorful children book illustration style, joyful energetic, clean simple background, no text'},
-    {label:'Gentle Soft Smile',prompt:'Cute cartoon illustration of a young person with a gentle closed-lip soft smile, colorful children book illustration style, calm kind expression, clean simple background, no text'}
+    {label:'Bright White Teeth',img:'images/smile_1.png'},
+    {label:'Wide Happy Grin',img:'images/smile_2.png'},
+    {label:'Gentle Soft Smile',img:'images/smile_3.png'}
   ];
 
   rightEl.innerHTML=`<div class="zq">What do you mean by <span>Nice Smile</span>?</div><div class="zimages" id="zimages"></div>`;
@@ -363,32 +365,12 @@ function showSmileZoom(txt){
     const card=document.createElement('div');
     card.className='zimg-card';
     card.style.animation=`su 0.5s ${0.3+i*0.15}s ease-out forwards`;
-    card.innerHTML=`<div class="zimg-placeholder"><div class="sp2"></div></div><div class="zimg-label">${v.label}</div>`;
+    card.innerHTML=`<img src="${v.img}" alt="${v.label}"><div class="zimg-label">${v.label}</div>`;
     card.onclick=()=>{addTrait('Nice Smile',v.label,'mouth');closeZoom();flashRegion('mouth')};
     container.appendChild(card);
-
-    genImg(v.prompt).then(url=>{
-      const ph=card.querySelector('.zimg-placeholder');
-      if(url){const img=document.createElement('img');img.src=url;img.alt=v.label;if(ph)ph.replaceWith(img)}
-      else if(ph){ph.innerHTML='<span style="font-size:40px">😊</span>'}
-    });
   });
 
   overlay.classList.add('active');
-}
-
-async function genImg(prompt){
-  try{
-    const r=await fetch(`${AE}/openai/deployments/gpt-image-2-1/images/generations?api-version=${AV}`,{
-      method:'POST',headers:{'Content-Type':'application/json','api-key':AK},
-      body:JSON.stringify({prompt,n:1,size:'1024x1024'})
-    });
-    if(!r.ok)return null;
-    const d=await r.json();
-    if(d.data?.[0]?.url)return d.data[0].url;
-    if(d.data?.[0]?.b64_json)return'data:image/png;base64,'+d.data[0].b64_json;
-    return null;
-  }catch{return null}
 }
 
 function closeZoom(){document.getElementById('zoomOverlay').classList.remove('active')}
