@@ -254,6 +254,8 @@ function initA(){if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)()
 function tone(f,d,t,v,dl){if(!ac)return;const o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.type=t||'sine';o.frequency.setValueAtTime(f,ac.currentTime+(dl||0));g.gain.setValueAtTime(v||.2,ac.currentTime+(dl||0));g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+(dl||0)+d);o.start(ac.currentTime+(dl||0));o.stop(ac.currentTime+(dl||0)+d)}
 function sndPop(){tone(880,.1,'sine',.25);tone(440,.08,'sine',.15,.04)}
 function sndDing(){tone(523,.25,'sine',.2);tone(659,.25,'sine',.18,.08)}
+function sndSelect(){tone(440,.12,'sine',.2);tone(554,.12,'sine',.18,.06);tone(659,.2,'sine',.15,.12)}
+function sndClick(){tone(600,.06,'sine',.15);tone(800,.06,'sine',.12,.03)}
 function sndCeleb(){[523,659,784,1047].forEach((f,i)=>tone(f,.3,'triangle',.18,i*.1))}
 function sndWhoosh(){if(!ac)return;const b=ac.createBuffer(1,ac.sampleRate*.25,ac.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*.25;const s=ac.createBufferSource();s.buffer=b;const f=ac.createBiquadFilter();f.type='bandpass';f.frequency.setValueAtTime(1200,ac.currentTime);f.frequency.exponentialRampToValueAtTime(200,ac.currentTime+.2);f.Q.value=2;const g=ac.createGain();g.gain.setValueAtTime(.25,ac.currentTime);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+.25);s.connect(f);f.connect(g);g.connect(ac.destination);s.start();s.stop(ac.currentTime+.25)}
 function sndErr(){tone(200,.3,'square',.15);tone(150,.3,'square',.1,.1)}
@@ -357,7 +359,7 @@ function showSmileZoom(txt){
     card.className='zimg-card';
     card.style.animation=`su 0.5s ${0.3+i*0.15}s ease-out forwards`;
     card.innerHTML=`<img src="${v.img}" alt="${v.label}"><div class="zimg-label">${v.label}</div>`;
-    card.onclick=()=>{addTrait('Nice Smile',v.label,'mouth');closeZoom();flashRegion('mouth')};
+    card.onclick=()=>{sndSelect();addTrait('Nice Smile',v.label,'mouth');closeZoom();flashRegion('mouth')};
     container.appendChild(card);
   });
 
@@ -368,7 +370,7 @@ function smileCustomSubmit(){
   const inp=document.getElementById('smileCustom');
   const val=inp?.value.trim();
   if(!val)return;
-  addTrait('Nice Smile',val,'mouth');closeZoom();flashRegion('mouth');
+  sndSelect();addTrait('Nice Smile',val,'mouth');closeZoom();flashRegion('mouth');
 }
 
 function closeZoom(){document.getElementById('zoomOverlay').classList.remove('active')}
@@ -451,7 +453,7 @@ document.querySelectorAll('.hotspot').forEach(hs=>{
 
     popup.style.left=Math.min(px+20,figRect.width-260)+'px';
     popup.style.top=Math.max(py-40,10)+'px';
-    popup.classList.add('active');
+    popup.classList.add('active');sndClick();
     input.value='';
     setTimeout(()=>input.focus(),100);
   });
@@ -473,7 +475,7 @@ function hsSubmit(){
   const txt=inp.value.trim();
   if(!txt)return;
   if(IDK_RE.test(txt)){closeHsPopup();showIDK();return}
-  addTrait(txt,null,activeHS||'full');
+  sndSelect();addTrait(txt,null,activeHS||'full');
   flashRegion(activeHS||'full');
   closeHsPopup();
 }
