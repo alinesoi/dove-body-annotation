@@ -340,7 +340,16 @@ function showSmileZoom(txt){
     {label:'Gentle Soft Smile',img:'images/smile_3.png'}
   ];
 
-  inner.innerHTML=`<div class="zq">What do you mean by <span>Nice Smile</span>?</div><div class="zimages" id="zimages"></div>`;
+  inner.innerHTML=`
+    <div class="zq">What do you mean by <span>Nice Smile</span>?</div>
+    <div class="zimages" id="zimages"></div>
+    <div style="margin-top:18px;opacity:0;animation:su .4s .8s ease-out forwards">
+      <div style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Or describe it yourself</div>
+      <div style="display:flex;gap:8px;max-width:360px;margin:0 auto">
+        <input id="smileCustom" placeholder="Type your own..." style="flex:1;padding:10px 14px;border:2px solid var(--dash);border-radius:12px;font-family:Nunito;font-size:13px;color:var(--navy);outline:none;transition:border .2s" onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--dash)'" onkeydown="if(event.key==='Enter'){event.preventDefault();smileCustomSubmit()}"/>
+        <button onclick="smileCustomSubmit()" style="padding:10px 18px;background:var(--green);color:#fff;border:none;border-radius:12px;font-family:Fredoka;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s">Add</button>
+      </div>
+    </div>`;
   const container=document.getElementById('zimages');
 
   variations.forEach((v,i)=>{
@@ -353,6 +362,13 @@ function showSmileZoom(txt){
   });
 
   overlay.classList.add('active');
+}
+
+function smileCustomSubmit(){
+  const inp=document.getElementById('smileCustom');
+  const val=inp?.value.trim();
+  if(!val)return;
+  addTrait('Nice Smile',val,'mouth');closeZoom();flashRegion('mouth');
 }
 
 function closeZoom(){document.getElementById('zoomOverlay').classList.remove('active')}
