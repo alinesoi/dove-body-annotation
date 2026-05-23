@@ -115,16 +115,12 @@ html,body{height:100%;font-family:'Nunito',sans-serif;background:linear-gradient
 .hs-row button{padding:7px 12px;background:var(--teal);color:#fff;border:none;border-radius:10px;font-family:'Fredoka';font-size:12px;font-weight:600;cursor:pointer}
 .hs-label{position:absolute;pointer-events:none;z-index:10;background:var(--navy);color:#fff;font-family:'Fredoka';font-size:10px;font-weight:600;padding:3px 8px;border-radius:10px;white-space:nowrap;opacity:0;transition:opacity .2s;transform:translateX(-50%)}
 
-/* Mascot */
-.mascot{position:fixed;bottom:60px;left:16px;width:100px;height:100px;z-index:8;opacity:0;pointer-events:none}
-.game.on .mascot{animation:mascotIn .8s 1s cubic-bezier(.34,1.56,.64,1) forwards}
-@keyframes mascotIn{0%{opacity:0;transform:translateY(30px) scale(.7)}100%{opacity:1;transform:none}}
 
 /* Bottom input bar */
 .g-input{
   position:relative;z-index:10;padding:10px 24px 14px;flex-shrink:0;
   display:flex;align-items:center;gap:10px;
-  margin:0 120px 0 140px;opacity:0;
+  margin:0 20px;opacity:0;
 }
 .game.on .g-input{animation:su .6s 1.1s ease-out forwards}
 .g-input-wrap{
@@ -297,9 +293,6 @@ html,body{height:100%;font-family:'Nunito',sans-serif;background:linear-gradient
       <div class="hs-label" id="hsLabel"></div>
     </div>
   </div>
-
-  <!-- Mascot -->
-  <img class="mascot" src="images/mascot.png" alt="Mascot" id="mascot">
 
   <!-- Bottom input bar -->
   <div class="g-input">
