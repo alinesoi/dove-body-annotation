@@ -151,12 +151,12 @@ html,body{height:100%;font-family:'Nunito',sans-serif;background:linear-gradient
 }
 .done-float:hover{transform:scale(1.05)}
 
-/* Decorative elements */
-.deco{position:fixed;pointer-events:none;z-index:1}
-.deco-big{font-size:28px;opacity:.8}
-.deco-med{font-size:20px;opacity:.7}
-.deco-sm{font-size:14px;opacity:.5}
-.deco-dot{width:10px;height:10px;border-radius:50%;opacity:.35}
+/* Decorative elements - z-index 5 to appear above game bg */
+.deco{position:fixed;pointer-events:none;z-index:5}
+.deco-big{font-size:32px;opacity:.85}
+.deco-med{font-size:22px;opacity:.75}
+.deco-sm{font-size:16px;opacity:.6}
+.deco-dot{width:12px;height:12px;border-radius:50%;opacity:.4}
 
 /* ═══ OVERLAYS ═══ */
 #zoomOverlay{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;background:rgba(224,247,241,.95);backdrop-filter:blur(16px)}
