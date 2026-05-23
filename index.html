@@ -39,7 +39,7 @@ html,body{height:100%;font-family:'Nunito',sans-serif;overflow:hidden;background
   position:relative;
   width:min(100vw, 150vh);
   height:min(100vh, 66.67vw);
-  background:url('images/mockup_bg_no_mascot.png') center/100% 100% no-repeat;
+  background:url('images/mockup_bg_clean.png') center/100% 100% no-repeat;
 }
 
 /* Overlays positioned with percentages on top of the mockup image */
@@ -113,8 +113,7 @@ html,body{height:100%;font-family:'Nunito',sans-serif;overflow:hidden;background
   flex:1;border:none;outline:none;font-family:'Nunito';font-size:min(1.3vw,15px);font-weight:600;
   color:var(--navy);background:transparent;min-width:0;text-align:center;
 }
-.ov-input input::placeholder{color:transparent}
-.ov-input input:focus::placeholder{color:var(--text-muted)}
+.ov-input input::placeholder{color:var(--text-muted);font-weight:600}
 .ov-input input.shake{animation:shake .5s}
 
 /* Send button - GPT-4o: left=74%, top=83%, width=6%, height=8% */
