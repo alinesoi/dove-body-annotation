@@ -50,42 +50,42 @@ html,body{height:100%;font-family:'Nunito',sans-serif;overflow:hidden;background
 .ov-home:hover{background:rgba(69,181,170,.1)}
 
 /* Progress number - covers the "0" in the mockup */
-.ov-pnum{left:2.8%;top:36%;width:10%;height:7%;
+.ov-pnum{left:3%;top:34%;width:10%;height:7%;
   display:flex;align-items:center;justify-content:center;
   font-family:'Fredoka';font-size:min(4vw,42px);font-weight:700;color:var(--navy);
   background:#fff;border-radius:0;cursor:default;z-index:2}
 .ov-pnum.bo{animation:cb .4s cubic-bezier(.34,1.56,.64,1)}
 /* Progress hint */
-.ov-phint{left:2.5%;top:46%;width:12%;height:4.5%;
+.ov-phint{left:2%;top:43%;width:13%;height:4%;
   display:flex;align-items:center;justify-content:center;
   font-size:min(0.8vw,9px);color:var(--teal);font-style:italic;font-weight:600;
   background:#fff;border-radius:0;cursor:default;z-index:2;text-align:center;padding:0 2px}
 
-/* Annotation slots - transparent when empty (image dashes show through), white when filled */
+/* Annotation slots - transparent when empty, white bg when filled */
 .ov-slot{
-  width:10.8%;height:4.8%;border-radius:12px;
+  width:12.5%;height:5.5%;border-radius:12px;
   display:flex;align-items:center;justify-content:center;
   transition:all .3s;z-index:3;
 }
 .ov-slot.filled{
-  background:rgba(255,255,255,.92);border:2px solid var(--teal-light);
+  background:rgba(255,255,255,.95);border:2px solid var(--teal-light);
   color:var(--navy);font-weight:700;font-size:min(1.1vw,12px);
-  text-align:center;padding:2px 4px;
+  text-align:center;padding:2px 6px;
   animation:slotPop .5s cubic-bezier(.34,1.56,.64,1);
 }
 .ov-slot.filled:hover{transform:scale(1.05);border-color:var(--teal);box-shadow:0 4px 16px rgba(69,181,170,.2)}
 .ov-slot .sub{font-size:min(0.8vw,9px);font-weight:600;color:var(--text-dim);margin-top:1px}
 
-/* Left slots */
-.slot-0{left:17.2%;top:14.5%}
-.slot-2{left:16.8%;top:27.5%}
-.slot-4{left:16.8%;top:41%}
-.slot-6{left:17.2%;top:55.5%}
+/* Left slots - positioned to match mockup's dashed rectangles */
+.slot-0{left:16%;top:24%}
+.slot-2{left:16%;top:38%}
+.slot-4{left:16%;top:52%}
+.slot-6{left:16%;top:67%}
 /* Right slots */
-.slot-1{left:72%;top:14.5%}
-.slot-3{left:72.2%;top:27.5%}
-.slot-5{left:72.2%;top:41%}
-.slot-7{left:72%;top:55.5%}
+.slot-1{left:70%;top:24%}
+.slot-3{left:70%;top:38%}
+.slot-5{left:70%;top:52%}
+.slot-7{left:70%;top:67%}
 
 /* Body hotspot zones - invisible, just capture clicks */
 .ov-hs{border-radius:8px;z-index:4;transition:background .2s,box-shadow .2s}
@@ -102,37 +102,38 @@ html,body{height:100%;font-family:'Nunito',sans-serif;overflow:hidden;background
 .hs-row button{padding:7px 12px;background:var(--teal);color:#fff;border:none;border-radius:10px;font-family:'Fredoka';font-size:12px;font-weight:600;cursor:pointer}
 .hs-label{position:absolute;pointer-events:none;z-index:10;background:var(--navy);color:#fff;font-family:'Fredoka';font-size:10px;font-weight:600;padding:3px 8px;border-radius:10px;white-space:nowrap;opacity:0;transition:opacity .2s}
 
-/* Input bar overlay - positioned on top of the mockup's input area */
+/* Input bar overlay - covers mockup's golden-bordered input */
 .ov-input{
-  left:29%;top:82.5%;width:38%;height:6%;z-index:10;
+  left:25.5%;top:82%;width:52%;height:8%;z-index:10;
   display:flex;align-items:center;gap:6px;
-  background:#fff;border:3px solid #F5A623;border-radius:28px;
-  padding:0 8px 0 16px;box-shadow:0 0 0 6px rgba(245,166,35,.15);
+  background:transparent;border:none;border-radius:28px;
+  padding:0 8px 0 16px;
 }
-.ov-input .mic{font-size:min(1.6vw,18px);opacity:.5;cursor:default}
+.ov-input .mic{font-size:min(1.6vw,18px);opacity:0;cursor:default;width:24px}
 .ov-input input{
   flex:1;border:none;outline:none;font-family:'Nunito';font-size:min(1.3vw,15px);font-weight:600;
   color:var(--navy);background:transparent;min-width:0;
 }
-.ov-input input::placeholder{color:var(--text-muted);font-weight:600}
+.ov-input input::placeholder{color:transparent}
+.ov-input input:focus::placeholder{color:var(--text-muted)}
 .ov-input input.shake{animation:shake .5s}
 
-/* Send button */
+/* Send button - coral arrow to the right of input */
 .ov-send{
-  left:68%;top:83%;width:3.8%;height:5%;z-index:11;
-  border-radius:50%;background:var(--coral);color:#fff;border:none;
+  left:78%;top:83.5%;width:3.5%;height:5%;z-index:11;
+  border-radius:50%;background:transparent;color:transparent;border:none;
   font-size:min(1.6vw,18px);display:flex;align-items:center;justify-content:center;
-  transition:all .2s;box-shadow:0 3px 10px rgba(244,123,108,.3);
+  transition:all .2s;
 }
-.ov-send:hover{transform:scale(1.1)}
+.ov-send:hover{transform:scale(1.1);background:rgba(244,123,108,.15)}
 .ov-send:disabled{opacity:.4;cursor:not-allowed;transform:none}
-.ov-send .sp{display:none;width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:spin .6s linear infinite}
+.ov-send .sp{display:none;width:14px;height:14px;border:2px solid var(--coral);border-top-color:transparent;border-radius:50%;animation:spin .6s linear infinite}
 .ov-send.loading .arrow{display:none}
 .ov-send.loading .sp{display:block}
 
 /* Done button */
 .ov-done{
-  left:73%;top:83.2%;width:auto;height:auto;z-index:11;
+  left:82.5%;top:83.5%;width:auto;height:auto;z-index:11;
   padding:6px 16px;background:var(--navy);color:#fff;border:none;border-radius:20px;
   font-family:'Fredoka';font-size:min(1.1vw,13px);font-weight:600;
   transition:all .2s;box-shadow:0 3px 10px rgba(27,61,111,.2);
@@ -222,16 +223,16 @@ html,body{height:100%;font-family:'Nunito',sans-serif;overflow:hidden;background
     <div class="ov ov-slot slot-6" data-slot="6"></div>
     <div class="ov ov-slot slot-7" data-slot="7"></div>
 
-    <!-- Body hotspot zones - invisible click targets -->
-    <div class="ov ov-hs" data-region="head" data-label="Head" style="left:41%;top:14%;width:18%;height:11%"></div>
-    <div class="ov ov-hs" data-region="shoulders" data-label="Shoulders" style="left:35%;top:25%;width:30%;height:5%"></div>
-    <div class="ov ov-hs" data-region="chest" data-label="Chest" style="left:39%;top:30%;width:22%;height:8%"></div>
-    <div class="ov ov-hs" data-region="arms" data-label="Arms" style="left:32%;top:28%;width:7%;height:16%"></div>
-    <div class="ov ov-hs" data-region="arms" data-label="Arms" style="left:61%;top:28%;width:7%;height:16%"></div>
-    <div class="ov ov-hs" data-region="abs" data-label="Abs / Core" style="left:39%;top:38%;width:22%;height:10%"></div>
-    <div class="ov ov-hs" data-region="hips" data-label="Hips / Waist" style="left:37%;top:48%;width:26%;height:6%"></div>
-    <div class="ov ov-hs" data-region="legs" data-label="Legs" style="left:38%;top:54%;width:24%;height:16%"></div>
-    <div class="ov ov-hs" data-region="feet" data-label="Feet" style="left:38%;top:70%;width:24%;height:8%"></div>
+    <!-- Body hotspot zones - aligned to body figure at x=31-61%, y=10-81% -->
+    <div class="ov ov-hs" data-region="head" data-label="Head" style="left:38%;top:10%;width:16%;height:10%"></div>
+    <div class="ov ov-hs" data-region="shoulders" data-label="Shoulders" style="left:33%;top:21%;width:26%;height:6%"></div>
+    <div class="ov ov-hs" data-region="chest" data-label="Chest" style="left:37%;top:27%;width:18%;height:8%"></div>
+    <div class="ov ov-hs" data-region="arms" data-label="Arms" style="left:31%;top:24%;width:6%;height:20%"></div>
+    <div class="ov ov-hs" data-region="arms" data-label="Arms" style="left:55%;top:24%;width:6%;height:20%"></div>
+    <div class="ov ov-hs" data-region="abs" data-label="Abs / Core" style="left:37%;top:35%;width:18%;height:12%"></div>
+    <div class="ov ov-hs" data-region="hips" data-label="Hips / Waist" style="left:35%;top:47%;width:22%;height:7%"></div>
+    <div class="ov ov-hs" data-region="legs" data-label="Legs" style="left:36%;top:54%;width:20%;height:18%"></div>
+    <div class="ov ov-hs" data-region="feet" data-label="Feet" style="left:36%;top:72%;width:20%;height:9%"></div>
 
     <!-- Hotspot popup -->
     <div id="hsPopup"><h3>Add trait for <span id="hsRegionLabel">Head</span></h3><div class="hs-row"><input id="hsInput" placeholder="e.g., thick hair" onkeydown="if(event.key==='Enter')hsSubmit()"/><button onclick="hsSubmit()">Add</button></div></div>
