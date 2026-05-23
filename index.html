@@ -87,9 +87,9 @@ html,body{height:100%;font-family:'Nunito',sans-serif;overflow:hidden;background
 .slot-5{left:65.2%;top:51%}
 .slot-7{left:65.2%;top:66.8%}
 
-/* Body hotspot zones - invisible, just capture clicks */
-.ov-hs{border-radius:8px;z-index:4;transition:background .2s,box-shadow .2s}
-.ov-hs:hover{background:rgba(69,181,170,.12);box-shadow:inset 0 0 0 2px rgba(69,181,170,.35)}
+/* Body hotspot zones - invisible, just capture clicks (no visible hover to avoid green rectangles) */
+.ov-hs{border-radius:8px;z-index:4;cursor:pointer}
+.ov-hs:hover{cursor:pointer}
 
 /* Hotspot popup */
 #hsPopup{position:absolute;z-index:20;background:#fff;border:2px solid var(--teal);border-radius:14px;padding:12px 14px;box-shadow:0 8px 28px rgba(27,61,111,.15);display:none;width:220px}
@@ -102,17 +102,16 @@ html,body{height:100%;font-family:'Nunito',sans-serif;overflow:hidden;background
 .hs-row button{padding:7px 12px;background:var(--teal);color:#fff;border:none;border-radius:10px;font-family:'Fredoka';font-size:12px;font-weight:600;cursor:pointer}
 .hs-label{position:absolute;pointer-events:none;z-index:10;background:var(--navy);color:#fff;font-family:'Fredoka';font-size:10px;font-weight:600;padding:3px 8px;border-radius:10px;white-space:nowrap;opacity:0;transition:opacity .2s}
 
-/* Input bar overlay - GPT-4o: left=21.4%, top=82%, width=52% */
+/* Input bar overlay - centered on mockup's golden input bar text area */
 .ov-input{
-  left:21.4%;top:82%;width:52%;height:9%;z-index:10;
-  display:flex;align-items:center;gap:6px;
+  left:30%;top:82.5%;width:42%;height:8%;z-index:10;
+  display:flex;align-items:center;
   background:transparent;border:none;border-radius:28px;
-  padding:0 8px 0 16px;
+  padding:0;
 }
-.ov-input .mic{font-size:min(1.6vw,18px);opacity:0;cursor:default;width:24px}
 .ov-input input{
   flex:1;border:none;outline:none;font-family:'Nunito';font-size:min(1.3vw,15px);font-weight:600;
-  color:var(--navy);background:transparent;min-width:0;
+  color:var(--navy);background:transparent;min-width:0;text-align:center;
 }
 .ov-input input::placeholder{color:transparent}
 .ov-input input:focus::placeholder{color:var(--text-muted)}
@@ -238,9 +237,8 @@ html,body{height:100%;font-family:'Nunito',sans-serif;overflow:hidden;background
     <div id="hsPopup"><h3>Add trait for <span id="hsRegionLabel">Head</span></h3><div class="hs-row"><input id="hsInput" placeholder="e.g., thick hair" onkeydown="if(event.key==='Enter')hsSubmit()"/><button onclick="hsSubmit()">Add</button></div></div>
     <div class="hs-label" id="hsLabel"></div>
 
-    <!-- Input bar overlay -->
+    <!-- Input bar overlay - centered on the mockup's text area -->
     <div class="ov ov-input">
-      <span class="mic">🎤</span>
       <input id="inp" placeholder="What traits come to mind?" onkeydown="if(event.key==='Enter'){event.preventDefault();submitTrait()}"/>
     </div>
     <button class="ov ov-send" id="btnGo" onclick="submitTrait()"><span class="arrow">➤</span><span class="sp"></span></button>
