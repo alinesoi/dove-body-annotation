@@ -9,161 +9,203 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --navy:#1B3D6F;--mint:#7EDDC3;--mint-light:#C5F5E8;
-  --coral:#F47B6C;--coral-light:#F9A99F;
-  --yellow:#F7DC6F;--yellow-light:#FFF4CC;
-  --green:#3EA66B;--green-glow:rgba(62,166,107,0.4);
-  --green-line:rgba(62,166,107,0.55);--green-dot:#3EA66B;
-  --dash:#B8D4E8;--text:#1B3D6F;--text-dim:#5A7A9E;--text-muted:#9BB4CC;
-  --red:#E74C3C;
+  --navy:#1B3D6F;--teal:#45B5AA;--teal-light:#7EDDC3;--teal-bg:#E0F7F1;
+  --mint:#B5ECD8;--coral:#F47B6C;--coral-light:#F9A99F;
+  --yellow:#F7DC6F;--yellow-light:#FFF8DC;
+  --green:#3EA66B;--dot:#5CC8B5;
+  --card-bg:rgba(255,255,255,0.85);--dash:#B8D8D2;
+  --text:#1B3D6F;--text-dim:#5A7A9E;--text-muted:#8BAAB8;
 }
-html,body{height:100%;font-family:'Nunito',sans-serif;background:#fff;color:var(--text);overflow:hidden}
+html,body{height:100%;font-family:'Nunito',sans-serif;background:linear-gradient(160deg,#D4F5EC 0%,#E8FBF4 30%,#F0FDF8 60%,#E0F5EE 100%);color:var(--text);overflow:hidden}
 
-/* BG */
-.bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-.blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:0;transition:opacity 1.5s}
-.blob.on{opacity:1}
-.b1{width:500px;height:500px;background:var(--mint);opacity:.07;top:-10%;left:-8%;animation:bd1 18s ease-in-out infinite}
-.b2{width:400px;height:400px;background:var(--coral);opacity:.05;bottom:-5%;right:-5%;animation:bd2 22s ease-in-out infinite}
-.b3{width:350px;height:350px;background:var(--yellow);opacity:.06;top:40%;right:20%;animation:bd3 20s ease-in-out infinite}
-@keyframes bd1{0%,100%{transform:translate(0,0)}50%{transform:translate(60px,40px)}}
-@keyframes bd2{0%,100%{transform:translate(0,0)}50%{transform:translate(-50px,-30px)}}
-@keyframes bd3{0%,100%{transform:translate(0,0)}50%{transform:translate(-40px,50px)}}
-
-/* INTRO */
+/* ═══ INTRO ═══ */
 #intro{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;flex-direction:column;
   background:linear-gradient(145deg,#E8FBF4 0%,#FFF 35%,#FFF4CC 70%,#FDE8E5 100%);background-size:200% 200%;
   animation:gShift 6s ease infinite;transition:opacity .8s,transform .8s}
 #intro.hidden{opacity:0;transform:scale(1.08);pointer-events:none}
 @keyframes gShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
-.ib{display:inline-block;padding:6px 20px;background:var(--mint);border-radius:20px;font-size:11px;font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:2px;opacity:0;animation:pop .6s .3s cubic-bezier(.34,1.56,.64,1) forwards}
+.ib{display:inline-block;padding:6px 20px;background:var(--teal-light);border-radius:20px;font-size:11px;font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:2px;opacity:0;animation:pop .6s .3s cubic-bezier(.34,1.56,.64,1) forwards}
 .it{font-family:'Fredoka';font-size:clamp(52px,9vw,90px);font-weight:700;color:var(--navy);margin:18px 0 6px;line-height:.95;letter-spacing:-2px;opacity:0;animation:pop .7s .6s cubic-bezier(.34,1.56,.64,1) forwards}
 .is{font-family:'Fredoka';font-size:clamp(22px,3.5vw,32px);font-weight:600;color:var(--coral);opacity:0;animation:su .6s 1s ease-out forwards}
-.ibtn{margin-top:40px;padding:18px 56px;background:var(--coral);color:#fff;border:none;border-radius:60px;font-family:'Fredoka';font-size:22px;font-weight:600;cursor:pointer;opacity:0;animation:pop .6s 1.4s cubic-bezier(.34,1.56,.64,1) forwards;box-shadow:0 8px 30px rgba(244,123,108,.4);transition:transform .2s,box-shadow .2s;position:relative}
+.ibtn{margin-top:40px;padding:18px 56px;background:var(--coral);color:#fff;border:none;border-radius:60px;font-family:'Fredoka';font-size:22px;font-weight:600;cursor:pointer;opacity:0;animation:pop .6s 1.4s cubic-bezier(.34,1.56,.64,1) forwards;box-shadow:0 8px 30px rgba(244,123,108,.4);transition:transform .2s;position:relative}
 .ibtn:hover{transform:scale(1.06)}
 .ibtn::after{content:'';position:absolute;inset:-3px;border-radius:63px;border:3px solid var(--coral-light);animation:pulse 2s 1.8s ease-out infinite}
 .ideco{position:fixed;pointer-events:none;z-index:999;opacity:0}.ideco.on{animation:fdeco .8s ease-out forwards}
-.dp{font-family:'Fredoka';font-weight:700}.dr{border-radius:50%;border:3px solid}.dd{border:2px solid;transform:rotate(45deg)}
 
 #conf{position:fixed;inset:0;z-index:9999;pointer-events:none}
 
-/* MAIN PAGE */
-.page{position:relative;z-index:2;display:flex;height:100vh;opacity:0;transform:translateY(20px)}
-.page.on{opacity:1;transform:none;transition:all .9s cubic-bezier(.23,1,.32,1)}
+/* ═══ GAME PAGE ═══ */
+.game{position:relative;display:flex;flex-direction:column;height:100vh;opacity:0;transform:translateY(20px)}
+.game.on{opacity:1;transform:none;transition:all .9s cubic-bezier(.23,1,.32,1)}
+
+/* Header */
+.g-header{display:flex;align-items:center;padding:10px 20px;flex-shrink:0;z-index:10}
+.home-btn{background:var(--card-bg);border:2px solid var(--dash);border-radius:10px;padding:6px 12px;font-size:14px;cursor:pointer;font-family:'Fredoka';color:var(--navy);transition:all .2s}
+.home-btn:hover{background:#fff;transform:scale(1.05)}
+.g-title{flex:1;text-align:center}
+.g-title h1{font-family:'Fredoka';font-size:28px;font-weight:700;color:var(--navy);line-height:1}
+.g-title h1 span{position:relative}
+.g-title .sub{display:inline-block;font-family:'Fredoka';font-size:14px;font-weight:600;color:#fff;background:var(--coral);padding:3px 16px;border-radius:12px;margin-top:2px}
+.safe-badge{background:var(--card-bg);border:2px solid var(--dash);border-radius:12px;padding:6px 12px;font-size:10px;font-weight:800;color:var(--teal);text-align:center;line-height:1.3}
+.safe-badge .icon{font-size:14px}
+
+/* Main area */
+.g-main{flex:1;display:flex;padding:0 16px;min-height:0;gap:12px}
+
+/* Left sidebar */
+.g-side{width:180px;flex-shrink:0;display:flex;flex-direction:column;gap:10px;padding:4px 0;opacity:0}
+.game.on .g-side{animation:sfr .6s .5s ease-out forwards}
+.mission-card,.progress-card{background:var(--card-bg);border:2px solid var(--dash);border-radius:14px;padding:12px;backdrop-filter:blur(8px)}
+.mission-card h3,.progress-card h3{font-family:'Fredoka';font-size:13px;font-weight:600;color:var(--teal);margin-bottom:4px;display:flex;align-items:center;gap:4px}
+.mission-card p{font-size:11px;color:var(--text-dim);line-height:1.4}
+.progress-card .num{font-family:'Fredoka';font-size:42px;font-weight:700;color:var(--navy);line-height:1}
+.progress-card .num.bo{animation:cb .4s cubic-bezier(.34,1.56,.64,1)}
+.progress-card .lbl{font-size:11px;font-weight:700;color:var(--text-dim)}
+.progress-card .hint{font-size:10px;color:var(--teal);margin-top:6px;font-style:italic}
 
 /* Figure area */
-.fig{flex:1;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;opacity:0}
-.page.on .fig{animation:bu .9s .6s cubic-bezier(.34,1.56,.64,1) forwards}
-.fig-title{position:absolute;top:10px;left:50%;transform:translateX(-50%);z-index:5;opacity:0}
-.page.on .fig-title{animation:fsd .6s .5s ease-out forwards}
-.fig-title h1{font-family:'Fredoka';font-size:17px;font-weight:600;color:var(--navy);background:rgba(255,255,255,.85);backdrop-filter:blur(8px);padding:7px 20px;border-radius:30px;border:2px solid var(--dash);display:inline-block}
-#bodySvg{height:88%;max-height:530px;transition:opacity .5s}
-#lineSvg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:3}
+.g-fig{flex:1;position:relative;display:flex;align-items:center;justify-content:center;opacity:0}
+.game.on .g-fig{animation:bu .9s .7s cubic-bezier(.34,1.56,.64,1) forwards}
+#bodySvg{height:85%;max-height:480px;z-index:2;position:relative}
+.hotspot{fill:transparent;cursor:pointer;transition:fill .3s,stroke .3s;stroke:rgba(69,181,170,.2);stroke-width:1.5;stroke-dasharray:4 3}
+.hotspot:hover{fill:rgba(69,181,170,.12);stroke:rgba(69,181,170,.5);stroke-width:2;stroke-dasharray:none}
+.hs-dot{fill:var(--dot);opacity:.6;pointer-events:none}
+@keyframes dotPulse{0%,100%{opacity:.4;r:3}50%{opacity:.8;r:4.5}}
+.hs-dot{animation:dotPulse 2s ease-in-out infinite}
 
-/* Hotspots */
-.hotspot{fill:rgba(62,166,107,.03);cursor:pointer;transition:fill .3s,stroke .3s;stroke:rgba(62,166,107,.15);stroke-width:1.5;stroke-dasharray:4 3}
-.hotspot:hover{fill:rgba(62,166,107,.1);stroke:rgba(62,166,107,.4);stroke-width:2;stroke-dasharray:none}
-@keyframes hsGentlePulse{0%,100%{opacity:1}50%{opacity:.6}}
-.hotspot{animation:hsGentlePulse 3s ease-in-out infinite}
-.hs-label{position:absolute;pointer-events:none;z-index:10;background:var(--navy);color:#fff;font-family:'Fredoka';font-size:11px;font-weight:600;padding:3px 10px;border-radius:12px;white-space:nowrap;opacity:0;transition:opacity .2s;transform:translateX(-50%)}
+/* Annotation slots */
+.slot{
+  position:absolute;width:130px;min-height:36px;
+  border:2.5px dashed var(--dash);border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;color:var(--text-muted);
+  transition:all .3s;z-index:3;
+  background:rgba(255,255,255,.3);
+}
+.slot.filled{
+  border-style:solid;border-color:var(--teal-light);
+  background:var(--card-bg);backdrop-filter:blur(8px);
+  color:var(--navy);font-weight:700;font-size:12px;
+  padding:6px 10px;text-align:center;
+  cursor:pointer;
+  animation:slotPop .5s cubic-bezier(.34,1.56,.64,1);
+}
+.slot.filled:hover{transform:scale(1.05);border-color:var(--teal);box-shadow:0 4px 16px rgba(69,181,170,.2)}
+.slot .sub{font-size:9px;font-weight:600;color:var(--text-dim);margin-top:2px}
+@keyframes slotPop{0%{opacity:0;transform:scale(.5)}60%{transform:scale(1.1)}100%{opacity:1;transform:scale(1)}}
+
+/* Slot positions - arranged around figure */
+.slot-0{top:2%;left:50%;transform:translateX(-160px)}
+.slot-1{top:2%;left:50%;transform:translateX(30px)}
+.slot-2{top:22%;left:50%;transform:translateX(-185px)}
+.slot-3{top:22%;left:50%;transform:translateX(55px)}
+.slot-4{top:45%;left:50%;transform:translateX(-185px)}
+.slot-5{top:45%;left:50%;transform:translateX(55px)}
+.slot-6{top:68%;left:50%;transform:translateX(-160px)}
+.slot-7{top:68%;left:50%;transform:translateX(30px)}
 
 /* Hotspot popup */
-#hsPopup{position:absolute;z-index:20;background:#fff;border:2px solid var(--green);border-radius:16px;padding:14px 16px;box-shadow:0 8px 30px rgba(27,61,111,.15);display:none;width:240px}
+#hsPopup{position:absolute;z-index:20;background:#fff;border:2px solid var(--teal);border-radius:14px;padding:12px 14px;box-shadow:0 8px 28px rgba(27,61,111,.12);display:none;width:220px}
 #hsPopup.active{display:block;animation:pop .4s cubic-bezier(.34,1.56,.64,1)}
-#hsPopup h3{font-family:'Fredoka';font-size:14px;font-weight:600;color:var(--navy);margin-bottom:8px}
+#hsPopup h3{font-family:'Fredoka';font-size:13px;font-weight:600;color:var(--navy);margin-bottom:6px}
 #hsPopup h3 span{color:var(--coral)}
-.hs-row{display:flex;gap:6px}
-.hs-row input{flex:1;padding:8px 10px;border:2px solid var(--dash);border-radius:10px;font-family:'Nunito';font-size:12px;color:var(--navy);outline:none;transition:border .2s}
-.hs-row input:focus{border-color:var(--green)}
-.hs-row button{padding:8px 14px;background:var(--green);color:#fff;border:none;border-radius:10px;font-family:'Fredoka';font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}
-.hs-row button:hover{transform:scale(1.05)}
+.hs-row{display:flex;gap:5px}
+.hs-row input{flex:1;padding:7px 10px;border:2px solid var(--dash);border-radius:10px;font-family:'Nunito';font-size:11px;color:var(--navy);outline:none;transition:border .2s}
+.hs-row input:focus{border-color:var(--teal)}
+.hs-row button{padding:7px 12px;background:var(--teal);color:#fff;border:none;border-radius:10px;font-family:'Fredoka';font-size:12px;font-weight:600;cursor:pointer}
+.hs-label{position:absolute;pointer-events:none;z-index:10;background:var(--navy);color:#fff;font-family:'Fredoka';font-size:10px;font-weight:600;padding:3px 8px;border-radius:10px;white-space:nowrap;opacity:0;transition:opacity .2s;transform:translateX(-50%)}
 
-/* Right panel: combined traits + input */
-.panel{width:300px;flex-shrink:0;display:flex;flex-direction:column;
-  background:rgba(255,255,255,.7);backdrop-filter:blur(12px);border-left:2px solid var(--dash);
-  opacity:0;position:relative;z-index:5;overflow:hidden}
-.page.on .panel{animation:sfr2 .7s .8s ease-out forwards}
+/* Mascot */
+.mascot{position:fixed;bottom:60px;left:16px;width:100px;height:100px;z-index:8;opacity:0;pointer-events:none}
+.game.on .mascot{animation:mascotIn .8s 1s cubic-bezier(.34,1.56,.64,1) forwards}
+@keyframes mascotIn{0%{opacity:0;transform:translateY(30px) scale(.7)}100%{opacity:1;transform:none}}
 
-.traits-section{flex:1;overflow-y:auto;padding:14px 16px 8px;min-height:0}
-.traits-section h2{font-family:'Fredoka';font-size:15px;font-weight:600;color:var(--navy);margin-bottom:8px;display:flex;align-items:center;gap:6px}
-.trait-item{padding:8px 12px;margin-bottom:5px;background:var(--mint-light);border:2px solid var(--mint);border-radius:10px;
-  font-size:12px;font-weight:700;color:var(--navy);cursor:pointer;transition:all .2s;opacity:0;transform:translateX(-20px)}
-.trait-item.in{opacity:1;transform:none;transition:all .4s cubic-bezier(.34,1.56,.64,1)}
-.trait-item:hover{transform:scale(1.03);border-color:var(--green);background:rgba(62,166,107,.1)}
-.trait-item .sub{font-size:10px;font-weight:600;color:var(--text-dim);margin-top:2px}
-.empty-msg{font-size:12px;color:var(--text-muted);text-align:center;padding:20px 8px;font-style:italic}
+/* Bottom input bar */
+.g-input{
+  position:relative;z-index:10;padding:10px 24px 14px;flex-shrink:0;
+  display:flex;align-items:center;gap:10px;
+  margin:0 120px 0 140px;opacity:0;
+}
+.game.on .g-input{animation:su .6s 1.1s ease-out forwards}
+.g-input-wrap{
+  flex:1;display:flex;align-items:center;gap:8px;
+  background:#fff;border:3px solid var(--coral);border-radius:28px;
+  padding:6px 8px 6px 16px;box-shadow:0 4px 20px rgba(244,123,108,.15);
+}
+.g-input-wrap .mic{font-size:18px;opacity:.5}
+.g-input-wrap input{
+  flex:1;border:none;outline:none;font-family:'Nunito';font-size:14px;font-weight:600;
+  color:var(--navy);background:transparent;
+}
+.g-input-wrap input::placeholder{color:var(--text-muted);font-weight:600}
+.g-input-wrap input.shake{animation:shake .5s}
+.send-btn{
+  width:40px;height:40px;border-radius:50%;background:var(--coral);color:#fff;
+  border:none;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all .2s;box-shadow:0 3px 12px rgba(244,123,108,.3);flex-shrink:0;
+}
+.send-btn:hover{transform:scale(1.1)}
+.send-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.send-btn .sp{display:none;width:16px;height:16px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:spin .6s linear infinite}
+.send-btn.loading .arrow{display:none}
+.send-btn.loading .sp{display:block}
+.done-float{
+  padding:8px 18px;background:var(--navy);color:#fff;border:none;border-radius:20px;
+  font-family:'Fredoka';font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;
+  box-shadow:0 3px 12px rgba(27,61,111,.2);flex-shrink:0;
+}
+.done-float:hover{transform:scale(1.05)}
 
-.input-section{padding:10px 16px 14px;border-top:2px dashed var(--dash);flex-shrink:0}
-.input-section h2{font-family:'Fredoka';font-size:14px;font-weight:600;color:var(--navy);margin-bottom:6px;display:flex;align-items:center;gap:6px}
-.input-section textarea{width:100%;min-height:54px;padding:9px 12px;background:#F5F9FE;border:2px solid var(--dash);border-radius:10px;color:var(--navy);font-family:'Nunito';font-size:13px;line-height:1.4;resize:none;outline:none;transition:all .2s}
-.input-section textarea:focus{border-color:var(--green);box-shadow:0 0 0 3px var(--green-glow)}
-.input-section textarea::placeholder{color:var(--text-muted)}
-.input-section textarea.shake{animation:shake .5s}
-.btn-row{display:flex;gap:6px;margin-top:6px}
-.bg1{flex:1;padding:10px;background:var(--coral);color:#fff;border:none;border-radius:10px;font-family:'Fredoka';font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;box-shadow:0 4px 14px rgba(244,123,108,.3);display:flex;align-items:center;justify-content:center;gap:5px}
-.bg1:hover{transform:translateY(-1px)}.bg1:disabled{opacity:.5;cursor:not-allowed;transform:none}
-.bg1.loading{background:#E8EDF4;color:var(--text-muted);box-shadow:none}
-.bg1 .sp{display:none;width:14px;height:14px;border:2px solid #ccc;border-top-color:var(--navy);border-radius:50%;animation:spin .6s linear infinite}
-.bg1.loading .sp{display:inline-block}.bg1.loading .bt{display:none}
-.bdone{padding:10px 16px;background:var(--navy);color:#fff;border:none;border-radius:10px;font-family:'Fredoka';font-size:14px;font-weight:600;cursor:pointer;transition:all .2s}
-.bdone:hover{transform:translateY(-1px)}
-.counter{display:flex;align-items:center;gap:8px;margin-top:6px;padding:6px 10px;background:var(--yellow-light);border-radius:10px;border:2px solid var(--yellow)}
-.cnum{font-family:'Fredoka';font-size:22px;font-weight:700;color:var(--coral);line-height:1}
-.cnum.bo{animation:cb .4s cubic-bezier(.34,1.56,.64,1)}
-.clbl{font-size:10px;font-weight:800;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px}
-.err{font-size:11px;color:var(--coral);padding:2px;display:none;font-weight:700;margin-top:2px}.err.show{display:block}
+/* Decorative elements */
+.deco{position:fixed;pointer-events:none;z-index:0;opacity:.12}
 
-/* ZOOM (only for smile) */
-#zoomOverlay{position:fixed;inset:0;z-index:100;display:none;background:rgba(255,255,255,.95);backdrop-filter:blur(16px)}
-#zoomOverlay.active{display:flex;align-items:center;justify-content:center}
+/* ═══ OVERLAYS ═══ */
+#zoomOverlay{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;background:rgba(224,247,241,.95);backdrop-filter:blur(16px)}
+#zoomOverlay.active{display:flex}
 .zoom-inner{text-align:center;max-width:640px;width:100%;padding:40px}
-.zq{font-family:'Fredoka';font-size:28px;font-weight:700;color:var(--navy);margin-bottom:24px;opacity:0;animation:su .5s .2s ease-out forwards}
+.zq{font-family:'Fredoka';font-size:26px;font-weight:700;color:var(--navy);margin-bottom:20px;opacity:0;animation:su .5s .2s ease-out forwards}
 .zq span{color:var(--coral)}
-.zimages{display:flex;gap:18px;justify-content:center;margin-bottom:8px}
-.zimg-card{flex:0 1 180px;padding:14px;background:#fff;border:3px solid var(--dash);border-radius:20px;cursor:pointer;transition:all .25s;opacity:0;text-align:center}
-.zimg-card:hover{border-color:var(--green);transform:translateY(-6px) scale(1.03);box-shadow:0 12px 32px rgba(62,166,107,.18)}
-.zimg-card:active{transform:translateY(-2px) scale(.98)}
-.zimg-card img{width:100%;aspect-ratio:1;border-radius:14px;object-fit:cover;background:#F0F4F8;display:block;margin-bottom:10px}
-.zimg-label{font-family:'Fredoka';font-size:15px;font-weight:600;color:var(--navy)}
+.zimages{display:flex;gap:16px;justify-content:center;margin-bottom:12px}
+.zimg-card{flex:0 1 170px;padding:12px;background:#fff;border:3px solid var(--dash);border-radius:18px;cursor:pointer;transition:all .25s;opacity:0;text-align:center}
+.zimg-card:hover{border-color:var(--teal);transform:translateY(-6px) scale(1.03);box-shadow:0 12px 30px rgba(69,181,170,.18)}
+.zimg-card img{width:100%;aspect-ratio:1;border-radius:12px;object-fit:cover;display:block;margin-bottom:8px}
+.zimg-label{font-family:'Fredoka';font-size:14px;font-weight:600;color:var(--navy)}
 
-/* IDK */
-#idkOverlay{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;background:rgba(231,76,60,.08);backdrop-filter:blur(4px)}
+#idkOverlay{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;background:rgba(244,123,108,.08);backdrop-filter:blur(4px)}
 #idkOverlay.active{display:flex}
 .idk-content{text-align:center;animation:pop .5s cubic-bezier(.34,1.56,.64,1)}
-.idk-x{font-size:120px;color:var(--red);line-height:1}
+.idk-x{font-size:120px;color:#E74C3C;line-height:1}
 .idk-msg{font-family:'Fredoka';font-size:22px;color:var(--navy);margin-top:12px}
 
-/* DONE */
-#doneOverlay{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;background:rgba(255,255,255,.95);backdrop-filter:blur(16px)}
+#doneOverlay{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;background:rgba(224,247,241,.95);backdrop-filter:blur(16px)}
 #doneOverlay.active{display:flex}
-.done-content{text-align:center;max-width:500px;padding:40px}
+.done-content{text-align:center;max-width:480px;padding:40px}
 .done-emoji{font-size:80px;animation:pop .6s cubic-bezier(.34,1.56,.64,1)}
-.done-title{font-family:'Fredoka';font-size:36px;font-weight:700;color:var(--navy);margin:12px 0}
+.done-title{font-family:'Fredoka';font-size:34px;font-weight:700;color:var(--navy);margin:10px 0}
 .done-count{font-family:'Fredoka';font-size:48px;font-weight:700;color:var(--coral)}
-.done-label{font-size:14px;color:var(--text-dim);font-weight:700;margin-bottom:16px}
-.done-list{text-align:left;max-height:200px;overflow-y:auto;margin:12px 0}
-.done-list .trait-item{opacity:1;transform:none;margin-bottom:6px}
-.done-back{padding:14px 40px;background:var(--coral);color:#fff;border:none;border-radius:50px;font-family:'Fredoka';font-size:18px;font-weight:600;cursor:pointer;transition:all .2s;box-shadow:0 6px 24px rgba(244,123,108,.3)}
+.done-label{font-size:13px;color:var(--text-dim);font-weight:700;margin-bottom:14px}
+.done-traits{text-align:left;max-height:200px;overflow-y:auto;margin:12px 0}
+.done-trait{padding:6px 12px;margin:4px 0;background:var(--mint);border:2px solid var(--teal-light);border-radius:10px;font-size:12px;font-weight:700;color:var(--navy)}
+.done-trait .sub{font-size:10px;color:var(--text-dim)}
+.done-back{padding:14px 40px;background:var(--coral);color:#fff;border:none;border-radius:50px;font-family:'Fredoka';font-size:18px;font-weight:600;cursor:pointer;box-shadow:0 6px 24px rgba(244,123,108,.3);transition:all .2s}
 .done-back:hover{transform:scale(1.05)}
 
-#toast{position:fixed;top:-80px;left:50%;transform:translateX(-50%);z-index:8000;padding:14px 30px;background:var(--navy);color:#fff;border-radius:18px;font-family:'Fredoka';font-size:17px;font-weight:600;box-shadow:0 10px 40px rgba(27,61,111,.3);display:flex;align-items:center;gap:10px;white-space:nowrap;transition:top .6s cubic-bezier(.34,1.56,.64,1)}
-#toast.show{top:20px}
+#toast{position:fixed;top:-80px;left:50%;transform:translateX(-50%);z-index:8000;padding:12px 28px;background:var(--navy);color:#fff;border-radius:18px;font-family:'Fredoka';font-size:16px;font-weight:600;box-shadow:0 10px 40px rgba(27,61,111,.3);display:flex;align-items:center;gap:8px;white-space:nowrap;transition:top .6s cubic-bezier(.34,1.56,.64,1)}
+#toast.show{top:16px}
 
+/* Keyframes */
 @keyframes pop{0%{opacity:0;transform:scale(.5) translateY(20px)}100%{opacity:1;transform:scale(1) translateY(0)}}
 @keyframes su{0%{opacity:0;transform:translateY(20px)}100%{opacity:1;transform:none}}
 @keyframes bu{0%{opacity:0;transform:translateY(50px)}60%{transform:translateY(-8px)}100%{opacity:1;transform:none}}
-@keyframes fsd{0%{opacity:0;transform:translateX(-50%) translateY(-15px)}100%{opacity:1;transform:translateX(-50%) translateY(0)}}
-@keyframes sfr2{0%{opacity:0;transform:translateX(30px)}100%{opacity:1;transform:none}}
-@keyframes fdeco{0%{opacity:0;transform:scale(.4)}100%{opacity:.15;transform:scale(1)}}
+@keyframes sfr{0%{opacity:0;transform:translateX(-30px)}100%{opacity:1;transform:none}}
+@keyframes fdeco{0%{opacity:0;transform:scale(.4)}100%{opacity:.12;transform:scale(1)}}
 @keyframes pulse{0%{transform:scale(1);opacity:.5}100%{transform:scale(1.5);opacity:0}}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes cb{0%{transform:scale(1)}40%{transform:scale(1.35)}100%{transform:scale(1)}}
 @keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
-@keyframes gentleFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 </style>
 </head>
 <body>
-<div class="bg"><div class="blob b1" id="b1"></div><div class="blob b2" id="b2"></div><div class="blob b3" id="b3"></div></div>
 
 <!-- INTRO -->
 <div id="intro">
@@ -171,81 +213,116 @@ html,body{height:100%;font-family:'Nunito',sans-serif;background:#fff;color:var(
   <div class="it">Confident Me</div>
   <div class="is">Appearance Ideals</div>
   <button class="ibtn" onclick="startGame()">Let's Go!</button>
-  <div class="ideco dp" style="top:10%;left:7%;color:var(--mint);font-size:32px">+</div>
-  <div class="ideco dp" style="top:16%;right:10%;color:var(--coral);font-size:26px">+</div>
-  <div class="ideco dr" style="bottom:20%;left:12%;border-color:var(--coral);width:22px;height:22px"></div>
-  <div class="ideco dd" style="top:28%;right:16%;border-color:var(--navy);width:14px;height:14px"></div>
-  <div class="ideco dp" style="bottom:16%;right:8%;color:var(--yellow);font-size:22px">+</div>
+  <div class="ideco" style="top:10%;left:7%;font-family:Fredoka;font-weight:700;color:var(--teal-light);font-size:32px">+</div>
+  <div class="ideco" style="top:16%;right:10%;font-family:Fredoka;font-weight:700;color:var(--coral);font-size:26px">+</div>
+  <div class="ideco" style="bottom:20%;left:12%;width:22px;height:22px;border-radius:50%;border:3px solid var(--coral)"></div>
+  <div class="ideco" style="top:28%;right:16%;width:14px;height:14px;border:2px solid var(--navy);transform:rotate(45deg)"></div>
+  <div class="ideco" style="bottom:16%;right:8%;font-family:Fredoka;font-weight:700;color:var(--yellow);font-size:22px">+</div>
 </div>
 
 <canvas id="conf"></canvas>
 
-<!-- MAIN -->
-<div class="page" id="page">
-  <!-- Figure with hotspots -->
-  <div class="fig" id="figArea">
-    <div class="fig-title"><h1>What are appearance ideals for males?</h1></div>
-    <svg id="bodySvg" viewBox="0 0 200 440" xmlns="http://www.w3.org/2000/svg">
-      <g fill="none" stroke="#1B3D6F" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="100" cy="34" r="26"/>
-        <path d="M 30,88 Q 30,76 42,76 L 158,76 Q 170,76 170,88 L 170,186 Q 170,200 157,200 Q 146,200 146,186 L 146,112 Q 146,102 138,102 L 134,102 Q 128,102 128,110 L 128,234 Q 128,246 116,246 L 84,246 Q 72,246 72,234 L 72,110 Q 72,102 66,102 L 62,102 Q 54,102 54,112 L 54,186 Q 54,200 43,200 Q 30,200 30,186 Z"/>
-        <rect x="72" y="256" width="24" height="138" rx="12"/>
-        <rect x="104" y="256" width="24" height="138" rx="12"/>
-      </g>
-      <!-- Clickable hotspots -->
-      <g id="hotspots">
-        <circle cx="100" cy="34" r="32" class="hotspot" data-region="head" data-label="Head"/>
-        <rect x="28" y="74" width="144" height="30" rx="8" class="hotspot" data-region="shoulders" data-label="Shoulders"/>
-        <rect x="68" y="100" width="64" height="46" rx="6" class="hotspot" data-region="chest" data-label="Chest"/>
-        <rect x="24" y="96" width="36" height="100" rx="10" class="hotspot" data-region="arms" data-label="Arms"/>
-        <rect x="140" y="96" width="36" height="100" rx="10" class="hotspot" data-region="arms" data-label="Arms"/>
-        <rect x="68" y="142" width="64" height="60" rx="6" class="hotspot" data-region="abs" data-label="Abs / Core"/>
-        <rect x="62" y="198" width="76" height="52" rx="6" class="hotspot" data-region="hips" data-label="Hips / Waist"/>
-        <rect x="68" y="254" width="64" height="90" rx="6" class="hotspot" data-region="legs" data-label="Legs"/>
-        <rect x="68" y="340" width="64" height="60" rx="6" class="hotspot" data-region="feet" data-label="Feet / Ankles"/>
-      </g>
-    </svg>
-    <svg id="lineSvg" xmlns="http://www.w3.org/2000/svg"></svg>
-    <!-- Hotspot popup -->
-    <div id="hsPopup">
-      <h3>Add trait for <span id="hsRegionLabel">Head</span></h3>
-      <div class="hs-row">
-        <input id="hsInput" placeholder="e.g., thick hair" onkeydown="if(event.key==='Enter')hsSubmit()"/>
-        <button onclick="hsSubmit()">Add</button>
-      </div>
+<!-- GAME PAGE -->
+<div class="game" id="game">
+  <!-- Header -->
+  <div class="g-header">
+    <button class="home-btn" onclick="location.reload()">🏠 Home</button>
+    <div class="g-title">
+      <h1>Confident Me</h1>
+      <div class="sub">Appearance Ideals</div>
     </div>
-    <!-- Hotspot hover label -->
-    <div class="hs-label" id="hsLabel"></div>
+    <div class="safe-badge"><div class="icon">🛡️</div>Safe Space<br><span style="font-size:8px;color:var(--text-dim)">Be kind & respectful</span></div>
   </div>
 
-  <!-- Combined panel: traits + input -->
-  <div class="panel" id="panel">
-    <div class="traits-section">
-      <h2>📋 Your Traits</h2>
-      <div id="traitList"><div class="empty-msg">Type below or click on the body!</div></div>
-    </div>
-    <div class="input-section">
-      <h2>✏️ Add a trait</h2>
-      <textarea id="inp" placeholder="e.g., nice smile, blue eyes..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();submitTrait()}"></textarea>
-      <div class="btn-row">
-        <button class="bg1" id="btnGo" onclick="submitTrait()"><span class="bt">Add ✨</span><span class="sp"></span></button>
-        <button class="bdone" onclick="showDone()">Done ✅</button>
+  <!-- Main area -->
+  <div class="g-main">
+    <!-- Left sidebar -->
+    <div class="g-side">
+      <div class="mission-card">
+        <h3>📋 Your Mission</h3>
+        <p>Discover and collect positive traits about how we look.</p>
       </div>
-      <div class="counter"><span class="cnum" id="cnum">0</span><span class="clbl">traits found</span></div>
-      <div class="err" id="errMsg"></div>
-      <button class="bg1" style="background:none;border:2px solid var(--dash);color:var(--text-dim);box-shadow:none;font-size:11px;padding:6px;margin-top:4px;font-family:Nunito;font-weight:700" onclick="clearAll()">Clear All</button>
+      <div class="progress-card">
+        <h3>📊 Progress</h3>
+        <div class="num" id="pNum">0</div>
+        <div class="lbl">traits found</div>
+        <div class="hint" id="pHint">Let's find some amazing traits!</div>
+      </div>
     </div>
+
+    <!-- Figure area with slots -->
+    <div class="g-fig" id="figArea">
+      <!-- 8 annotation slots -->
+      <div class="slot slot-0" data-slot="0"></div>
+      <div class="slot slot-1" data-slot="1"></div>
+      <div class="slot slot-2" data-slot="2"></div>
+      <div class="slot slot-3" data-slot="3"></div>
+      <div class="slot slot-4" data-slot="4"></div>
+      <div class="slot slot-5" data-slot="5"></div>
+      <div class="slot slot-6" data-slot="6"></div>
+      <div class="slot slot-7" data-slot="7"></div>
+
+      <!-- Body SVG -->
+      <svg id="bodySvg" viewBox="0 0 200 440" xmlns="http://www.w3.org/2000/svg">
+        <g fill="none" stroke="#1B3D6F" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="100" cy="34" r="26"/>
+          <path d="M 30,88 Q 30,76 42,76 L 158,76 Q 170,76 170,88 L 170,186 Q 170,200 157,200 Q 146,200 146,186 L 146,112 Q 146,102 138,102 L 134,102 Q 128,102 128,110 L 128,234 Q 128,246 116,246 L 84,246 Q 72,246 72,234 L 72,110 Q 72,102 66,102 L 62,102 Q 54,102 54,112 L 54,186 Q 54,200 43,200 Q 30,200 30,186 Z"/>
+          <rect x="72" y="256" width="24" height="138" rx="12"/>
+          <rect x="104" y="256" width="24" height="138" rx="12"/>
+        </g>
+        <!-- Hotspot dots -->
+        <circle cx="100" cy="34" r="3.5" class="hs-dot"/>
+        <circle cx="100" cy="90" r="3.5" class="hs-dot" style="animation-delay:.3s"/>
+        <circle cx="42" cy="140" r="3.5" class="hs-dot" style="animation-delay:.5s"/>
+        <circle cx="158" cy="140" r="3.5" class="hs-dot" style="animation-delay:.7s"/>
+        <circle cx="100" cy="155" r="3.5" class="hs-dot" style="animation-delay:.4s"/>
+        <circle cx="100" cy="230" r="3.5" class="hs-dot" style="animation-delay:.6s"/>
+        <circle cx="88" cy="310" r="3.5" class="hs-dot" style="animation-delay:.8s"/>
+        <circle cx="112" cy="310" r="3.5" class="hs-dot" style="animation-delay:.2s"/>
+        <!-- Clickable hotspots -->
+        <g id="hotspots">
+          <circle cx="100" cy="34" r="32" class="hotspot" data-region="head" data-label="Head"/>
+          <rect x="28" y="74" width="144" height="30" rx="8" class="hotspot" data-region="shoulders" data-label="Shoulders"/>
+          <rect x="68" y="100" width="64" height="46" rx="6" class="hotspot" data-region="chest" data-label="Chest"/>
+          <rect x="24" y="96" width="36" height="100" rx="10" class="hotspot" data-region="arms" data-label="Arms"/>
+          <rect x="140" y="96" width="36" height="100" rx="10" class="hotspot" data-region="arms" data-label="Arms"/>
+          <rect x="68" y="142" width="64" height="60" rx="6" class="hotspot" data-region="abs" data-label="Abs / Core"/>
+          <rect x="62" y="198" width="76" height="52" rx="6" class="hotspot" data-region="hips" data-label="Hips / Waist"/>
+          <rect x="68" y="254" width="64" height="90" rx="6" class="hotspot" data-region="legs" data-label="Legs"/>
+          <rect x="68" y="340" width="64" height="60" rx="6" class="hotspot" data-region="feet" data-label="Feet"/>
+        </g>
+      </svg>
+
+      <div id="hsPopup"><h3>Add trait for <span id="hsRegionLabel">Head</span></h3><div class="hs-row"><input id="hsInput" placeholder="e.g., thick hair" onkeydown="if(event.key==='Enter')hsSubmit()"/><button onclick="hsSubmit()">Add</button></div></div>
+      <div class="hs-label" id="hsLabel"></div>
+    </div>
+  </div>
+
+  <!-- Mascot -->
+  <img class="mascot" src="images/mascot.png" alt="Mascot" id="mascot">
+
+  <!-- Bottom input bar -->
+  <div class="g-input">
+    <div class="g-input-wrap">
+      <span class="mic">🎤</span>
+      <input id="inp" placeholder="What traits come to mind?" onkeydown="if(event.key==='Enter'){event.preventDefault();submitTrait()}"/>
+    </div>
+    <button class="send-btn" id="btnGo" onclick="submitTrait()"><span class="arrow">➤</span><span class="sp"></span></button>
+    <button class="done-float" onclick="showDone()">Done ✅</button>
   </div>
 </div>
 
-<!-- ZOOM (smile only) -->
-<div id="zoomOverlay">
-  <div class="zoom-inner" id="zoomInner"></div>
-</div>
-
+<!-- OVERLAYS -->
+<div id="zoomOverlay"><div class="zoom-inner" id="zoomInner"></div></div>
 <div id="idkOverlay"><div class="idk-content"><div class="idk-x">✕</div><div class="idk-msg">Think harder! What comes to mind?</div></div></div>
 <div id="doneOverlay"><div class="done-content" id="doneContent"></div></div>
 <div id="toast"><span id="tE"></span><span id="tT"></span></div>
+
+<!-- Decorations -->
+<div class="deco" style="top:15%;right:8%;font-size:24px;color:var(--yellow)">⭐</div>
+<div class="deco" style="top:35%;right:4%;font-size:16px;color:var(--coral)">💛</div>
+<div class="deco" style="bottom:25%;right:12%;font-family:Fredoka;font-weight:700;font-size:20px;color:var(--teal-light)">+</div>
+<div class="deco" style="top:8%;left:45%;font-size:14px;color:var(--yellow)">✦</div>
 
 <script>
 /* AUDIO */
@@ -267,21 +344,48 @@ function burst(x,y,n){cv.width=innerWidth;cv.height=innerHeight;for(let i=0;i<n;
 function aniC(){cr=true;cx.clearRect(0,0,cv.width,cv.height);cp=cp.filter(p=>p.l>0);cp.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.35;p.r+=p.rv;p.l-=p.d;p.vx*=.99;cx.save();cx.translate(p.x,p.y);cx.rotate(p.r*Math.PI/180);cx.globalAlpha=Math.min(p.l*2,1);cx.fillStyle=p.c;cx.fillRect(-p.w/2,-p.h/2,p.w,p.h);cx.restore()});cp.length?requestAnimationFrame(aniC):cr=false}
 
 /* MILESTONES */
-const MS={3:{e:'⭐',t:'Great start!'},5:{e:'🔥',t:'On fire! 5!'},10:{e:'🎉',t:'Amazing! 10!'},15:{e:'🚀',t:'15 traits!'},20:{e:'💪',t:'Unstoppable!'},25:{e:'🌟',t:'Superstar!'},30:{e:'🏆',t:'Champion!'}};
+const MS={3:{e:'⭐',t:'Great start!'},5:{e:'🔥',t:'On fire! 5!'},10:{e:'🎉',t:'Amazing! 10!'},15:{e:'🚀',t:'15 traits!'},20:{e:'💪',t:'Unstoppable!'}};
 function checkMS(n){const m=MS[n];if(!m)return;document.getElementById('tE').textContent=m.e;document.getElementById('tT').textContent=m.t;const t=document.getElementById('toast');t.classList.add('show');sndCeleb();burst(innerWidth/2,innerHeight/3,90);setTimeout(()=>t.classList.remove('show'),3000)}
 
 /* INTRO */
-function startGame(){initA();sndWhoosh();document.querySelectorAll('.ideco').forEach(d=>d.classList.add('on'));const i=document.getElementById('intro');i.classList.add('hidden');setTimeout(()=>{i.style.display='none';document.getElementById('page').classList.add('on');document.querySelectorAll('.blob').forEach(b=>b.classList.add('on'));setTimeout(()=>sndPop(),500)},700)}
+function startGame(){initA();sndWhoosh();document.querySelectorAll('.ideco').forEach(d=>d.classList.add('on'));document.getElementById('intro').classList.add('hidden');setTimeout(()=>{document.getElementById('intro').style.display='none';document.getElementById('game').classList.add('on');setTimeout(()=>sndPop(),500)},700)}
 
-/* REGIONS */
-const REGIONS={
-  head:{vb:'55 -10 90 90',cx:100,cy:34},face:{vb:'65 5 70 70',cx:100,cy:40},
-  mouth:{vb:'70 25 60 45',cx:100,cy:48},shoulders:{vb:'10 55 180 70',cx:100,cy:88},
-  chest:{vb:'55 70 90 80',cx:100,cy:100},arms:{vb:'10 70 80 130',cx:45,cy:140},
-  abs:{vb:'55 110 90 90',cx:100,cy:155},hips:{vb:'50 180 100 80',cx:100,cy:230},
-  legs:{vb:'50 240 100 120',cx:100,cy:300},feet:{vb:'50 340 100 80',cx:100,cy:380},
-  full:{vb:'10 60 180 180',cx:100,cy:150}
-};
+/* REGIONS & SLOT MAPPING */
+const REGIONS={head:{s:[0,1]},face:{s:[0,1]},mouth:{s:[0,1]},shoulders:{s:[2,3]},chest:{s:[2,3]},arms:{s:[2,3]},abs:{s:[4,5]},hips:{s:[4,5]},legs:{s:[6,7]},feet:{s:[6,7]},full:{s:[4,5]}};
+const slotData=new Array(8).fill(null);
+
+function findSlot(region){
+  const r=REGIONS[region]||REGIONS.full;
+  for(const s of r.s)if(!slotData[s])return s;
+  for(let i=0;i<8;i++)if(!slotData[i])return i;
+  return r.s[0];
+}
+
+function fillSlot(idx,trait,detail){
+  slotData[idx]={trait,detail};
+  const el=document.querySelector(`.slot-${idx}`);
+  el.className=`slot slot-${idx} filled`;
+  el.innerHTML=`<div>${trait}</div>${detail?`<div class="sub">${detail}</div>`:''}`;
+  el.onmouseenter=()=>highlightRegion(Object.keys(REGIONS).find(k=>REGIONS[k].s.includes(idx))||'full');
+  el.onmouseleave=()=>clearHL();
+}
+
+function renderSlots(){
+  for(let i=0;i<8;i++){
+    const el=document.querySelector(`.slot-${i}`);
+    if(slotData[i]){
+      el.className=`slot slot-${i} filled`;
+      el.innerHTML=`<div>${slotData[i].trait}</div>${slotData[i].detail?`<div class="sub">${slotData[i].detail}</div>`:''}`;
+    }else{
+      el.className=`slot slot-${i}`;
+      el.innerHTML='';
+    }
+  }
+}
+
+/* HIGHLIGHT */
+function highlightRegion(region){}
+function clearHL(){}
 
 /* API */
 const AE='https://nesoi-resource.openai.azure.com';
@@ -297,22 +401,15 @@ async function submitTrait(){
   const inp=document.getElementById('inp'),txt=inp.value.trim();
   if(!txt)return;
   if(IDK_RE.test(txt)){showIDK();inp.value='';return}
+  if(SMILE_RE.test(txt)){inp.value='';showSmileZoom();return}
 
-  if(SMILE_RE.test(txt)){
-    inp.value='';
-    showSmileZoom(txt);
-    return;
-  }
-
-  busy=true;
-  const btn=document.getElementById('btnGo');
+  busy=true;const btn=document.getElementById('btnGo');
   btn.disabled=true;btn.classList.add('loading');
-
   try{
     const r=await fetch(`${AE}/openai/deployments/gpt-5.4/chat/completions?api-version=${AV}`,{
       method:'POST',headers:{'Content-Type':'application/json','api-key':AK},
       body:JSON.stringify({messages:[
-        {role:'system',content:`Given a physical appearance trait, return JSON with "trait" (cleaned title case 2-4 words) and "region" (one of: head,face,mouth,shoulders,chest,arms,abs,hips,legs,feet,full). Return ONLY JSON, no markdown.`},
+        {role:'system',content:'Given a physical appearance trait, return JSON with "trait" (cleaned title case 2-4 words) and "region" (one of: head,face,mouth,shoulders,chest,arms,abs,hips,legs,feet,full). Return ONLY JSON.'},
         {role:'user',content:txt}
       ],max_completion_tokens:200,temperature:0.2})
     });
@@ -321,191 +418,121 @@ async function submitTrait(){
     const p=JSON.parse(c.replace(/```json\s*/g,'').replace(/```/g,'').trim());
     inp.value='';
     addTrait(p.trait||txt,null,p.region||'full');
-    flashRegion(p.region||'full');
-  }catch(e){
-    console.error(e);
-    showErr('Oops! Try again.');
-  }finally{busy=false;btn.disabled=false;btn.classList.remove('loading')}
+  }catch(e){console.error(e);showErr()}
+  finally{busy=false;btn.disabled=false;btn.classList.remove('loading')}
 }
 
-function showErr(msg){const el=document.getElementById('errMsg');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),3000)}
+function showErr(){const inp=document.getElementById('inp');inp.classList.add('shake');setTimeout(()=>inp.classList.remove('shake'),500)}
+
+function addTrait(trait,detail,region){
+  const slot=findSlot(region);
+  fillSlot(slot,trait,detail);
+  traits.push({trait,detail:detail||'',region,slot});
+  sndDing();updateProgress();checkMS(traits.length);
+}
+
+function updateProgress(){
+  const el=document.getElementById('pNum');
+  el.textContent=traits.length;
+  el.classList.remove('bo');void el.offsetWidth;
+  if(traits.length)el.classList.add('bo');
+  const hints=['Let\'s find some amazing traits!','Great start! Keep going!','You\'re on a roll!','Impressive collection!','Wow, so many!'];
+  document.getElementById('pHint').textContent=hints[Math.min(Math.floor(traits.length/3),hints.length-1)];
+}
 
 /* SMILE ZOOM */
-function showSmileZoom(txt){
+function showSmileZoom(){
   sndPop();
-  const overlay=document.getElementById('zoomOverlay');
   const inner=document.getElementById('zoomInner');
-
   const variations=[
     {label:'Bright White Teeth',img:'images/smile_1.png'},
     {label:'Wide Happy Grin',img:'images/smile_2.png'},
     {label:'Gentle Soft Smile',img:'images/smile_3.png'}
   ];
-
   inner.innerHTML=`
     <div class="zq">What do you mean by <span>Nice Smile</span>?</div>
     <div class="zimages" id="zimages"></div>
-    <div style="margin-top:18px;opacity:0;animation:su .4s .8s ease-out forwards">
-      <div style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Or describe it yourself</div>
-      <div style="display:flex;gap:8px;max-width:360px;margin:0 auto">
-        <input id="smileCustom" placeholder="Type your own..." style="flex:1;padding:10px 14px;border:2px solid var(--dash);border-radius:12px;font-family:Nunito;font-size:13px;color:var(--navy);outline:none;transition:border .2s" onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--dash)'" onkeydown="if(event.key==='Enter'){event.preventDefault();smileCustomSubmit()}"/>
-        <button onclick="smileCustomSubmit()" style="padding:10px 18px;background:var(--green);color:#fff;border:none;border-radius:12px;font-family:Fredoka;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s">Add</button>
+    <div style="margin-top:16px;opacity:0;animation:su .4s .8s ease-out forwards">
+      <div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Or describe it yourself</div>
+      <div style="display:flex;gap:8px;max-width:340px;margin:0 auto">
+        <input id="smileCustom" placeholder="Type your own..." style="flex:1;padding:10px 14px;border:2px solid var(--dash);border-radius:12px;font-family:Nunito;font-size:13px;color:var(--navy);outline:none" onkeydown="if(event.key==='Enter'){event.preventDefault();smileCustomSubmit()}" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--dash)'"/>
+        <button onclick="smileCustomSubmit()" style="padding:10px 16px;background:var(--teal);color:#fff;border:none;border-radius:12px;font-family:Fredoka;font-size:13px;font-weight:600;cursor:pointer">Add</button>
       </div>
     </div>`;
   const container=document.getElementById('zimages');
-
   variations.forEach((v,i)=>{
     const card=document.createElement('div');
     card.className='zimg-card';
     card.style.animation=`su 0.5s ${0.3+i*0.15}s ease-out forwards`;
     card.innerHTML=`<img src="${v.img}" alt="${v.label}"><div class="zimg-label">${v.label}</div>`;
-    card.onclick=()=>{sndSelect();addTrait('Nice Smile',v.label,'mouth');closeZoom();flashRegion('mouth')};
+    card.onclick=()=>{sndSelect();addTrait('Nice Smile',v.label,'mouth');closeZoom()};
     container.appendChild(card);
   });
-
-  overlay.classList.add('active');
+  document.getElementById('zoomOverlay').classList.add('active');
 }
 
 function smileCustomSubmit(){
-  const inp=document.getElementById('smileCustom');
-  const val=inp?.value.trim();
+  const inp=document.getElementById('smileCustom'),val=inp?.value.trim();
   if(!val)return;
-  sndSelect();addTrait('Nice Smile',val,'mouth');closeZoom();flashRegion('mouth');
+  sndSelect();addTrait('Nice Smile',val,'mouth');closeZoom();
 }
 
 function closeZoom(){document.getElementById('zoomOverlay').classList.remove('active')}
-
-/* FLASH REGION highlight on body */
-function flashRegion(region){
-  const r=REGIONS[region];if(!r)return;
-  const svg=document.getElementById('lineSvg');
-  const area=document.getElementById('figArea').getBoundingClientRect();
-  const body=document.getElementById('bodySvg').getBoundingClientRect();
-  const sx=body.width/200,sy=body.height/440;
-  const bL=body.left-area.left,bT=body.top-area.top;
-  svg.setAttribute('viewBox',`0 0 ${area.width} ${area.height}`);
-  const px=bL+r.cx*sx,py=bT+r.cy*sy;
-  svg.innerHTML=`<circle cx="${px}" cy="${py}" r="20" fill="none" stroke="var(--green)" stroke-width="3" stroke-dasharray="6 4" opacity="0.7">
-    <animate attributeName="r" values="15;35;15" dur="1s" repeatCount="1"/>
-    <animate attributeName="opacity" values="0.7;0.2;0" dur="1s" repeatCount="1" fill="freeze"/>
-  </circle>`;
-  setTimeout(()=>svg.innerHTML='',1200);
-}
-
-/* ADD TRAIT */
-function addTrait(trait,detail,region){
-  traits.push({trait,detail:detail||'',region});
-  sndDing();renderTraitList();updateCounter();checkMS(traits.length);
-}
-
-function renderTraitList(){
-  const list=document.getElementById('traitList');
-  list.innerHTML='';
-  if(!traits.length){list.innerHTML='<div class="empty-msg">Type below or click on the body!</div>';return}
-  traits.forEach((t,i)=>{
-    const el=document.createElement('div');
-    el.className='trait-item';
-    el.innerHTML=`<div>${t.trait}</div>${t.detail?`<div class="sub">${t.detail}</div>`:''}`;
-    el.onmouseenter=()=>highlightRegion(t.region);
-    el.onmouseleave=()=>clearHL();
-    list.appendChild(el);
-    setTimeout(()=>el.classList.add('in'),50+i*40);
-  });
-  list.scrollTop=list.scrollHeight;
-}
-
-function highlightRegion(region){
-  const r=REGIONS[region];if(!r)return;
-  const svg=document.getElementById('lineSvg');
-  const area=document.getElementById('figArea').getBoundingClientRect();
-  const body=document.getElementById('bodySvg').getBoundingClientRect();
-  const sx=body.width/200,sy=body.height/440;
-  const bL=body.left-area.left,bT=body.top-area.top;
-  svg.setAttribute('viewBox',`0 0 ${area.width} ${area.height}`);
-  const px=bL+r.cx*sx,py=bT+r.cy*sy;
-  svg.innerHTML=`<circle cx="${px}" cy="${py}" r="22" fill="none" stroke="var(--green)" stroke-width="3" stroke-dasharray="8 4" opacity="0.6">
-    <animate attributeName="r" values="18;28;18" dur="1.5s" repeatCount="indefinite"/>
-    <animate attributeName="opacity" values="0.6;0.3;0.6" dur="1.5s" repeatCount="indefinite"/>
-  </circle>`;
-}
-function clearHL(){document.getElementById('lineSvg').innerHTML=''}
-
-function updateCounter(){const el=document.getElementById('cnum');el.textContent=traits.length;el.classList.remove('bo');void el.offsetWidth;if(traits.length)el.classList.add('bo')}
 
 /* HOTSPOTS */
 let activeHS=null;
 document.querySelectorAll('.hotspot').forEach(hs=>{
   hs.addEventListener('click',e=>{
-    e.stopPropagation();
-    const region=hs.dataset.region;
-    const label=hs.dataset.label;
-    const popup=document.getElementById('hsPopup');
-    const input=document.getElementById('hsInput');
+    e.stopPropagation();sndClick();
+    const region=hs.dataset.region,label=hs.dataset.label;
+    const popup=document.getElementById('hsPopup'),input=document.getElementById('hsInput');
     document.getElementById('hsRegionLabel').textContent=label;
     activeHS=region;
-
-    const svg=document.getElementById('bodySvg');
-    const svgRect=svg.getBoundingClientRect();
     const figRect=document.getElementById('figArea').getBoundingClientRect();
     const bbox=hs.getBoundingClientRect();
-    const px=bbox.left+bbox.width/2-figRect.left;
-    const py=bbox.top+bbox.height/2-figRect.top;
-
-    popup.style.left=Math.min(px+20,figRect.width-260)+'px';
-    popup.style.top=Math.max(py-40,10)+'px';
-    popup.classList.add('active');sndClick();
-    input.value='';
+    const px=bbox.left+bbox.width/2-figRect.left,py=bbox.top+bbox.height/2-figRect.top;
+    popup.style.left=Math.min(px+20,figRect.width-240)+'px';
+    popup.style.top=Math.max(py-30,10)+'px';
+    popup.classList.add('active');input.value='';
     setTimeout(()=>input.focus(),100);
   });
-
   hs.addEventListener('mouseenter',e=>{
-    const lbl=document.getElementById('hsLabel');
+    const lbl=document.getElementById('hsLabel'),figRect=document.getElementById('figArea').getBoundingClientRect(),bbox=hs.getBoundingClientRect();
     lbl.textContent=hs.dataset.label;
-    const figRect=document.getElementById('figArea').getBoundingClientRect();
-    const bbox=hs.getBoundingClientRect();
     lbl.style.left=(bbox.left+bbox.width/2-figRect.left)+'px';
-    lbl.style.top=(bbox.top-figRect.top-24)+'px';
+    lbl.style.top=(bbox.top-figRect.top-22)+'px';
     lbl.style.opacity='1';
   });
   hs.addEventListener('mouseleave',()=>{document.getElementById('hsLabel').style.opacity='0'});
 });
 
 function hsSubmit(){
-  const inp=document.getElementById('hsInput');
-  const txt=inp.value.trim();
+  const inp=document.getElementById('hsInput'),txt=inp.value.trim();
   if(!txt)return;
   if(IDK_RE.test(txt)){closeHsPopup();showIDK();return}
-  sndSelect();addTrait(txt,null,activeHS||'full');
-  flashRegion(activeHS||'full');
-  closeHsPopup();
+  sndSelect();addTrait(txt,null,activeHS||'full');closeHsPopup();
 }
-
 function closeHsPopup(){document.getElementById('hsPopup').classList.remove('active');activeHS=null}
 document.getElementById('figArea').addEventListener('click',e=>{
   if(!e.target.closest('.hotspot')&&!e.target.closest('#hsPopup'))closeHsPopup();
 });
 
 /* IDK */
-function showIDK(){sndErr();const o=document.getElementById('idkOverlay');o.classList.add('active');const ta=document.getElementById('inp');ta.classList.add('shake');setTimeout(()=>ta.classList.remove('shake'),500);setTimeout(()=>o.classList.remove('active'),1800)}
+function showIDK(){sndErr();document.getElementById('idkOverlay').classList.add('active');const inp=document.getElementById('inp');inp.classList.add('shake');setTimeout(()=>inp.classList.remove('shake'),500);setTimeout(()=>document.getElementById('idkOverlay').classList.remove('active'),1800)}
 
 /* DONE */
 function showDone(){
   sndCeleb();burst(innerWidth/2,innerHeight/3,120);
   const c=document.getElementById('doneContent');
-  let h='';traits.forEach(t=>{h+=`<div class="trait-item" style="opacity:1;transform:none"><div>${t.trait}</div>${t.detail?`<div class="sub">${t.detail}</div>`:''}</div>`});
-  c.innerHTML=`<div class="done-emoji">🎉</div><div class="done-title">Great Job!</div><div class="done-count">${traits.length}</div><div class="done-label">appearance ideals identified</div>${h?`<div class="done-list">${h}</div>`:'<div class="done-label" style="color:var(--coral)">No traits added yet!</div>'}<button class="done-back" onclick="closeDone()">Back to Activity</button>`;
+  let h='';traits.forEach(t=>{h+=`<div class="done-trait"><div>${t.trait}</div>${t.detail?`<div class="sub">${t.detail}</div>`:''}</div>`});
+  c.innerHTML=`<div class="done-emoji">🎉</div><div class="done-title">Great Job!</div><div class="done-count">${traits.length}</div><div class="done-label">appearance ideals identified</div>${h?`<div class="done-traits">${h}</div>`:'<div class="done-label" style="color:var(--coral)">No traits yet!</div>'}<button class="done-back" onclick="closeDone()">Back to Activity</button>`;
   document.getElementById('doneOverlay').classList.add('active');
 }
 function closeDone(){document.getElementById('doneOverlay').classList.remove('active')}
 
-function clearAll(){traits=[];renderTraitList();updateCounter();clearHL();sndPop()}
+function clearAll(){traits=[];slotData.fill(null);renderSlots();updateProgress();sndPop()}
 
 setTimeout(()=>document.querySelectorAll('.ideco').forEach((d,i)=>{d.style.animationDelay=(.3+i*.12)+'s';d.classList.add('on')}),100);
-['12%,85%,+,32px,navy','88%,18%,+,24px,mint','6%,40%,+,20px,coral','90%,65%,+,18px,yellow'].forEach(d=>{
-  const[l,t,ch,sz,c]=d.split(',');const el=document.createElement('div');
-  el.style.cssText=`position:fixed;pointer-events:none;z-index:0;opacity:.06;font-family:Fredoka;font-weight:700;left:${l};top:${t};font-size:${sz};color:var(--${c});animation:gentleFloat ${6+Math.random()*8}s ease-in-out infinite;animation-delay:${Math.random()*3}s`;
-  el.textContent=ch;document.body.appendChild(el);
-});
 </script>
 </body>
 </html>
