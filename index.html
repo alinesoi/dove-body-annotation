@@ -16,7 +16,7 @@
   --card-bg:rgba(255,255,255,0.85);--dash:#B8D8D2;
   --text:#1B3D6F;--text-dim:#5A7A9E;--text-muted:#8BAAB8;
 }
-html,body{height:100%;font-family:'Nunito',sans-serif;background:linear-gradient(160deg,#C2EDDF 0%,#D8F5EC 30%,#E4FAF3 60%,#D0F0E6 100%);color:var(--text);overflow:hidden}
+html,body{height:100%;font-family:'Nunito',sans-serif;background:linear-gradient(160deg,#B8E8D8 0%,#CCEEE3 30%,#DDF6EF 60%,#C6ECE0 100%);color:var(--text);overflow:hidden}
 
 /* ═══ INTRO ═══ */
 #intro{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;flex-direction:column;
@@ -40,19 +40,19 @@ html,body{height:100%;font-family:'Nunito',sans-serif;background:linear-gradient
 
 /* Header */
 .g-header{display:flex;align-items:flex-start;padding:6px 14px;flex-shrink:0;z-index:10}
-.home-btn{background:var(--card-bg);border:2px solid var(--dash);border-radius:10px;padding:4px 10px;font-size:11px;cursor:pointer;font-family:'Fredoka';color:var(--navy);transition:all .2s}
-.home-btn:hover{background:#fff;transform:scale(1.05)}
+.home-btn{background:#fff;border:2.5px solid var(--dash);border-radius:12px;padding:6px 14px;font-size:12px;cursor:pointer;font-family:'Fredoka';font-weight:600;color:var(--navy);transition:all .2s;box-shadow:0 2px 8px rgba(69,181,170,.1)}
+.home-btn:hover{background:#fff;transform:scale(1.05);border-color:var(--teal)}
 .g-title{flex:1;text-align:center}
-.g-title h1{font-family:'Fredoka';font-size:clamp(32px,4vw,42px);font-weight:700;color:var(--navy);line-height:1}
-.g-title .sub{display:inline-block;font-family:'Fredoka';font-size:clamp(14px,1.8vw,18px);font-weight:600;color:#fff;background:var(--coral);padding:5px 26px;border-radius:16px;margin-top:4px;box-shadow:0 3px 12px rgba(244,123,108,.3)}
-.safe-badge{background:var(--card-bg);border:2px solid var(--dash);border-radius:12px;padding:5px 8px;font-size:8px;font-weight:800;color:var(--teal);text-align:center;line-height:1.2;max-width:72px}
-.safe-badge .icon{font-size:12px;display:block;margin-bottom:1px}
+.g-title h1{font-family:'Fredoka';font-size:clamp(36px,4.5vw,48px);font-weight:700;color:var(--navy);line-height:1}
+.g-title .sub{display:inline-block;font-family:'Fredoka';font-size:clamp(15px,2vw,20px);font-weight:600;color:#fff;background:var(--coral);padding:6px 30px;border-radius:18px;margin-top:5px;box-shadow:0 4px 16px rgba(244,123,108,.35)}
+.safe-badge{background:#fff;border:2.5px solid var(--teal-light);border-radius:14px;padding:8px 12px;font-size:10px;font-weight:800;color:var(--teal);text-align:center;line-height:1.3;max-width:100px;box-shadow:0 2px 10px rgba(69,181,170,.15)}
+.safe-badge .icon{font-size:16px;display:block;margin-bottom:2px}
 
 /* Main area */
 .g-main{flex:1;display:flex;padding:0 12px;min-height:0;gap:8px}
 
 /* Left sidebar */
-.g-side{width:155px;flex-shrink:0;display:flex;flex-direction:column;gap:8px;padding:2px 0;opacity:0}
+.g-side{width:168px;flex-shrink:0;display:flex;flex-direction:column;gap:10px;padding:2px 0;opacity:0}
 .game.on .g-side{animation:sfr .6s .5s ease-out forwards}
 .mission-card,.progress-card{background:#fff;border:2.5px solid var(--dash);border-radius:14px;overflow:hidden;backdrop-filter:blur(8px);box-shadow:0 2px 12px rgba(69,181,170,.1)}
 .mission-card h3,.progress-card h3{font-family:'Fredoka';font-size:13px;font-weight:600;color:#fff;background:var(--teal);margin:0;padding:7px 12px;display:flex;align-items:center;gap:4px}
@@ -73,12 +73,12 @@ html,body{height:100%;font-family:'Nunito',sans-serif;background:linear-gradient
 
 /* Annotation slots */
 .slot{
-  position:absolute;min-height:34px;
-  border:2.5px dashed #8DC5B6;border-radius:12px;
+  position:absolute;min-height:36px;
+  border:2.5px dashed #7CB8AD;border-radius:14px;
   display:flex;align-items:center;justify-content:center;
   font-size:11px;color:var(--text-muted);
   transition:all .3s;z-index:3;
-  background:rgba(255,255,255,.35);
+  background:rgba(255,255,255,.4);
 }
 .slot.filled{
   border-style:solid;border-color:var(--teal-light);
@@ -93,7 +93,7 @@ html,body{height:100%;font-family:'Nunito',sans-serif;background:linear-gradient
 @keyframes slotPop{0%{opacity:0;transform:scale(.5)}60%{transform:scale(1.1)}100%{opacity:1;transform:scale(1)}}
 
 /* Slot positions - tight around figure, 4 per side */
-.slot{width:120px;min-height:32px}
+.slot{width:130px;min-height:36px}
 .slot-0{top:6%;left:50%;transform:translateX(-190px)}
 .slot-1{top:6%;left:50%;transform:translateX(70px)}
 .slot-2{top:28%;left:50%;transform:translateX(-200px)}
@@ -125,7 +125,7 @@ html,body{height:100%;font-family:'Nunito',sans-serif;background:linear-gradient
 .g-input-wrap{
   flex:1;display:flex;align-items:center;gap:10px;
   background:#fff;border:3.5px solid #F5A623;border-radius:32px;
-  padding:10px 10px 10px 20px;box-shadow:0 0 0 6px rgba(245,166,35,.15),0 6px 24px rgba(244,123,108,.15);
+  padding:12px 12px 12px 22px;box-shadow:0 0 0 8px rgba(245,166,35,.18),0 6px 24px rgba(244,123,108,.15);
 }
 .g-input-wrap .mic{font-size:20px;opacity:.5}
 .g-input-wrap input{
@@ -153,10 +153,7 @@ html,body{height:100%;font-family:'Nunito',sans-serif;background:linear-gradient
 
 /* Decorative elements - z-index 5 to appear above game bg */
 .deco{position:fixed;pointer-events:none;z-index:5}
-.deco-big{font-size:32px;opacity:.85}
-.deco-med{font-size:22px;opacity:.75}
-.deco-sm{font-size:16px;opacity:.6}
-.deco-dot{width:12px;height:12px;border-radius:50%;opacity:.4}
+.deco-dot{border-radius:50%}
 
 /* ═══ OVERLAYS ═══ */
 #zoomOverlay{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;background:rgba(224,247,241,.95);backdrop-filter:blur(16px)}
@@ -298,22 +295,37 @@ html,body{height:100%;font-family:'Nunito',sans-serif;background:linear-gradient
 <div id="doneOverlay"><div class="done-content" id="doneContent"></div></div>
 <div id="toast"><span id="tE"></span><span id="tT"></span></div>
 
-<!-- Right side decorations using CSS shapes (not emojis) -->
-<svg class="deco" style="top:12%;right:3%;width:36px;height:36px;opacity:.85" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9" fill="#F7DC6F"/></svg>
-<svg class="deco" style="top:27%;right:2%;width:28px;height:28px;opacity:.75" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#F47B6C"/></svg>
-<svg class="deco" style="top:40%;right:5%;width:30px;height:30px;opacity:.8" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9" fill="#F5A623"/></svg>
-<svg class="deco" style="top:54%;right:2.5%;width:24px;height:24px;opacity:.7" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#F7DC6F"/></svg>
-<svg class="deco" style="top:66%;right:6%;width:20px;height:20px;opacity:.65" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9" fill="#F47B6C"/></svg>
-<div class="deco deco-dot" style="top:20%;right:9%;background:#45B5AA"></div>
-<div class="deco deco-dot" style="top:48%;right:8%;background:#F47B6C"></div>
-<div class="deco deco-dot" style="top:72%;right:4%;background:#45B5AA;width:8px;height:8px"></div>
-<!-- Left side -->
-<div class="deco deco-dot" style="top:48%;left:15%;background:#45B5AA;opacity:.3"></div>
-<div class="deco" style="bottom:22%;left:14%;font-family:Fredoka;font-weight:700;font-size:26px;color:#7EDDC3;opacity:.4">+</div>
-<div class="deco deco-dot" style="bottom:16%;left:9%;background:#45B5AA;opacity:.25"></div>
-<div class="deco" style="top:60%;left:12%;font-family:Fredoka;font-weight:700;font-size:18px;color:#45B5AA;opacity:.25">+</div>
-<!-- Bottom right -->
-<svg class="deco" style="bottom:20%;right:8%;width:22px;height:22px;opacity:.5" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9" fill="#F7DC6F"/></svg>
+<!-- ═══ RIGHT SIDE DECORATIONS ═══ -->
+<!-- Big yellow star -->
+<svg class="deco" style="top:10%;right:2.5%;width:56px;height:56px" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9" fill="#FFD700"/></svg>
+<!-- Coral heart -->
+<svg class="deco" style="top:24%;right:4%;width:40px;height:40px" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#F47B6C"/></svg>
+<!-- Orange star -->
+<svg class="deco" style="top:37%;right:2%;width:44px;height:44px" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9" fill="#F5A623"/></svg>
+<!-- Yellow heart -->
+<svg class="deco" style="top:50%;right:5%;width:34px;height:34px" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#FFD700"/></svg>
+<!-- Small coral star -->
+<svg class="deco" style="top:62%;right:3%;width:32px;height:32px" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9" fill="#F47B6C"/></svg>
+<!-- Yellow star bottom -->
+<svg class="deco" style="top:75%;right:6%;width:28px;height:28px" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9" fill="#FFD700"/></svg>
+<!-- Teal dots right side -->
+<div class="deco deco-dot" style="top:18%;right:8%;width:14px;height:14px;background:#45B5AA;opacity:.7"></div>
+<div class="deco deco-dot" style="top:33%;right:9%;width:10px;height:10px;background:#F47B6C;opacity:.8"></div>
+<div class="deco deco-dot" style="top:46%;right:2%;width:12px;height:12px;background:#45B5AA;opacity:.6"></div>
+<div class="deco deco-dot" style="top:58%;right:9%;width:8px;height:8px;background:#F5A623;opacity:.7"></div>
+<div class="deco deco-dot" style="top:70%;right:2%;width:10px;height:10px;background:#45B5AA;opacity:.6"></div>
+<!-- Orange heart top-right -->
+<svg class="deco" style="top:5%;right:8%;width:26px;height:26px;opacity:.9" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#F5A623"/></svg>
+
+<!-- ═══ LEFT SIDE DECORATIONS ═══ -->
+<div class="deco" style="top:55%;left:13%;font-family:Fredoka;font-weight:700;font-size:32px;color:#7EDDC3;opacity:.6">+</div>
+<div class="deco" style="top:68%;left:10%;font-family:Fredoka;font-weight:700;font-size:22px;color:#45B5AA;opacity:.5">+</div>
+<div class="deco deco-dot" style="top:62%;left:16%;width:12px;height:12px;background:#45B5AA;opacity:.4"></div>
+<div class="deco deco-dot" style="top:75%;left:14%;width:10px;height:10px;background:#7EDDC3;opacity:.35"></div>
+<div class="deco deco-dot" style="top:80%;left:8%;width:8px;height:8px;background:#45B5AA;opacity:.3"></div>
+<!-- Bottom area decoration -->
+<svg class="deco" style="bottom:12%;right:10%;width:24px;height:24px;opacity:.7" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9" fill="#F7DC6F"/></svg>
+<svg class="deco" style="bottom:8%;left:16%;width:20px;height:20px;opacity:.5" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9" fill="#45B5AA"/></svg>
 
 <script>
 /* AUDIO */
