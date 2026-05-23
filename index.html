@@ -298,21 +298,22 @@ html,body{height:100%;font-family:'Nunito',sans-serif;background:linear-gradient
 <div id="doneOverlay"><div class="done-content" id="doneContent"></div></div>
 <div id="toast"><span id="tE"></span><span id="tT"></span></div>
 
-<!-- Right side - big colorful decorations matching mockup -->
-<div class="deco deco-big" style="top:14%;right:4%">⭐</div>
-<div class="deco deco-med" style="top:28%;right:2.5%;color:var(--coral)">🧡</div>
-<div class="deco deco-big" style="top:42%;right:5%">⭐</div>
-<div class="deco deco-med" style="top:56%;right:3%;color:var(--yellow)">💛</div>
-<div class="deco deco-sm" style="top:68%;right:6%;color:var(--coral)">❤️</div>
-<div class="deco deco-dot" style="top:22%;right:10%;background:var(--teal)"></div>
-<div class="deco deco-dot" style="top:50%;right:9%;background:var(--coral)"></div>
+<!-- Right side decorations using CSS shapes (not emojis) -->
+<svg class="deco" style="top:12%;right:3%;width:36px;height:36px;opacity:.85" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9" fill="#F7DC6F"/></svg>
+<svg class="deco" style="top:27%;right:2%;width:28px;height:28px;opacity:.75" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#F47B6C"/></svg>
+<svg class="deco" style="top:40%;right:5%;width:30px;height:30px;opacity:.8" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9" fill="#F5A623"/></svg>
+<svg class="deco" style="top:54%;right:2.5%;width:24px;height:24px;opacity:.7" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#F7DC6F"/></svg>
+<svg class="deco" style="top:66%;right:6%;width:20px;height:20px;opacity:.65" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9" fill="#F47B6C"/></svg>
+<div class="deco deco-dot" style="top:20%;right:9%;background:#45B5AA"></div>
+<div class="deco deco-dot" style="top:48%;right:8%;background:#F47B6C"></div>
+<div class="deco deco-dot" style="top:72%;right:4%;background:#45B5AA;width:8px;height:8px"></div>
 <!-- Left side -->
-<div class="deco deco-dot" style="top:50%;left:16%;background:var(--teal);opacity:.25"></div>
-<div class="deco" style="bottom:25%;left:16%;font-family:Fredoka;font-weight:700;font-size:22px;color:var(--teal-light);opacity:.3">+</div>
-<div class="deco deco-dot" style="bottom:18%;left:10%;background:var(--teal);opacity:.2"></div>
-<!-- Top -->
-<div class="deco" style="top:4%;left:48%;font-size:12px;opacity:.3;color:var(--yellow)">✦</div>
-<div class="deco deco-dot" style="bottom:12%;right:12%;background:var(--teal);opacity:.2"></div>
+<div class="deco deco-dot" style="top:48%;left:15%;background:#45B5AA;opacity:.3"></div>
+<div class="deco" style="bottom:22%;left:14%;font-family:Fredoka;font-weight:700;font-size:26px;color:#7EDDC3;opacity:.4">+</div>
+<div class="deco deco-dot" style="bottom:16%;left:9%;background:#45B5AA;opacity:.25"></div>
+<div class="deco" style="top:60%;left:12%;font-family:Fredoka;font-weight:700;font-size:18px;color:#45B5AA;opacity:.25">+</div>
+<!-- Bottom right -->
+<svg class="deco" style="bottom:20%;right:8%;width:22px;height:22px;opacity:.5" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9" fill="#F7DC6F"/></svg>
 
 <script>
 /* AUDIO */
