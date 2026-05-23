@@ -61,31 +61,31 @@ html,body{height:100%;font-family:'Nunito',sans-serif;overflow:hidden;background
   font-size:min(0.8vw,9px);color:var(--teal);font-style:italic;font-weight:600;
   background:#fff;border-radius:0;cursor:default;z-index:2;text-align:center;padding:0 2px}
 
-/* Annotation slots - transparent when empty, white bg when filled */
+/* Annotation slots - GPT-4o vision detected positions */
 .ov-slot{
-  width:12.5%;height:5.5%;border-radius:12px;
+  width:14.2%;height:7%;border-radius:14px;
   display:flex;align-items:center;justify-content:center;
   transition:all .3s;z-index:3;
 }
 .ov-slot.filled{
   background:rgba(255,255,255,.95);border:2px solid var(--teal-light);
-  color:var(--navy);font-weight:700;font-size:min(1.1vw,12px);
-  text-align:center;padding:2px 6px;
+  color:var(--navy);font-weight:700;font-size:min(1.2vw,13px);
+  text-align:center;padding:4px 8px;
   animation:slotPop .5s cubic-bezier(.34,1.56,.64,1);
 }
 .ov-slot.filled:hover{transform:scale(1.05);border-color:var(--teal);box-shadow:0 4px 16px rgba(69,181,170,.2)}
 .ov-slot .sub{font-size:min(0.8vw,9px);font-weight:600;color:var(--text-dim);margin-top:1px}
 
-/* Left slots - positioned to match mockup's dashed rectangles */
-.slot-0{left:14.5%;top:24%}
-.slot-2{left:14.5%;top:38%}
-.slot-4{left:14.5%;top:52%}
-.slot-6{left:14.5%;top:67%}
-/* Right slots */
-.slot-1{left:68.5%;top:24%}
-.slot-3{left:68.5%;top:38%}
-.slot-5{left:68.5%;top:52%}
-.slot-7{left:68.5%;top:67%}
+/* Left slots - GPT-4o detected: left=21.4%, y=23.1/36.4/51.0/66.8% */
+.slot-0{left:21.4%;top:23.1%}
+.slot-2{left:21.4%;top:36.4%}
+.slot-4{left:21.4%;top:51%}
+.slot-6{left:21.4%;top:66.8%}
+/* Right slots - GPT-4o detected: left=65.2% */
+.slot-1{left:65.2%;top:23.1%}
+.slot-3{left:65.2%;top:36.4%}
+.slot-5{left:65.2%;top:51%}
+.slot-7{left:65.2%;top:66.8%}
 
 /* Body hotspot zones - invisible, just capture clicks */
 .ov-hs{border-radius:8px;z-index:4;transition:background .2s,box-shadow .2s}
@@ -102,9 +102,9 @@ html,body{height:100%;font-family:'Nunito',sans-serif;overflow:hidden;background
 .hs-row button{padding:7px 12px;background:var(--teal);color:#fff;border:none;border-radius:10px;font-family:'Fredoka';font-size:12px;font-weight:600;cursor:pointer}
 .hs-label{position:absolute;pointer-events:none;z-index:10;background:var(--navy);color:#fff;font-family:'Fredoka';font-size:10px;font-weight:600;padding:3px 8px;border-radius:10px;white-space:nowrap;opacity:0;transition:opacity .2s}
 
-/* Input bar overlay - covers mockup's golden-bordered input */
+/* Input bar overlay - GPT-4o: left=21.4%, top=82%, width=52% */
 .ov-input{
-  left:25.5%;top:82%;width:52%;height:8%;z-index:10;
+  left:21.4%;top:82%;width:52%;height:9%;z-index:10;
   display:flex;align-items:center;gap:6px;
   background:transparent;border:none;border-radius:28px;
   padding:0 8px 0 16px;
@@ -118,9 +118,9 @@ html,body{height:100%;font-family:'Nunito',sans-serif;overflow:hidden;background
 .ov-input input:focus::placeholder{color:var(--text-muted)}
 .ov-input input.shake{animation:shake .5s}
 
-/* Send button - coral arrow to the right of input */
+/* Send button - GPT-4o: left=74%, top=83%, width=6%, height=8% */
 .ov-send{
-  left:78%;top:83.5%;width:3.5%;height:5%;z-index:11;
+  left:74%;top:83%;width:5.5%;height:7%;z-index:11;
   border-radius:50%;background:transparent;color:transparent;border:none;
   font-size:min(1.6vw,18px);display:flex;align-items:center;justify-content:center;
   transition:all .2s;
@@ -133,7 +133,7 @@ html,body{height:100%;font-family:'Nunito',sans-serif;overflow:hidden;background
 
 /* Done button */
 .ov-done{
-  left:82.5%;top:83.5%;width:auto;height:auto;z-index:11;
+  left:80.5%;top:83.5%;width:auto;height:auto;z-index:11;
   padding:6px 16px;background:var(--navy);color:#fff;border:none;border-radius:20px;
   font-family:'Fredoka';font-size:min(1.1vw,13px);font-weight:600;
   transition:all .2s;box-shadow:0 3px 10px rgba(27,61,111,.2);
@@ -223,16 +223,16 @@ html,body{height:100%;font-family:'Nunito',sans-serif;overflow:hidden;background
     <div class="ov ov-slot slot-6" data-slot="6"></div>
     <div class="ov ov-slot slot-7" data-slot="7"></div>
 
-    <!-- Body hotspot zones - aligned to body figure at x=31-61%, y=10-81% -->
-    <div class="ov ov-hs" data-region="head" data-label="Head" style="left:38%;top:10%;width:16%;height:10%"></div>
-    <div class="ov ov-hs" data-region="shoulders" data-label="Shoulders" style="left:33%;top:21%;width:26%;height:6%"></div>
-    <div class="ov ov-hs" data-region="chest" data-label="Chest" style="left:37%;top:27%;width:18%;height:8%"></div>
-    <div class="ov ov-hs" data-region="arms" data-label="Arms" style="left:31%;top:24%;width:6%;height:20%"></div>
-    <div class="ov ov-hs" data-region="arms" data-label="Arms" style="left:55%;top:24%;width:6%;height:20%"></div>
-    <div class="ov ov-hs" data-region="abs" data-label="Abs / Core" style="left:37%;top:35%;width:18%;height:12%"></div>
-    <div class="ov ov-hs" data-region="hips" data-label="Hips / Waist" style="left:35%;top:47%;width:22%;height:7%"></div>
-    <div class="ov ov-hs" data-region="legs" data-label="Legs" style="left:36%;top:54%;width:20%;height:18%"></div>
-    <div class="ov ov-hs" data-region="feet" data-label="Feet" style="left:36%;top:72%;width:20%;height:9%"></div>
+    <!-- Body hotspot zones - GPT-4o: body at x=39.6-63.8%, y=14.5-80.9% -->
+    <div class="ov ov-hs" data-region="head" data-label="Head" style="left:43%;top:14.5%;width:16%;height:10%"></div>
+    <div class="ov ov-hs" data-region="shoulders" data-label="Shoulders" style="left:38%;top:23%;width:26%;height:6%"></div>
+    <div class="ov ov-hs" data-region="chest" data-label="Chest" style="left:42%;top:29%;width:18%;height:8%"></div>
+    <div class="ov ov-hs" data-region="arms" data-label="Arms" style="left:37%;top:25%;width:6%;height:20%"></div>
+    <div class="ov ov-hs" data-region="arms" data-label="Arms" style="left:59%;top:25%;width:6%;height:20%"></div>
+    <div class="ov ov-hs" data-region="abs" data-label="Abs / Core" style="left:42%;top:37%;width:18%;height:11%"></div>
+    <div class="ov ov-hs" data-region="hips" data-label="Hips / Waist" style="left:40%;top:48%;width:22%;height:7%"></div>
+    <div class="ov ov-hs" data-region="legs" data-label="Legs" style="left:41%;top:55%;width:20%;height:18%"></div>
+    <div class="ov ov-hs" data-region="feet" data-label="Feet" style="left:41%;top:73%;width:20%;height:8%"></div>
 
     <!-- Hotspot popup -->
     <div id="hsPopup"><h3>Add trait for <span id="hsRegionLabel">Head</span></h3><div class="hs-row"><input id="hsInput" placeholder="e.g., thick hair" onkeydown="if(event.key==='Enter')hsSubmit()"/><button onclick="hsSubmit()">Add</button></div></div>
