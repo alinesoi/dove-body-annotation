@@ -39,38 +39,37 @@ html,body{height:100%;font-family:'Nunito',sans-serif;background:linear-gradient
 .game.on{opacity:1;transform:none;transition:all .9s cubic-bezier(.23,1,.32,1)}
 
 /* Header */
-.g-header{display:flex;align-items:center;padding:10px 20px;flex-shrink:0;z-index:10}
-.home-btn{background:var(--card-bg);border:2px solid var(--dash);border-radius:10px;padding:6px 12px;font-size:14px;cursor:pointer;font-family:'Fredoka';color:var(--navy);transition:all .2s}
+.g-header{display:flex;align-items:flex-start;padding:8px 16px;flex-shrink:0;z-index:10}
+.home-btn{background:var(--card-bg);border:2px solid var(--dash);border-radius:10px;padding:5px 10px;font-size:12px;cursor:pointer;font-family:'Fredoka';color:var(--navy);transition:all .2s}
 .home-btn:hover{background:#fff;transform:scale(1.05)}
 .g-title{flex:1;text-align:center}
-.g-title h1{font-family:'Fredoka';font-size:28px;font-weight:700;color:var(--navy);line-height:1}
-.g-title h1 span{position:relative}
-.g-title .sub{display:inline-block;font-family:'Fredoka';font-size:14px;font-weight:600;color:#fff;background:var(--coral);padding:3px 16px;border-radius:12px;margin-top:2px}
-.safe-badge{background:var(--card-bg);border:2px solid var(--dash);border-radius:12px;padding:6px 12px;font-size:10px;font-weight:800;color:var(--teal);text-align:center;line-height:1.3}
-.safe-badge .icon{font-size:14px}
+.g-title h1{font-family:'Fredoka';font-size:36px;font-weight:700;color:var(--navy);line-height:1}
+.g-title .sub{display:inline-block;font-family:'Fredoka';font-size:16px;font-weight:600;color:#fff;background:var(--coral);padding:4px 22px;border-radius:14px;margin-top:4px;box-shadow:0 3px 10px rgba(244,123,108,.25)}
+.safe-badge{background:var(--card-bg);border:2px solid var(--dash);border-radius:12px;padding:6px 10px;font-size:9px;font-weight:800;color:var(--teal);text-align:center;line-height:1.3;max-width:80px}
+.safe-badge .icon{font-size:14px;display:block;margin-bottom:2px}
 
 /* Main area */
-.g-main{flex:1;display:flex;padding:0 16px;min-height:0;gap:12px}
+.g-main{flex:1;display:flex;padding:0 12px;min-height:0;gap:8px}
 
 /* Left sidebar */
-.g-side{width:180px;flex-shrink:0;display:flex;flex-direction:column;gap:10px;padding:4px 0;opacity:0}
+.g-side{width:170px;flex-shrink:0;display:flex;flex-direction:column;gap:8px;padding:2px 0;opacity:0}
 .game.on .g-side{animation:sfr .6s .5s ease-out forwards}
-.mission-card,.progress-card{background:var(--card-bg);border:2px solid var(--dash);border-radius:14px;padding:12px;backdrop-filter:blur(8px)}
-.mission-card h3,.progress-card h3{font-family:'Fredoka';font-size:13px;font-weight:600;color:var(--teal);margin-bottom:4px;display:flex;align-items:center;gap:4px}
+.mission-card,.progress-card{background:var(--card-bg);border:2px solid var(--dash);border-radius:14px;padding:12px;backdrop-filter:blur(8px);box-shadow:0 2px 10px rgba(69,181,170,.08)}
+.mission-card h3,.progress-card h3{font-family:'Fredoka';font-size:14px;font-weight:600;color:var(--teal);margin-bottom:4px;display:flex;align-items:center;gap:4px}
 .mission-card p{font-size:11px;color:var(--text-dim);line-height:1.4}
-.progress-card .num{font-family:'Fredoka';font-size:42px;font-weight:700;color:var(--navy);line-height:1}
+.progress-card .num{font-family:'Fredoka';font-size:48px;font-weight:700;color:var(--navy);line-height:1}
 .progress-card .num.bo{animation:cb .4s cubic-bezier(.34,1.56,.64,1)}
-.progress-card .lbl{font-size:11px;font-weight:700;color:var(--text-dim)}
+.progress-card .lbl{font-size:12px;font-weight:700;color:var(--text-dim)}
 .progress-card .hint{font-size:10px;color:var(--teal);margin-top:6px;font-style:italic}
 
 /* Figure area */
 .g-fig{flex:1;position:relative;display:flex;align-items:center;justify-content:center;opacity:0}
 .game.on .g-fig{animation:bu .9s .7s cubic-bezier(.34,1.56,.64,1) forwards}
-#bodySvg{height:85%;max-height:480px;z-index:2;position:relative}
+#bodySvg{height:92%;max-height:560px;z-index:2;position:relative}
 .hotspot{fill:transparent;cursor:pointer;transition:fill .3s,stroke .3s;stroke:rgba(69,181,170,.2);stroke-width:1.5;stroke-dasharray:4 3}
 .hotspot:hover{fill:rgba(69,181,170,.12);stroke:rgba(69,181,170,.5);stroke-width:2;stroke-dasharray:none}
-.hs-dot{fill:var(--dot);opacity:.6;pointer-events:none}
-@keyframes dotPulse{0%,100%{opacity:.4;r:3}50%{opacity:.8;r:4.5}}
+.hs-dot{fill:var(--dot);opacity:.7;pointer-events:none}
+@keyframes dotPulse{0%,100%{opacity:.5;r:4}50%{opacity:.9;r:6}}
 .hs-dot{animation:dotPulse 2s ease-in-out infinite}
 
 /* Annotation slots */
@@ -94,15 +93,15 @@ html,body{height:100%;font-family:'Nunito',sans-serif;background:linear-gradient
 .slot .sub{font-size:9px;font-weight:600;color:var(--text-dim);margin-top:2px}
 @keyframes slotPop{0%{opacity:0;transform:scale(.5)}60%{transform:scale(1.1)}100%{opacity:1;transform:scale(1)}}
 
-/* Slot positions - arranged around figure */
-.slot-0{top:2%;left:50%;transform:translateX(-160px)}
-.slot-1{top:2%;left:50%;transform:translateX(30px)}
-.slot-2{top:22%;left:50%;transform:translateX(-185px)}
-.slot-3{top:22%;left:50%;transform:translateX(55px)}
-.slot-4{top:45%;left:50%;transform:translateX(-185px)}
-.slot-5{top:45%;left:50%;transform:translateX(55px)}
-.slot-6{top:68%;left:50%;transform:translateX(-160px)}
-.slot-7{top:68%;left:50%;transform:translateX(30px)}
+/* Slot positions - tightly hugging the figure */
+.slot-0{top:5%;left:50%;transform:translateX(-195px)}
+.slot-1{top:5%;left:50%;transform:translateX(65px)}
+.slot-2{top:24%;left:50%;transform:translateX(-210px)}
+.slot-3{top:24%;left:50%;transform:translateX(80px)}
+.slot-4{top:46%;left:50%;transform:translateX(-210px)}
+.slot-5{top:46%;left:50%;transform:translateX(80px)}
+.slot-6{top:68%;left:50%;transform:translateX(-195px)}
+.slot-7{top:68%;left:50%;transform:translateX(65px)}
 
 /* Hotspot popup */
 #hsPopup{position:absolute;z-index:20;background:#fff;border:2px solid var(--teal);border-radius:14px;padding:12px 14px;box-shadow:0 8px 28px rgba(27,61,111,.12);display:none;width:220px}
@@ -118,26 +117,26 @@ html,body{height:100%;font-family:'Nunito',sans-serif;background:linear-gradient
 
 /* Bottom input bar */
 .g-input{
-  position:relative;z-index:10;padding:10px 24px 14px;flex-shrink:0;
-  display:flex;align-items:center;gap:10px;
-  margin:0 20px;opacity:0;
+  position:relative;z-index:10;padding:8px 0 12px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  margin:0 auto;width:60%;max-width:600px;opacity:0;
 }
 .game.on .g-input{animation:su .6s 1.1s ease-out forwards}
 .g-input-wrap{
-  flex:1;display:flex;align-items:center;gap:8px;
-  background:#fff;border:3px solid var(--coral);border-radius:28px;
-  padding:6px 8px 6px 16px;box-shadow:0 4px 20px rgba(244,123,108,.15);
+  flex:1;display:flex;align-items:center;gap:10px;
+  background:#fff;border:3.5px solid var(--coral);border-radius:32px;
+  padding:10px 10px 10px 20px;box-shadow:0 6px 24px rgba(244,123,108,.2);
 }
-.g-input-wrap .mic{font-size:18px;opacity:.5}
+.g-input-wrap .mic{font-size:20px;opacity:.5}
 .g-input-wrap input{
-  flex:1;border:none;outline:none;font-family:'Nunito';font-size:14px;font-weight:600;
+  flex:1;border:none;outline:none;font-family:'Nunito';font-size:15px;font-weight:600;
   color:var(--navy);background:transparent;
 }
 .g-input-wrap input::placeholder{color:var(--text-muted);font-weight:600}
 .g-input-wrap input.shake{animation:shake .5s}
 .send-btn{
-  width:40px;height:40px;border-radius:50%;background:var(--coral);color:#fff;
-  border:none;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  width:44px;height:44px;border-radius:50%;background:var(--coral);color:#fff;
+  border:none;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;
   transition:all .2s;box-shadow:0 3px 12px rgba(244,123,108,.3);flex-shrink:0;
 }
 .send-btn:hover{transform:scale(1.1)}
@@ -146,8 +145,8 @@ html,body{height:100%;font-family:'Nunito',sans-serif;background:linear-gradient
 .send-btn.loading .arrow{display:none}
 .send-btn.loading .sp{display:block}
 .done-float{
-  padding:8px 18px;background:var(--navy);color:#fff;border:none;border-radius:20px;
-  font-family:'Fredoka';font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;
+  padding:10px 20px;background:var(--navy);color:#fff;border:none;border-radius:24px;
+  font-family:'Fredoka';font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;
   box-shadow:0 3px 12px rgba(27,61,111,.2);flex-shrink:0;
 }
 .done-float:hover{transform:scale(1.05)}
@@ -260,21 +259,21 @@ html,body{height:100%;font-family:'Nunito',sans-serif;background:linear-gradient
 
       <!-- Body SVG -->
       <svg id="bodySvg" viewBox="0 0 200 440" xmlns="http://www.w3.org/2000/svg">
-        <g fill="none" stroke="#1B3D6F" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+        <g fill="rgba(192,240,228,0.4)" stroke="#1B3D6F" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="100" cy="34" r="26"/>
           <path d="M 30,88 Q 30,76 42,76 L 158,76 Q 170,76 170,88 L 170,186 Q 170,200 157,200 Q 146,200 146,186 L 146,112 Q 146,102 138,102 L 134,102 Q 128,102 128,110 L 128,234 Q 128,246 116,246 L 84,246 Q 72,246 72,234 L 72,110 Q 72,102 66,102 L 62,102 Q 54,102 54,112 L 54,186 Q 54,200 43,200 Q 30,200 30,186 Z"/>
           <rect x="72" y="256" width="24" height="138" rx="12"/>
           <rect x="104" y="256" width="24" height="138" rx="12"/>
         </g>
         <!-- Hotspot dots -->
-        <circle cx="100" cy="34" r="3.5" class="hs-dot"/>
-        <circle cx="100" cy="90" r="3.5" class="hs-dot" style="animation-delay:.3s"/>
-        <circle cx="42" cy="140" r="3.5" class="hs-dot" style="animation-delay:.5s"/>
-        <circle cx="158" cy="140" r="3.5" class="hs-dot" style="animation-delay:.7s"/>
-        <circle cx="100" cy="155" r="3.5" class="hs-dot" style="animation-delay:.4s"/>
-        <circle cx="100" cy="230" r="3.5" class="hs-dot" style="animation-delay:.6s"/>
-        <circle cx="88" cy="310" r="3.5" class="hs-dot" style="animation-delay:.8s"/>
-        <circle cx="112" cy="310" r="3.5" class="hs-dot" style="animation-delay:.2s"/>
+        <circle cx="100" cy="34" r="5" class="hs-dot"/>
+        <circle cx="100" cy="90" r="5" class="hs-dot" style="animation-delay:.3s"/>
+        <circle cx="42" cy="140" r="5" class="hs-dot" style="animation-delay:.5s"/>
+        <circle cx="158" cy="140" r="5" class="hs-dot" style="animation-delay:.7s"/>
+        <circle cx="100" cy="155" r="5" class="hs-dot" style="animation-delay:.4s"/>
+        <circle cx="100" cy="230" r="5" class="hs-dot" style="animation-delay:.6s"/>
+        <circle cx="88" cy="310" r="5" class="hs-dot" style="animation-delay:.8s"/>
+        <circle cx="112" cy="310" r="5" class="hs-dot" style="animation-delay:.2s"/>
         <!-- Clickable hotspots -->
         <g id="hotspots">
           <circle cx="100" cy="34" r="32" class="hotspot" data-region="head" data-label="Head"/>
@@ -311,11 +310,18 @@ html,body{height:100%;font-family:'Nunito',sans-serif;background:linear-gradient
 <div id="doneOverlay"><div class="done-content" id="doneContent"></div></div>
 <div id="toast"><span id="tE"></span><span id="tT"></span></div>
 
-<!-- Decorations -->
-<div class="deco" style="top:15%;right:8%;font-size:24px;color:var(--yellow)">⭐</div>
-<div class="deco" style="top:35%;right:4%;font-size:16px;color:var(--coral)">💛</div>
-<div class="deco" style="bottom:25%;right:12%;font-family:Fredoka;font-weight:700;font-size:20px;color:var(--teal-light)">+</div>
-<div class="deco" style="top:8%;left:45%;font-size:14px;color:var(--yellow)">✦</div>
+<!-- Decorations matching mockup -->
+<div class="deco" style="top:12%;right:6%;font-size:22px;color:var(--yellow)">⭐</div>
+<div class="deco" style="top:30%;right:3%;font-size:18px;color:var(--yellow)">⭐</div>
+<div class="deco" style="top:55%;right:5%;font-size:14px;color:var(--coral)">💛</div>
+<div class="deco" style="bottom:30%;right:8%;font-size:16px;color:var(--yellow)">⭐</div>
+<div class="deco" style="top:6%;left:38%;font-size:12px;color:var(--teal-light)">✦</div>
+<div class="deco" style="top:18%;right:14%;font-size:14px;color:var(--coral-light)">♥</div>
+<div class="deco" style="bottom:20%;left:22%;font-family:Fredoka;font-weight:700;font-size:18px;color:var(--teal-light)">+</div>
+<div class="deco" style="top:45%;left:15%;font-size:10px;color:var(--teal)">●</div>
+<div class="deco" style="bottom:35%;right:18%;font-size:10px;color:var(--teal-light)">●</div>
+<div class="deco" style="top:70%;right:10%;font-family:Fredoka;font-weight:700;font-size:16px;color:var(--dash)">+</div>
+<div class="deco" style="bottom:15%;left:8%;font-size:12px;color:var(--yellow)">✦</div>
 
 <script>
 /* AUDIO */
