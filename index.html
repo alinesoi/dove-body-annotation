@@ -152,7 +152,11 @@ html,body{height:100%;font-family:'Nunito',sans-serif;background:linear-gradient
 .done-float:hover{transform:scale(1.05)}
 
 /* Decorative elements */
-.deco{position:fixed;pointer-events:none;z-index:0;opacity:.12}
+.deco{position:fixed;pointer-events:none;z-index:1}
+.deco-big{font-size:28px;opacity:.8}
+.deco-med{font-size:20px;opacity:.7}
+.deco-sm{font-size:14px;opacity:.5}
+.deco-dot{width:10px;height:10px;border-radius:50%;opacity:.35}
 
 /* ═══ OVERLAYS ═══ */
 #zoomOverlay{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;background:rgba(224,247,241,.95);backdrop-filter:blur(16px)}
@@ -294,22 +298,21 @@ html,body{height:100%;font-family:'Nunito',sans-serif;background:linear-gradient
 <div id="doneOverlay"><div class="done-content" id="doneContent"></div></div>
 <div id="toast"><span id="tE"></span><span id="tT"></span></div>
 
-<!-- Decorations matching mockup placement -->
-<!-- Right side cluster (near Safe Space) -->
-<div class="deco" style="top:12%;right:5%;font-size:20px;opacity:.25">⭐</div>
-<div class="deco" style="top:24%;right:3%;font-size:14px;opacity:.2">💛</div>
-<div class="deco" style="top:36%;right:6%;font-size:16px;opacity:.22">⭐</div>
-<div class="deco" style="top:16%;right:12%;font-size:12px;opacity:.2;color:var(--coral)">♥</div>
-<!-- Bottom right -->
-<div class="deco" style="bottom:22%;right:4%;font-size:18px;opacity:.2">⭐</div>
-<div class="deco" style="bottom:35%;right:10%;font-size:10px;opacity:.18;color:var(--teal)">●</div>
+<!-- Right side - big colorful decorations matching mockup -->
+<div class="deco deco-big" style="top:14%;right:4%">⭐</div>
+<div class="deco deco-med" style="top:28%;right:2.5%;color:var(--coral)">🧡</div>
+<div class="deco deco-big" style="top:42%;right:5%">⭐</div>
+<div class="deco deco-med" style="top:56%;right:3%;color:var(--yellow)">💛</div>
+<div class="deco deco-sm" style="top:68%;right:6%;color:var(--coral)">❤️</div>
+<div class="deco deco-dot" style="top:22%;right:10%;background:var(--teal)"></div>
+<div class="deco deco-dot" style="top:50%;right:9%;background:var(--coral)"></div>
 <!-- Left side -->
-<div class="deco" style="bottom:28%;left:18%;font-size:10px;opacity:.15;color:var(--teal)">●</div>
-<div class="deco" style="bottom:18%;left:12%;font-family:Fredoka;font-weight:700;font-size:16px;opacity:.12;color:var(--teal-light)">+</div>
-<div class="deco" style="top:55%;left:14%;font-size:8px;opacity:.15;color:var(--teal)">●</div>
-<!-- Top scattered -->
-<div class="deco" style="top:5%;left:52%;font-size:10px;opacity:.15;color:var(--yellow)">✦</div>
-<div class="deco" style="top:42%;right:14%;font-size:8px;opacity:.18;color:var(--coral)">●</div>
+<div class="deco deco-dot" style="top:50%;left:16%;background:var(--teal);opacity:.25"></div>
+<div class="deco" style="bottom:25%;left:16%;font-family:Fredoka;font-weight:700;font-size:22px;color:var(--teal-light);opacity:.3">+</div>
+<div class="deco deco-dot" style="bottom:18%;left:10%;background:var(--teal);opacity:.2"></div>
+<!-- Top -->
+<div class="deco" style="top:4%;left:48%;font-size:12px;opacity:.3;color:var(--yellow)">✦</div>
+<div class="deco deco-dot" style="bottom:12%;right:12%;background:var(--teal);opacity:.2"></div>
 
 <script>
 /* AUDIO */
