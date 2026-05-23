@@ -9,14 +9,12 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --navy:#1B3D6F;--teal:#45B5AA;--teal-light:#7EDDC3;--teal-bg:#E0F7F1;
-  --mint:#B5ECD8;--coral:#F47B6C;--coral-light:#F9A99F;
-  --yellow:#F7DC6F;--yellow-light:#FFF8DC;
-  --green:#3EA66B;--dot:#5CC8B5;
-  --card-bg:rgba(255,255,255,0.85);--dash:#B8D8D2;
-  --text:#1B3D6F;--text-dim:#5A7A9E;--text-muted:#8BAAB8;
+  --navy:#1B3D6F;--teal:#45B5AA;--teal-light:#7EDDC3;
+  --coral:#F47B6C;--coral-light:#F9A99F;
+  --yellow:#F7DC6F;--mint:#B5ECD8;
+  --dash:#B8D8D2;--text:#1B3D6F;--text-dim:#5A7A9E;--text-muted:#8BAAB8;
 }
-html,body{height:100%;font-family:'Nunito',sans-serif;background:linear-gradient(160deg,#B8E8D8 0%,#CCEEE3 30%,#DDF6EF 60%,#C6ECE0 100%);color:var(--text);overflow:hidden}
+html,body{height:100%;font-family:'Nunito',sans-serif;overflow:hidden;background:#B5DFD3}
 
 /* ═══ INTRO ═══ */
 #intro{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;flex-direction:column;
@@ -31,86 +29,70 @@ html,body{height:100%;font-family:'Nunito',sans-serif;background:linear-gradient
 .ibtn:hover{transform:scale(1.06)}
 .ibtn::after{content:'';position:absolute;inset:-3px;border-radius:63px;border:3px solid var(--coral-light);animation:pulse 2s 1.8s ease-out infinite}
 .ideco{position:fixed;pointer-events:none;z-index:999;opacity:0}.ideco.on{animation:fdeco .8s ease-out forwards}
-
 #conf{position:fixed;inset:0;z-index:9999;pointer-events:none}
 
-/* ═══ GAME PAGE ═══ */
-.game{position:relative;display:flex;flex-direction:column;height:100vh;opacity:0;transform:translateY(20px)}
+/* ═══ GAME PAGE - Image Background Approach ═══ */
+.game{width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;background:#B5DFD3;overflow:hidden;opacity:0;transform:translateY(20px)}
 .game.on{opacity:1;transform:none;transition:all .9s cubic-bezier(.23,1,.32,1)}
 
-/* Header */
-.g-header{display:flex;align-items:flex-start;padding:8px 16px;flex-shrink:0;z-index:10}
-.home-btn{background:#fff;border:2.5px solid var(--dash);border-radius:12px;padding:6px 12px;font-size:11px;cursor:pointer;font-family:'Fredoka';font-weight:600;color:var(--navy);transition:all .2s;box-shadow:0 2px 8px rgba(69,181,170,.1);display:flex;align-items:center;gap:4px}
-.home-btn:hover{background:#fff;transform:scale(1.05);border-color:var(--teal)}
-.g-title{flex:1;text-align:center}
-.g-title h1{font-family:'Fredoka';font-size:clamp(36px,4.5vw,48px);font-weight:700;color:var(--navy);line-height:1;display:inline-flex;align-items:center;gap:8px}
-.g-title .dove-logo{width:36px;height:36px;flex-shrink:0}
-.g-title .sub{display:inline-block;font-family:'Fredoka';font-size:clamp(15px,2vw,20px);font-weight:600;color:#fff;background:var(--coral);padding:6px 30px;border-radius:18px;margin-top:5px;box-shadow:0 4px 16px rgba(244,123,108,.35);position:relative}
-.g-title .sub .star-l,.g-title .sub .star-r{position:absolute;top:50%;transform:translateY(-50%);font-size:10px;color:rgba(255,255,255,.7)}
-.g-title .sub .star-l{left:10px}
-.g-title .sub .star-r{right:10px}
-.safe-badge{background:#fff;border:2.5px solid var(--teal-light);border-radius:14px;padding:8px 12px;font-size:10px;font-weight:800;color:var(--teal);text-align:center;line-height:1.3;max-width:100px;box-shadow:0 2px 10px rgba(69,181,170,.15)}
-.safe-badge .icon{font-size:16px;display:block;margin-bottom:2px}
-
-/* Main area */
-.g-main{flex:1;display:flex;padding:0 12px;min-height:0;gap:8px}
-
-/* Left sidebar */
-.g-side{width:168px;flex-shrink:0;display:flex;flex-direction:column;gap:10px;padding:2px 0;opacity:0}
-.game.on .g-side{animation:sfr .6s .5s ease-out forwards}
-.mission-card,.progress-card{background:#fff;border:2.5px solid var(--dash);border-radius:14px;overflow:hidden;backdrop-filter:blur(8px);box-shadow:0 2px 12px rgba(69,181,170,.1)}
-.mission-card h3,.progress-card h3{font-family:'Fredoka';font-size:13px;font-weight:600;color:#fff;background:var(--teal);margin:0;padding:7px 12px;display:flex;align-items:center;gap:4px}
-.mission-card p{font-size:10px;color:var(--text-dim);line-height:1.4;padding:10px 12px}
-.progress-card .num{font-family:'Fredoka';font-size:48px;font-weight:700;color:var(--navy);line-height:1;padding:8px 12px 0}
-.progress-card .num.bo{animation:cb .4s cubic-bezier(.34,1.56,.64,1)}
-.progress-card .lbl{font-size:11px;font-weight:700;color:var(--text-dim);padding:0 12px}
-.progress-card .hint{font-size:9px;color:var(--teal);padding:4px 12px 10px;font-style:italic}
-
-/* Figure area */
-.g-fig{flex:1;position:relative;display:flex;align-items:center;justify-content:center;opacity:0;
-  background:rgba(255,255,255,.88);border-radius:24px;margin:0 6px;padding:10px 16px;
-  box-shadow:0 4px 24px rgba(69,181,170,.12);}
-.game.on .g-fig{animation:bu .9s .7s cubic-bezier(.34,1.56,.64,1) forwards}
-#bodyImg{height:88%;max-height:500px;z-index:2;position:relative;pointer-events:none;user-select:none}
-/* Hotspot overlay container - positioned over the image */
-.hotspot-layer{position:absolute;z-index:3}
-.hotspot-zone{position:absolute;cursor:pointer;border-radius:10px;transition:background .2s,box-shadow .2s}
-.hotspot-zone:hover{background:rgba(69,181,170,.12);box-shadow:inset 0 0 0 2px rgba(69,181,170,.4)}
-
-/* Annotation slots */
-.slot{
-  position:absolute;min-height:36px;
-  border:2.5px dashed #7CB8AD;border-radius:14px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:11px;color:var(--text-muted);
-  transition:all .3s;z-index:3;
-  background:rgba(255,255,255,.4);
+.canvas{
+  position:relative;
+  width:min(100vw, 150vh);
+  height:min(100vh, 66.67vw);
+  background:url('images/mockup_bg.png') center/100% 100% no-repeat;
 }
-.slot.filled{
-  border-style:solid;border-color:var(--teal-light);
-  background:var(--card-bg);backdrop-filter:blur(8px);
-  color:var(--navy);font-weight:700;font-size:12px;
-  padding:6px 10px;text-align:center;
-  cursor:pointer;
+
+/* Overlays positioned with percentages on top of the mockup image */
+.ov{position:absolute;cursor:pointer}
+
+/* Home button - transparent overlay on mockup's Home btn */
+.ov-home{left:1.3%;top:1.8%;width:5.5%;height:4%;border-radius:10px;z-index:10}
+.ov-home:hover{background:rgba(69,181,170,.1)}
+
+/* Progress number - covers the "0" in the mockup */
+.ov-pnum{left:2.8%;top:36%;width:10%;height:7%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Fredoka';font-size:min(4vw,42px);font-weight:700;color:var(--navy);
+  background:#fff;border-radius:0;cursor:default;z-index:2}
+.ov-pnum.bo{animation:cb .4s cubic-bezier(.34,1.56,.64,1)}
+/* Progress hint */
+.ov-phint{left:2.5%;top:46%;width:12%;height:4.5%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:min(0.8vw,9px);color:var(--teal);font-style:italic;font-weight:600;
+  background:#fff;border-radius:0;cursor:default;z-index:2;text-align:center;padding:0 2px}
+
+/* Annotation slots - transparent when empty (image dashes show through), white when filled */
+.ov-slot{
+  width:10.8%;height:4.8%;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .3s;z-index:3;
+}
+.ov-slot.filled{
+  background:rgba(255,255,255,.92);border:2px solid var(--teal-light);
+  color:var(--navy);font-weight:700;font-size:min(1.1vw,12px);
+  text-align:center;padding:2px 4px;
   animation:slotPop .5s cubic-bezier(.34,1.56,.64,1);
 }
-.slot.filled:hover{transform:scale(1.05);border-color:var(--teal);box-shadow:0 4px 16px rgba(69,181,170,.2)}
-.slot .sub{font-size:9px;font-weight:600;color:var(--text-dim);margin-top:2px}
-@keyframes slotPop{0%{opacity:0;transform:scale(.5)}60%{transform:scale(1.1)}100%{opacity:1;transform:scale(1)}}
+.ov-slot.filled:hover{transform:scale(1.05);border-color:var(--teal);box-shadow:0 4px 16px rgba(69,181,170,.2)}
+.ov-slot .sub{font-size:min(0.8vw,9px);font-weight:600;color:var(--text-dim);margin-top:1px}
 
-/* Slot positions - tight around figure, 4 per side */
-.slot{width:130px;min-height:36px}
-.slot-0{top:6%;left:50%;transform:translateX(-190px)}
-.slot-1{top:6%;left:50%;transform:translateX(70px)}
-.slot-2{top:28%;left:50%;transform:translateX(-200px)}
-.slot-3{top:28%;left:50%;transform:translateX(80px)}
-.slot-4{top:50%;left:50%;transform:translateX(-200px)}
-.slot-5{top:50%;left:50%;transform:translateX(80px)}
-.slot-6{top:72%;left:50%;transform:translateX(-190px)}
-.slot-7{top:72%;left:50%;transform:translateX(70px)}
+/* Left slots */
+.slot-0{left:17.2%;top:14.5%}
+.slot-2{left:16.8%;top:27.5%}
+.slot-4{left:16.8%;top:41%}
+.slot-6{left:17.2%;top:55.5%}
+/* Right slots */
+.slot-1{left:72%;top:14.5%}
+.slot-3{left:72.2%;top:27.5%}
+.slot-5{left:72.2%;top:41%}
+.slot-7{left:72%;top:55.5%}
+
+/* Body hotspot zones - invisible, just capture clicks */
+.ov-hs{border-radius:8px;z-index:4;transition:background .2s,box-shadow .2s}
+.ov-hs:hover{background:rgba(69,181,170,.12);box-shadow:inset 0 0 0 2px rgba(69,181,170,.35)}
 
 /* Hotspot popup */
-#hsPopup{position:absolute;z-index:20;background:#fff;border:2px solid var(--teal);border-radius:14px;padding:12px 14px;box-shadow:0 8px 28px rgba(27,61,111,.12);display:none;width:220px}
+#hsPopup{position:absolute;z-index:20;background:#fff;border:2px solid var(--teal);border-radius:14px;padding:12px 14px;box-shadow:0 8px 28px rgba(27,61,111,.15);display:none;width:220px}
 #hsPopup.active{display:block;animation:pop .4s cubic-bezier(.34,1.56,.64,1)}
 #hsPopup h3{font-family:'Fredoka';font-size:13px;font-weight:600;color:var(--navy);margin-bottom:6px}
 #hsPopup h3 span{color:var(--coral)}
@@ -118,48 +100,44 @@ html,body{height:100%;font-family:'Nunito',sans-serif;background:linear-gradient
 .hs-row input{flex:1;padding:7px 10px;border:2px solid var(--dash);border-radius:10px;font-family:'Nunito';font-size:11px;color:var(--navy);outline:none;transition:border .2s}
 .hs-row input:focus{border-color:var(--teal)}
 .hs-row button{padding:7px 12px;background:var(--teal);color:#fff;border:none;border-radius:10px;font-family:'Fredoka';font-size:12px;font-weight:600;cursor:pointer}
-.hs-label{position:absolute;pointer-events:none;z-index:10;background:var(--navy);color:#fff;font-family:'Fredoka';font-size:10px;font-weight:600;padding:3px 8px;border-radius:10px;white-space:nowrap;opacity:0;transition:opacity .2s;transform:translateX(-50%)}
+.hs-label{position:absolute;pointer-events:none;z-index:10;background:var(--navy);color:#fff;font-family:'Fredoka';font-size:10px;font-weight:600;padding:3px 8px;border-radius:10px;white-space:nowrap;opacity:0;transition:opacity .2s}
 
+/* Input bar overlay - positioned on top of the mockup's input area */
+.ov-input{
+  left:29%;top:82.5%;width:38%;height:6%;z-index:10;
+  display:flex;align-items:center;gap:6px;
+  background:#fff;border:3px solid #F5A623;border-radius:28px;
+  padding:0 8px 0 16px;box-shadow:0 0 0 6px rgba(245,166,35,.15);
+}
+.ov-input .mic{font-size:min(1.6vw,18px);opacity:.5;cursor:default}
+.ov-input input{
+  flex:1;border:none;outline:none;font-family:'Nunito';font-size:min(1.3vw,15px);font-weight:600;
+  color:var(--navy);background:transparent;min-width:0;
+}
+.ov-input input::placeholder{color:var(--text-muted);font-weight:600}
+.ov-input input.shake{animation:shake .5s}
 
-/* Bottom input bar - positioned inside figure area */
-.g-input{
-  position:absolute;bottom:8px;left:50%;transform:translateX(-50%);z-index:10;
-  display:flex;align-items:center;justify-content:center;gap:10px;
-  width:55%;max-width:520px;opacity:0;
+/* Send button */
+.ov-send{
+  left:68%;top:83%;width:3.8%;height:5%;z-index:11;
+  border-radius:50%;background:var(--coral);color:#fff;border:none;
+  font-size:min(1.6vw,18px);display:flex;align-items:center;justify-content:center;
+  transition:all .2s;box-shadow:0 3px 10px rgba(244,123,108,.3);
 }
-.game.on .g-input{animation:su .6s 1.1s ease-out forwards}
-.g-input-wrap{
-  flex:1;display:flex;align-items:center;gap:10px;
-  background:#fff;border:3.5px solid #F5A623;border-radius:32px;
-  padding:12px 12px 12px 22px;box-shadow:0 0 0 8px rgba(245,166,35,.18),0 6px 24px rgba(244,123,108,.15);
-}
-.g-input-wrap .mic{font-size:20px;opacity:.5}
-.g-input-wrap input{
-  flex:1;border:none;outline:none;font-family:'Nunito';font-size:15px;font-weight:600;
-  color:var(--navy);background:transparent;
-}
-.g-input-wrap input::placeholder{color:var(--text-muted);font-weight:600}
-.g-input-wrap input.shake{animation:shake .5s}
-.send-btn{
-  width:44px;height:44px;border-radius:50%;background:var(--coral);color:#fff;
-  border:none;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;
-  transition:all .2s;box-shadow:0 3px 12px rgba(244,123,108,.3);flex-shrink:0;
-}
-.send-btn:hover{transform:scale(1.1)}
-.send-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
-.send-btn .sp{display:none;width:16px;height:16px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:spin .6s linear infinite}
-.send-btn.loading .arrow{display:none}
-.send-btn.loading .sp{display:block}
-.done-float{
-  padding:10px 20px;background:var(--navy);color:#fff;border:none;border-radius:24px;
-  font-family:'Fredoka';font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;
-  box-shadow:0 3px 12px rgba(27,61,111,.2);flex-shrink:0;
-}
-.done-float:hover{transform:scale(1.05)}
+.ov-send:hover{transform:scale(1.1)}
+.ov-send:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.ov-send .sp{display:none;width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:spin .6s linear infinite}
+.ov-send.loading .arrow{display:none}
+.ov-send.loading .sp{display:block}
 
-/* Decorative elements - z-index 5 to appear above game bg */
-.deco{position:fixed;pointer-events:none;z-index:5}
-.deco-dot{border-radius:50%}
+/* Done button */
+.ov-done{
+  left:73%;top:83.2%;width:auto;height:auto;z-index:11;
+  padding:6px 16px;background:var(--navy);color:#fff;border:none;border-radius:20px;
+  font-family:'Fredoka';font-size:min(1.1vw,13px);font-weight:600;
+  transition:all .2s;box-shadow:0 3px 10px rgba(27,61,111,.2);
+}
+.ov-done:hover{transform:scale(1.05)}
 
 /* ═══ OVERLAYS ═══ */
 #zoomOverlay{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;background:rgba(224,247,241,.95);backdrop-filter:blur(16px)}
@@ -198,13 +176,12 @@ html,body{height:100%;font-family:'Nunito',sans-serif;background:linear-gradient
 /* Keyframes */
 @keyframes pop{0%{opacity:0;transform:scale(.5) translateY(20px)}100%{opacity:1;transform:scale(1) translateY(0)}}
 @keyframes su{0%{opacity:0;transform:translateY(20px)}100%{opacity:1;transform:none}}
-@keyframes bu{0%{opacity:0;transform:translateY(50px)}60%{transform:translateY(-8px)}100%{opacity:1;transform:none}}
-@keyframes sfr{0%{opacity:0;transform:translateX(-30px)}100%{opacity:1;transform:none}}
 @keyframes fdeco{0%{opacity:0;transform:scale(.4)}100%{opacity:.12;transform:scale(1)}}
 @keyframes pulse{0%{transform:scale(1);opacity:.5}100%{transform:scale(1.5);opacity:0}}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes cb{0%{transform:scale(1)}40%{transform:scale(1.35)}100%{transform:scale(1)}}
 @keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+@keyframes slotPop{0%{opacity:0;transform:scale(.5)}60%{transform:scale(1.1)}100%{opacity:1;transform:scale(1)}}
 </style>
 </head>
 <body>
@@ -224,77 +201,49 @@ html,body{height:100%;font-family:'Nunito',sans-serif;background:linear-gradient
 
 <canvas id="conf"></canvas>
 
-<!-- GAME PAGE -->
+<!-- GAME PAGE - Mockup image as background with interactive overlays -->
 <div class="game" id="game">
-  <!-- Header -->
-  <div class="g-header">
-    <button class="home-btn" onclick="location.reload()">🏠 Home</button>
-    <div class="g-title">
-      <h1>
-        <svg class="dove-logo" viewBox="0 0 64 64" fill="none"><path d="M32 8c-4 0-7 2-9 5-3-1-6 0-8 3-2 3-1 6 1 8-3 2-5 5-5 9 0 6 5 10 10 11l5 12c1 2 3 3 5 3h2c2 0 4-1 5-3l5-12c5-1 10-5 10-11 0-4-2-7-5-9 2-2 3-5 1-8-2-3-5-4-8-3-2-3-5-5-9-5z" fill="#1B3D6F"/><path d="M28 30c2 1 4 1 6 0" stroke="#7EDDC3" stroke-width="2" stroke-linecap="round"/><circle cx="27" cy="24" r="2" fill="#fff"/><circle cx="37" cy="24" r="2" fill="#fff"/></svg>
-        Confident <span style="position:relative">Me<span style="position:absolute;top:-8px;right:-14px;font-size:14px;color:var(--yellow)">✦</span></span>
-      </h1>
-      <div class="sub"><span class="star-l">✦</span>Appearance Ideals<span class="star-r">✦</span></div>
+  <div class="canvas" id="gameCanvas">
+
+    <!-- Home button overlay -->
+    <div class="ov ov-home" onclick="location.reload()"></div>
+
+    <!-- Progress number overlay -->
+    <div class="ov ov-pnum" id="pNum">0</div>
+    <div class="ov ov-phint" id="pHint">Let's find some amazing traits!</div>
+
+    <!-- 8 annotation slot overlays -->
+    <div class="ov ov-slot slot-0" data-slot="0"></div>
+    <div class="ov ov-slot slot-1" data-slot="1"></div>
+    <div class="ov ov-slot slot-2" data-slot="2"></div>
+    <div class="ov ov-slot slot-3" data-slot="3"></div>
+    <div class="ov ov-slot slot-4" data-slot="4"></div>
+    <div class="ov ov-slot slot-5" data-slot="5"></div>
+    <div class="ov ov-slot slot-6" data-slot="6"></div>
+    <div class="ov ov-slot slot-7" data-slot="7"></div>
+
+    <!-- Body hotspot zones - invisible click targets -->
+    <div class="ov ov-hs" data-region="head" data-label="Head" style="left:41%;top:14%;width:18%;height:11%"></div>
+    <div class="ov ov-hs" data-region="shoulders" data-label="Shoulders" style="left:35%;top:25%;width:30%;height:5%"></div>
+    <div class="ov ov-hs" data-region="chest" data-label="Chest" style="left:39%;top:30%;width:22%;height:8%"></div>
+    <div class="ov ov-hs" data-region="arms" data-label="Arms" style="left:32%;top:28%;width:7%;height:16%"></div>
+    <div class="ov ov-hs" data-region="arms" data-label="Arms" style="left:61%;top:28%;width:7%;height:16%"></div>
+    <div class="ov ov-hs" data-region="abs" data-label="Abs / Core" style="left:39%;top:38%;width:22%;height:10%"></div>
+    <div class="ov ov-hs" data-region="hips" data-label="Hips / Waist" style="left:37%;top:48%;width:26%;height:6%"></div>
+    <div class="ov ov-hs" data-region="legs" data-label="Legs" style="left:38%;top:54%;width:24%;height:16%"></div>
+    <div class="ov ov-hs" data-region="feet" data-label="Feet" style="left:38%;top:70%;width:24%;height:8%"></div>
+
+    <!-- Hotspot popup -->
+    <div id="hsPopup"><h3>Add trait for <span id="hsRegionLabel">Head</span></h3><div class="hs-row"><input id="hsInput" placeholder="e.g., thick hair" onkeydown="if(event.key==='Enter')hsSubmit()"/><button onclick="hsSubmit()">Add</button></div></div>
+    <div class="hs-label" id="hsLabel"></div>
+
+    <!-- Input bar overlay -->
+    <div class="ov ov-input">
+      <span class="mic">🎤</span>
+      <input id="inp" placeholder="What traits come to mind?" onkeydown="if(event.key==='Enter'){event.preventDefault();submitTrait()}"/>
     </div>
-    <div class="safe-badge"><div class="icon">🛡️</div>Safe Space<br><span style="font-size:8px;color:var(--text-dim)">Be kind & respectful</span></div>
-  </div>
-
-  <!-- Main area -->
-  <div class="g-main">
-    <!-- Left sidebar -->
-    <div class="g-side">
-      <div class="mission-card">
-        <h3>📋 Your Mission</h3>
-        <p>Discover and collect positive traits about how we look.</p>
-      </div>
-      <div class="progress-card">
-        <h3>📊 Progress</h3>
-        <div class="num" id="pNum">0</div>
-        <div class="lbl">traits found</div>
-        <div class="hint" id="pHint">Let's find some amazing traits!</div>
-      </div>
-    </div>
-
-    <!-- Figure area with slots -->
-    <div class="g-fig" id="figArea">
-      <!-- 8 annotation slots -->
-      <div class="slot slot-0" data-slot="0"></div>
-      <div class="slot slot-1" data-slot="1"></div>
-      <div class="slot slot-2" data-slot="2"></div>
-      <div class="slot slot-3" data-slot="3"></div>
-      <div class="slot slot-4" data-slot="4"></div>
-      <div class="slot slot-5" data-slot="5"></div>
-      <div class="slot slot-6" data-slot="6"></div>
-      <div class="slot slot-7" data-slot="7"></div>
-
-      <!-- Body character image -->
-      <img id="bodyImg" src="images/character.png" alt="Body figure">
-      <!-- Hotspot overlay - percentage-based zones over the image -->
-      <div class="hotspot-layer" id="hotspotLayer">
-        <div class="hotspot-zone" style="left:30%;top:0%;width:40%;height:16%" data-region="head" data-label="Head"></div>
-        <div class="hotspot-zone" style="left:18%;top:16%;width:64%;height:8%" data-region="shoulders" data-label="Shoulders"></div>
-        <div class="hotspot-zone" style="left:28%;top:23%;width:44%;height:12%" data-region="chest" data-label="Chest"></div>
-        <div class="hotspot-zone" style="left:8%;top:20%;width:18%;height:22%" data-region="arms" data-label="Arms"></div>
-        <div class="hotspot-zone" style="left:74%;top:20%;width:18%;height:22%" data-region="arms" data-label="Arms"></div>
-        <div class="hotspot-zone" style="left:28%;top:34%;width:44%;height:14%" data-region="abs" data-label="Abs / Core"></div>
-        <div class="hotspot-zone" style="left:24%;top:47%;width:52%;height:10%" data-region="hips" data-label="Hips / Waist"></div>
-        <div class="hotspot-zone" style="left:24%;top:56%;width:52%;height:22%" data-region="legs" data-label="Legs"></div>
-        <div class="hotspot-zone" style="left:24%;top:78%;width:52%;height:18%" data-region="feet" data-label="Feet"></div>
-      </div>
-
-      <div id="hsPopup"><h3>Add trait for <span id="hsRegionLabel">Head</span></h3><div class="hs-row"><input id="hsInput" placeholder="e.g., thick hair" onkeydown="if(event.key==='Enter')hsSubmit()"/><button onclick="hsSubmit()">Add</button></div></div>
-      <div class="hs-label" id="hsLabel"></div>
-
-      <!-- Input bar inside figure area -->
-      <div class="g-input">
-        <div class="g-input-wrap">
-          <span class="mic">🎤</span>
-          <input id="inp" placeholder="What traits come to mind?" onkeydown="if(event.key==='Enter'){event.preventDefault();submitTrait()}"/>
-        </div>
-        <button class="send-btn" id="btnGo" onclick="submitTrait()"><span class="arrow">➤</span><span class="sp"></span></button>
-        <button class="done-float" onclick="showDone()">Done ✅</button>
-      </div>
-    </div>
+    <button class="ov ov-send" id="btnGo" onclick="submitTrait()"><span class="arrow">➤</span><span class="sp"></span></button>
+    <button class="ov ov-done" onclick="showDone()">Done</button>
   </div>
 </div>
 
@@ -303,38 +252,6 @@ html,body{height:100%;font-family:'Nunito',sans-serif;background:linear-gradient
 <div id="idkOverlay"><div class="idk-content"><div class="idk-x">✕</div><div class="idk-msg">Think harder! What comes to mind?</div></div></div>
 <div id="doneOverlay"><div class="done-content" id="doneContent"></div></div>
 <div id="toast"><span id="tE"></span><span id="tT"></span></div>
-
-<!-- ═══ RIGHT SIDE DECORATIONS ═══ -->
-<!-- Big yellow star -->
-<svg class="deco" style="top:10%;right:2.5%;width:56px;height:56px" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9" fill="#FFD700"/></svg>
-<!-- Coral heart -->
-<svg class="deco" style="top:24%;right:4%;width:40px;height:40px" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#F47B6C"/></svg>
-<!-- Orange star -->
-<svg class="deco" style="top:37%;right:2%;width:44px;height:44px" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9" fill="#F5A623"/></svg>
-<!-- Yellow heart -->
-<svg class="deco" style="top:50%;right:5%;width:34px;height:34px" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#FFD700"/></svg>
-<!-- Small coral star -->
-<svg class="deco" style="top:62%;right:3%;width:32px;height:32px" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9" fill="#F47B6C"/></svg>
-<!-- Yellow star bottom -->
-<svg class="deco" style="top:75%;right:6%;width:28px;height:28px" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9" fill="#FFD700"/></svg>
-<!-- Teal dots right side -->
-<div class="deco deco-dot" style="top:18%;right:8%;width:14px;height:14px;background:#45B5AA;opacity:.7"></div>
-<div class="deco deco-dot" style="top:33%;right:9%;width:10px;height:10px;background:#F47B6C;opacity:.8"></div>
-<div class="deco deco-dot" style="top:46%;right:2%;width:12px;height:12px;background:#45B5AA;opacity:.6"></div>
-<div class="deco deco-dot" style="top:58%;right:9%;width:8px;height:8px;background:#F5A623;opacity:.7"></div>
-<div class="deco deco-dot" style="top:70%;right:2%;width:10px;height:10px;background:#45B5AA;opacity:.6"></div>
-<!-- Orange heart top-right -->
-<svg class="deco" style="top:5%;right:8%;width:26px;height:26px;opacity:.9" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#F5A623"/></svg>
-
-<!-- ═══ LEFT SIDE DECORATIONS ═══ -->
-<div class="deco" style="top:55%;left:13%;font-family:Fredoka;font-weight:700;font-size:32px;color:#7EDDC3;opacity:.6">+</div>
-<div class="deco" style="top:68%;left:10%;font-family:Fredoka;font-weight:700;font-size:22px;color:#45B5AA;opacity:.5">+</div>
-<div class="deco deco-dot" style="top:62%;left:16%;width:12px;height:12px;background:#45B5AA;opacity:.4"></div>
-<div class="deco deco-dot" style="top:75%;left:14%;width:10px;height:10px;background:#7EDDC3;opacity:.35"></div>
-<div class="deco deco-dot" style="top:80%;left:8%;width:8px;height:8px;background:#45B5AA;opacity:.3"></div>
-<!-- Bottom area decoration -->
-<svg class="deco" style="bottom:12%;right:10%;width:24px;height:24px;opacity:.7" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9" fill="#F7DC6F"/></svg>
-<svg class="deco" style="bottom:8%;left:16%;width:20px;height:20px;opacity:.5" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9" fill="#45B5AA"/></svg>
 
 <script>
 /* AUDIO */
@@ -376,28 +293,22 @@ function findSlot(region){
 function fillSlot(idx,trait,detail){
   slotData[idx]={trait,detail};
   const el=document.querySelector(`.slot-${idx}`);
-  el.className=`slot slot-${idx} filled`;
+  el.className=`ov ov-slot slot-${idx} filled`;
   el.innerHTML=`<div>${trait}</div>${detail?`<div class="sub">${detail}</div>`:''}`;
-  el.onmouseenter=()=>highlightRegion(Object.keys(REGIONS).find(k=>REGIONS[k].s.includes(idx))||'full');
-  el.onmouseleave=()=>clearHL();
 }
 
 function renderSlots(){
   for(let i=0;i<8;i++){
     const el=document.querySelector(`.slot-${i}`);
     if(slotData[i]){
-      el.className=`slot slot-${i} filled`;
+      el.className=`ov ov-slot slot-${i} filled`;
       el.innerHTML=`<div>${slotData[i].trait}</div>${slotData[i].detail?`<div class="sub">${slotData[i].detail}</div>`:''}`;
     }else{
-      el.className=`slot slot-${i}`;
+      el.className=`ov ov-slot slot-${i}`;
       el.innerHTML='';
     }
   }
 }
-
-/* HIGHLIGHT */
-function highlightRegion(region){}
-function clearHL(){}
 
 /* API */
 const AE='https://nesoi-resource.openai.azure.com';
@@ -482,52 +393,31 @@ function showSmileZoom(){
   });
   document.getElementById('zoomOverlay').classList.add('active');
 }
-
-function smileCustomSubmit(){
-  const inp=document.getElementById('smileCustom'),val=inp?.value.trim();
-  if(!val)return;
-  sndSelect();addTrait('Nice Smile',val,'mouth');closeZoom();
-}
-
+function smileCustomSubmit(){const inp=document.getElementById('smileCustom'),val=inp?.value.trim();if(!val)return;sndSelect();addTrait('Nice Smile',val,'mouth');closeZoom()}
 function closeZoom(){document.getElementById('zoomOverlay').classList.remove('active')}
 
-/* HOTSPOTS - position layer over image */
+/* HOTSPOTS */
 let activeHS=null;
-function positionHotspotLayer(){
-  const img=document.getElementById('bodyImg');
-  const layer=document.getElementById('hotspotLayer');
-  if(!img||!layer)return;
-  const r=img.getBoundingClientRect();
-  const p=img.parentElement.getBoundingClientRect();
-  layer.style.left=(r.left-p.left)+'px';
-  layer.style.top=(r.top-p.top)+'px';
-  layer.style.width=r.width+'px';
-  layer.style.height=r.height+'px';
-}
-window.addEventListener('resize',positionHotspotLayer);
-new ResizeObserver(positionHotspotLayer).observe(document.body);
-setTimeout(positionHotspotLayer,2500);
-
-document.querySelectorAll('.hotspot-zone').forEach(hs=>{
+document.querySelectorAll('.ov-hs').forEach(hs=>{
   hs.addEventListener('click',e=>{
     e.stopPropagation();sndClick();
     const region=hs.dataset.region,label=hs.dataset.label;
     const popup=document.getElementById('hsPopup'),input=document.getElementById('hsInput');
     document.getElementById('hsRegionLabel').textContent=label;
     activeHS=region;
-    const figRect=document.getElementById('figArea').getBoundingClientRect();
+    const canvasRect=document.getElementById('gameCanvas').getBoundingClientRect();
     const bbox=hs.getBoundingClientRect();
-    const px=bbox.left+bbox.width/2-figRect.left,py=bbox.top+bbox.height/2-figRect.top;
-    popup.style.left=Math.min(px+20,figRect.width-240)+'px';
+    const px=bbox.left+bbox.width/2-canvasRect.left,py=bbox.top+bbox.height/2-canvasRect.top;
+    popup.style.left=Math.min(px+20,canvasRect.width-240)+'px';
     popup.style.top=Math.max(py-30,10)+'px';
     popup.classList.add('active');input.value='';
     setTimeout(()=>input.focus(),100);
   });
   hs.addEventListener('mouseenter',e=>{
-    const lbl=document.getElementById('hsLabel'),figRect=document.getElementById('figArea').getBoundingClientRect(),bbox=hs.getBoundingClientRect();
+    const lbl=document.getElementById('hsLabel'),canvasRect=document.getElementById('gameCanvas').getBoundingClientRect(),bbox=hs.getBoundingClientRect();
     lbl.textContent=hs.dataset.label;
-    lbl.style.left=(bbox.left+bbox.width/2-figRect.left)+'px';
-    lbl.style.top=(bbox.top-figRect.top-22)+'px';
+    lbl.style.left=(bbox.left+bbox.width/2-canvasRect.left)+'px';
+    lbl.style.top=(bbox.top-canvasRect.top-22)+'px';
     lbl.style.opacity='1';
   });
   hs.addEventListener('mouseleave',()=>{document.getElementById('hsLabel').style.opacity='0'});
@@ -540,8 +430,8 @@ function hsSubmit(){
   sndSelect();addTrait(txt,null,activeHS||'full');closeHsPopup();
 }
 function closeHsPopup(){document.getElementById('hsPopup').classList.remove('active');activeHS=null}
-document.getElementById('figArea').addEventListener('click',e=>{
-  if(!e.target.closest('.hotspot-zone')&&!e.target.closest('#hsPopup'))closeHsPopup();
+document.getElementById('gameCanvas').addEventListener('click',e=>{
+  if(!e.target.closest('.ov-hs')&&!e.target.closest('#hsPopup'))closeHsPopup();
 });
 
 /* IDK */
@@ -556,7 +446,6 @@ function showDone(){
   document.getElementById('doneOverlay').classList.add('active');
 }
 function closeDone(){document.getElementById('doneOverlay').classList.remove('active')}
-
 function clearAll(){traits=[];slotData.fill(null);renderSlots();updateProgress();sndPop()}
 
 setTimeout(()=>document.querySelectorAll('.ideco').forEach((d,i)=>{d.style.animationDelay=(.3+i*.12)+'s';d.classList.add('on')}),100);
