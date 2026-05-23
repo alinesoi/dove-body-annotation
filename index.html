@@ -65,12 +65,11 @@ html,body{height:100%;font-family:'Nunito',sans-serif;background:linear-gradient
 /* Figure area */
 .g-fig{flex:1;position:relative;display:flex;align-items:center;justify-content:center;opacity:0}
 .game.on .g-fig{animation:bu .9s .7s cubic-bezier(.34,1.56,.64,1) forwards}
-#bodySvg{height:90%;max-height:520px;z-index:2;position:relative}
-.hotspot{fill:transparent;cursor:pointer;transition:fill .3s,stroke .3s;stroke:rgba(69,181,170,.2);stroke-width:1.5;stroke-dasharray:4 3}
-.hotspot:hover{fill:rgba(69,181,170,.12);stroke:rgba(69,181,170,.5);stroke-width:2;stroke-dasharray:none}
-.hs-dot{fill:var(--dot);opacity:.7;pointer-events:none}
-@keyframes dotPulse{0%,100%{opacity:.5;r:4}50%{opacity:.9;r:6}}
-.hs-dot{animation:dotPulse 2s ease-in-out infinite}
+#bodyImg{height:88%;max-height:500px;z-index:2;position:relative;pointer-events:none;user-select:none}
+/* Hotspot overlay container - positioned over the image */
+.hotspot-layer{position:absolute;z-index:3}
+.hotspot-zone{position:absolute;cursor:pointer;border-radius:10px;transition:background .2s,box-shadow .2s}
+.hotspot-zone:hover{background:rgba(69,181,170,.12);box-shadow:inset 0 0 0 2px rgba(69,181,170,.4)}
 
 /* Annotation slots */
 .slot{
@@ -258,40 +257,20 @@ html,body{height:100%;font-family:'Nunito',sans-serif;background:linear-gradient
       <div class="slot slot-6" data-slot="6"></div>
       <div class="slot slot-7" data-slot="7"></div>
 
-      <!-- Body SVG - child-like rounded figure with separate shapes -->
-      <svg id="bodySvg" viewBox="0 0 200 350" xmlns="http://www.w3.org/2000/svg">
-        <!-- Body shapes - child-like, rounded, with neck -->
-        <g fill="#BDE8DA" stroke="#1B3D6F" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="100" cy="36" r="30"/>
-          <rect x="88" y="64" width="24" height="16" rx="8"/>
-          <rect x="50" y="76" width="100" height="146" rx="26"/>
-          <rect x="24" y="90" width="24" height="84" rx="12"/>
-          <rect x="152" y="90" width="24" height="84" rx="12"/>
-          <rect x="54" y="226" width="34" height="108" rx="17"/>
-          <rect x="112" y="226" width="34" height="108" rx="17"/>
-        </g>
-        <!-- Hotspot dots -->
-        <circle cx="100" cy="38" r="5" class="hs-dot"/>
-        <circle cx="100" cy="84" r="5" class="hs-dot" style="animation-delay:.3s"/>
-        <circle cx="40" cy="130" r="5" class="hs-dot" style="animation-delay:.5s"/>
-        <circle cx="160" cy="130" r="5" class="hs-dot" style="animation-delay:.7s"/>
-        <circle cx="100" cy="140" r="5" class="hs-dot" style="animation-delay:.4s"/>
-        <circle cx="100" cy="200" r="5" class="hs-dot" style="animation-delay:.6s"/>
-        <circle cx="74" cy="275" r="5" class="hs-dot" style="animation-delay:.8s"/>
-        <circle cx="126" cy="275" r="5" class="hs-dot" style="animation-delay:.2s"/>
-        <!-- Clickable hotspots -->
-        <g id="hotspots">
-          <circle cx="100" cy="38" r="34" class="hotspot" data-region="head" data-label="Head"/>
-          <rect x="52" y="72" width="96" height="36" rx="8" class="hotspot" data-region="shoulders" data-label="Shoulders"/>
-          <rect x="56" y="104" width="88" height="46" rx="6" class="hotspot" data-region="chest" data-label="Chest"/>
-          <rect x="24" y="86" width="30" height="90" rx="10" class="hotspot" data-region="arms" data-label="Arms"/>
-          <rect x="146" y="86" width="30" height="90" rx="10" class="hotspot" data-region="arms" data-label="Arms"/>
-          <rect x="56" y="146" width="88" height="50" rx="6" class="hotspot" data-region="abs" data-label="Abs / Core"/>
-          <rect x="52" y="192" width="96" height="36" rx="6" class="hotspot" data-region="hips" data-label="Hips / Waist"/>
-          <rect x="54" y="224" width="92" height="70" rx="6" class="hotspot" data-region="legs" data-label="Legs"/>
-          <rect x="54" y="290" width="92" height="48" rx="6" class="hotspot" data-region="feet" data-label="Feet"/>
-        </g>
-      </svg>
+      <!-- Body character image -->
+      <img id="bodyImg" src="images/character.png" alt="Body figure">
+      <!-- Hotspot overlay - percentage-based zones over the image -->
+      <div class="hotspot-layer" id="hotspotLayer">
+        <div class="hotspot-zone" style="left:30%;top:0%;width:40%;height:16%" data-region="head" data-label="Head"></div>
+        <div class="hotspot-zone" style="left:18%;top:16%;width:64%;height:8%" data-region="shoulders" data-label="Shoulders"></div>
+        <div class="hotspot-zone" style="left:28%;top:23%;width:44%;height:12%" data-region="chest" data-label="Chest"></div>
+        <div class="hotspot-zone" style="left:8%;top:20%;width:18%;height:22%" data-region="arms" data-label="Arms"></div>
+        <div class="hotspot-zone" style="left:74%;top:20%;width:18%;height:22%" data-region="arms" data-label="Arms"></div>
+        <div class="hotspot-zone" style="left:28%;top:34%;width:44%;height:14%" data-region="abs" data-label="Abs / Core"></div>
+        <div class="hotspot-zone" style="left:24%;top:47%;width:52%;height:10%" data-region="hips" data-label="Hips / Waist"></div>
+        <div class="hotspot-zone" style="left:24%;top:56%;width:52%;height:22%" data-region="legs" data-label="Legs"></div>
+        <div class="hotspot-zone" style="left:24%;top:78%;width:52%;height:18%" data-region="feet" data-label="Feet"></div>
+      </div>
 
       <div id="hsPopup"><h3>Add trait for <span id="hsRegionLabel">Head</span></h3><div class="hs-row"><input id="hsInput" placeholder="e.g., thick hair" onkeydown="if(event.key==='Enter')hsSubmit()"/><button onclick="hsSubmit()">Add</button></div></div>
       <div class="hs-label" id="hsLabel"></div>
@@ -487,9 +466,24 @@ function smileCustomSubmit(){
 
 function closeZoom(){document.getElementById('zoomOverlay').classList.remove('active')}
 
-/* HOTSPOTS */
+/* HOTSPOTS - position layer over image */
 let activeHS=null;
-document.querySelectorAll('.hotspot').forEach(hs=>{
+function positionHotspotLayer(){
+  const img=document.getElementById('bodyImg');
+  const layer=document.getElementById('hotspotLayer');
+  if(!img||!layer)return;
+  const r=img.getBoundingClientRect();
+  const p=img.parentElement.getBoundingClientRect();
+  layer.style.left=(r.left-p.left)+'px';
+  layer.style.top=(r.top-p.top)+'px';
+  layer.style.width=r.width+'px';
+  layer.style.height=r.height+'px';
+}
+window.addEventListener('resize',positionHotspotLayer);
+new ResizeObserver(positionHotspotLayer).observe(document.body);
+setTimeout(positionHotspotLayer,2500);
+
+document.querySelectorAll('.hotspot-zone').forEach(hs=>{
   hs.addEventListener('click',e=>{
     e.stopPropagation();sndClick();
     const region=hs.dataset.region,label=hs.dataset.label;
@@ -522,7 +516,7 @@ function hsSubmit(){
 }
 function closeHsPopup(){document.getElementById('hsPopup').classList.remove('active');activeHS=null}
 document.getElementById('figArea').addEventListener('click',e=>{
-  if(!e.target.closest('.hotspot')&&!e.target.closest('#hsPopup'))closeHsPopup();
+  if(!e.target.closest('.hotspot-zone')&&!e.target.closest('#hsPopup'))closeHsPopup();
 });
 
 /* IDK */
