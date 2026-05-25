@@ -39,7 +39,7 @@ html,body{height:100%;font-family:'Nunito',sans-serif;overflow:hidden;background
   position:relative;
   width:min(100vw, 150vh);
   height:min(100vh, 66.67vw);
-  background:url('images/mockup_bg_clean.png') center/100% 100% no-repeat;
+  background:url('images/mockup_bg_final.png') center/100% 100% no-repeat;
 }
 
 /* Overlays positioned with percentages on top of the mockup image */
@@ -49,17 +49,14 @@ html,body{height:100%;font-family:'Nunito',sans-serif;overflow:hidden;background
 .ov-home{left:1.3%;top:1.8%;width:5.5%;height:4%;border-radius:10px;z-index:10}
 .ov-home:hover{background:rgba(69,181,170,.1)}
 
-/* Progress number - covers mockup's "0" in Progress card */
-.ov-pnum{left:2.5%;top:51%;width:11%;height:9%;
-  display:flex;align-items:center;justify-content:center;
+/* Progress number - positioned in the clean Progress card */
+.ov-pnum{left:2%;top:48%;width:12%;height:10%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
   font-family:'Fredoka';font-size:min(4vw,42px);font-weight:700;color:var(--navy);
-  background:#fff;border-radius:0;cursor:default;z-index:2}
+  background:transparent;border-radius:0;cursor:default;z-index:2}
+.ov-pnum .plbl{font-family:'Nunito';font-size:min(1vw,11px);font-weight:700;color:var(--text-dim)}
+.ov-pnum .phint{font-family:'Nunito';font-size:min(0.7vw,9px);color:var(--teal);font-style:italic;font-weight:600}
 .ov-pnum.bo{animation:cb .4s cubic-bezier(.34,1.56,.64,1)}
-/* Progress hint */
-.ov-phint{left:2%;top:62%;width:13%;height:4%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:min(0.8vw,9px);color:var(--teal);font-style:italic;font-weight:600;
-  background:transparent;border-radius:0;cursor:default;z-index:2;text-align:center;padding:0 2px}
 
 /* Annotation slots - GPT-4o vision detected positions */
 .ov-slot{
@@ -207,9 +204,12 @@ html,body{height:100%;font-family:'Nunito',sans-serif;overflow:hidden;background
     <!-- Home button overlay -->
     <div class="ov ov-home" onclick="location.reload()"></div>
 
-    <!-- Progress number overlay -->
-    <div class="ov ov-pnum" id="pNum">0</div>
-    <div class="ov ov-phint" id="pHint">Let's find some amazing traits!</div>
+    <!-- Progress display - number + label + hint in one block -->
+    <div class="ov ov-pnum" id="pNum">
+      <span id="pCount">0</span>
+      <span class="plbl">traits found</span>
+      <span class="phint" id="pHint">Let's find some amazing traits!</span>
+    </div>
 
     <!-- 8 annotation slot overlays -->
     <div class="ov ov-slot slot-0" data-slot="0"></div>
@@ -353,10 +353,11 @@ function addTrait(trait,detail,region){
 }
 
 function updateProgress(){
-  const el=document.getElementById('pNum');
+  const el=document.getElementById('pCount');
   el.textContent=traits.length;
-  el.classList.remove('bo');void el.offsetWidth;
-  if(traits.length)el.classList.add('bo');
+  const wrap=document.getElementById('pNum');
+  wrap.classList.remove('bo');void wrap.offsetWidth;
+  if(traits.length)wrap.classList.add('bo');
   const hints=['Let\'s find some amazing traits!','Great start! Keep going!','You\'re on a roll!','Impressive collection!','Wow, so many!'];
   document.getElementById('pHint').textContent=hints[Math.min(Math.floor(traits.length/3),hints.length-1)];
 }
