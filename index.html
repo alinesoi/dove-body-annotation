@@ -39,7 +39,7 @@ html,body{height:100%;font-family:'Nunito',sans-serif;overflow:hidden;background
   position:relative;
   width:min(100vw, 150vh);
   height:min(100vh, 66.67vw);
-  background:url('images/mockup_bg_final.png') center/100% 100% no-repeat;
+  background:url('images/mockup_bg_nosidebar.png') center/100% 100% no-repeat;
 }
 
 /* Overlays positioned with percentages on top of the mockup image */
@@ -49,15 +49,17 @@ html,body{height:100%;font-family:'Nunito',sans-serif;overflow:hidden;background
 .ov-home{left:1.3%;top:1.8%;width:5.5%;height:4%;border-radius:10px;z-index:10}
 .ov-home:hover{background:rgba(69,181,170,.1)}
 
-/* Progress content - fills the Progress card body */
-.ov-pnum{left:4%;top:52%;width:10%;height:13%;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;
-  font-family:'Fredoka';font-size:min(4vw,42px);font-weight:700;color:var(--navy);
-  background:#fff;border-radius:0 0 12px 12px;cursor:default;z-index:2;
-  padding:2px 4px 6px}
-.ov-pnum .plbl{font-family:'Nunito';font-size:min(1vw,11px);font-weight:700;color:var(--text-dim);margin-top:-2px}
-.ov-pnum .phint{font-family:'Nunito';font-size:min(0.7vw,9px);color:var(--teal);font-style:italic;font-weight:600;margin-top:2px}
-.ov-pnum.bo{animation:cb .4s cubic-bezier(.34,1.56,.64,1)}
+/* HTML sidebar cards - fully rendered, no image alignment needed */
+.ov-sidebar{left:1.5%;top:16%;width:13%;height:50%;
+  display:flex;flex-direction:column;gap:1.2%;z-index:2;cursor:default}
+.side-card{background:#fff;border:2px solid #B8D8D2;border-radius:12px;overflow:hidden}
+.side-card h3{font-family:'Fredoka';font-size:min(1.1vw,13px);font-weight:600;color:#fff;
+  background:var(--teal);margin:0;padding:min(0.7vh,7px) min(0.8vw,10px);display:flex;align-items:center;gap:4px}
+.side-card p{font-family:'Nunito';font-size:min(0.85vw,10px);color:var(--text-dim);line-height:1.4;padding:min(0.8vh,8px) min(0.8vw,10px)}
+.side-card .num{font-family:'Fredoka';font-size:min(4vw,42px);font-weight:700;color:var(--navy);line-height:1;padding:min(0.6vh,6px) min(0.8vw,10px) 0;text-align:center}
+.side-card .num.bo{animation:cb .4s cubic-bezier(.34,1.56,.64,1)}
+.side-card .lbl{font-family:'Nunito';font-size:min(0.9vw,11px);font-weight:700;color:var(--text-dim);padding:0 min(0.8vw,10px);text-align:center}
+.side-card .hint{font-family:'Nunito';font-size:min(0.7vw,9px);color:var(--teal);padding:min(0.3vh,3px) min(0.8vw,10px) min(0.7vh,7px);font-style:italic;text-align:center}
 
 /* Annotation slots - GPT-4o vision detected positions */
 .ov-slot{
@@ -205,11 +207,18 @@ html,body{height:100%;font-family:'Nunito',sans-serif;overflow:hidden;background
     <!-- Home button overlay -->
     <div class="ov ov-home" onclick="location.reload()"></div>
 
-    <!-- Progress display - number + label + hint in one block -->
-    <div class="ov ov-pnum" id="pNum">
-      <span id="pCount">0</span>
-      <span class="plbl">traits found</span>
-      <span class="phint" id="pHint">Let's find some amazing traits!</span>
+    <!-- Sidebar cards - fully HTML rendered -->
+    <div class="ov ov-sidebar">
+      <div class="side-card">
+        <h3>Your Mission</h3>
+        <p>Discover and collect positive traits about how we look.</p>
+      </div>
+      <div class="side-card">
+        <h3>Progress</h3>
+        <div class="num" id="pCount">0</div>
+        <div class="lbl">traits found</div>
+        <div class="hint" id="pHint">Let's find some amazing traits!</div>
+      </div>
     </div>
 
     <!-- 8 annotation slot overlays -->
@@ -356,9 +365,8 @@ function addTrait(trait,detail,region){
 function updateProgress(){
   const el=document.getElementById('pCount');
   el.textContent=traits.length;
-  const wrap=document.getElementById('pNum');
-  wrap.classList.remove('bo');void wrap.offsetWidth;
-  if(traits.length)wrap.classList.add('bo');
+  el.classList.remove('bo');void el.offsetWidth;
+  if(traits.length)el.classList.add('bo');
   const hints=['Let\'s find some amazing traits!','Great start! Keep going!','You\'re on a roll!','Impressive collection!','Wow, so many!'];
   document.getElementById('pHint').textContent=hints[Math.min(Math.floor(traits.length/3),hints.length-1)];
 }
