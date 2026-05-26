@@ -94,15 +94,15 @@ html,body{height:100%;font-family:'Nunito',sans-serif;overflow:hidden;background
 .ov-hs:hover{cursor:pointer}
 
 /* Hotspot popup */
-#hsPopup{position:absolute;z-index:20;background:linear-gradient(135deg,#E8FBF4,#F0FDF8);border:none;border-radius:20px;padding:16px 24px;box-shadow:0 10px 32px rgba(27,61,111,.2);display:none;width:380px}
+#hsPopup{position:absolute;z-index:20;background:linear-gradient(135deg,#E8FBF4,#F0FDF8);border:none;border-radius:20px;padding:18px 28px;box-shadow:0 10px 32px rgba(27,61,111,.2);display:none;width:320px}
 #hsPopup.active{display:block;animation:pop .4s cubic-bezier(.34,1.56,.64,1)}
-#hsPopup h3{font-family:'Fredoka';font-size:14px;font-weight:600;color:var(--navy);margin-bottom:8px}
+#hsPopup h3{font-family:'Fredoka';font-size:15px;font-weight:600;color:var(--navy);margin-bottom:10px}
 #hsPopup h3 span{color:var(--coral)}
-.hs-row{display:flex;gap:6px;align-items:stretch}
-.hs-row input{flex:1;padding:10px 12px;border:2px solid var(--teal-light);border-radius:12px;font-family:'Nunito';font-size:13px;color:var(--navy);outline:none;transition:border .2s;background:rgba(255,255,255,.8)}
+.hs-row{display:flex;flex-direction:column;gap:8px}
+.hs-row input{width:100%;padding:12px 14px;border:2px solid var(--teal-light);border-radius:14px;font-family:'Nunito';font-size:14px;color:var(--navy);outline:none;transition:border .2s;background:rgba(255,255,255,.8)}
 .hs-row input:focus{border-color:var(--teal);background:#fff}
-.hs-row button{padding:10px 18px;background:var(--coral);color:#fff;border:none;border-radius:12px;font-family:'Fredoka';font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;box-shadow:0 3px 10px rgba(244,123,108,.25)}
-.hs-row button:hover{transform:scale(1.05);box-shadow:0 4px 14px rgba(244,123,108,.35)}
+.hs-row button{width:100%;padding:12px 20px;background:var(--coral);color:#fff;border:none;border-radius:14px;font-family:'Fredoka';font-size:15px;font-weight:600;cursor:pointer;transition:all .2s;box-shadow:0 3px 10px rgba(244,123,108,.25)}
+.hs-row button:hover{transform:scale(1.02);box-shadow:0 4px 14px rgba(244,123,108,.35)}
 .hs-label{position:absolute;pointer-events:none;z-index:10;background:var(--navy);color:#fff;font-family:'Fredoka';font-size:10px;font-weight:600;padding:3px 8px;border-radius:10px;white-space:nowrap;opacity:0;transition:opacity .2s}
 
 /* Input bar overlay - fills the golden bar's white interior */
@@ -419,7 +419,7 @@ document.querySelectorAll('.ov-hs').forEach(hs=>{
     const canvasRect=document.getElementById('gameCanvas').getBoundingClientRect();
     const bbox=hs.getBoundingClientRect();
     const px=bbox.left+bbox.width/2-canvasRect.left,py=bbox.top+bbox.height/2-canvasRect.top;
-    popup.style.left=Math.min(px+20,canvasRect.width-240)+'px';
+    popup.style.left=Math.min(px+20,canvasRect.width-340)+'px';
     popup.style.top=Math.max(py-30,10)+'px';
     popup.classList.add('active');input.value='';
     setTimeout(()=>input.focus(),100);
