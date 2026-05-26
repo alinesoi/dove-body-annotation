@@ -39,7 +39,7 @@ html,body{height:100%;font-family:'Nunito',sans-serif;overflow:hidden;background
   position:relative;
   width:min(100vw, 150vh);
   height:min(100vh, 66.67vw);
-  background:url('images/mockup_bg_nosidebar.png') center/100% 100% no-repeat;
+  background:url('images/mockup_bg_noslots.png') center/100% 100% no-repeat;
 }
 
 /* Overlays positioned with percentages on top of the mockup image */
@@ -61,14 +61,16 @@ html,body{height:100%;font-family:'Nunito',sans-serif;overflow:hidden;background
 .side-card .lbl{font-family:'Nunito';font-size:min(0.9vw,11px);font-weight:700;color:var(--text-dim);padding:0 min(0.8vw,10px);text-align:center}
 .side-card .hint{font-family:'Nunito';font-size:min(0.7vw,9px);color:var(--teal);padding:min(0.3vh,3px) min(0.8vw,10px) min(0.7vh,7px);font-style:italic;text-align:center}
 
-/* Annotation slots - GPT-4o vision detected positions */
+/* Annotation slots - fully HTML rendered with dashed borders */
 .ov-slot{
   width:14.2%;height:7%;border-radius:14px;
+  border:2.5px dashed #8DC5B6;
+  background:rgba(255,255,255,.3);
   display:flex;align-items:center;justify-content:center;
   transition:all .3s;z-index:3;
 }
 .ov-slot.filled{
-  background:rgba(255,255,255,.95);border:2px solid var(--teal-light);
+  background:rgba(255,255,255,.95);border:2.5px solid var(--teal-light);
   color:var(--navy);font-weight:700;font-size:min(1.2vw,13px);
   text-align:center;padding:4px 8px;
   animation:slotPop .5s cubic-bezier(.34,1.56,.64,1);
