@@ -73,9 +73,15 @@ html,body{height:100%;font-family:'Nunito',sans-serif;overflow:hidden;background
   background:rgba(255,255,255,.95);border:2.5px solid var(--teal-light);
   color:var(--navy);font-weight:700;font-size:min(1.2vw,13px);
   text-align:center;padding:4px 8px;
-  animation:slotPop .5s cubic-bezier(.34,1.56,.64,1);
+  animation:slotFillGlow .6s cubic-bezier(.34,1.56,.64,1);
 }
 .ov-slot.filled:hover{transform:scale(1.05);border-color:var(--teal);box-shadow:0 4px 16px rgba(69,181,170,.2)}
+@keyframes slotFillGlow{
+  0%{opacity:0;transform:scale(.4);box-shadow:0 0 0 0 rgba(69,181,170,0)}
+  50%{transform:scale(1.15);box-shadow:0 0 24px 8px rgba(69,181,170,.4)}
+  70%{transform:scale(.95)}
+  100%{opacity:1;transform:scale(1);box-shadow:0 0 0 0 rgba(69,181,170,0)}
+}
 .ov-slot .sub{font-size:min(0.8vw,9px);font-weight:600;color:var(--text-dim);margin-top:1px}
 
 /* Left slots - GPT-4o detected: left=21.4%, y=23.1/36.4/51.0/66.8% */
@@ -89,9 +95,15 @@ html,body{height:100%;font-family:'Nunito',sans-serif;overflow:hidden;background
 .slot-5{left:65.2%;top:51%}
 .slot-7{left:65.2%;top:66.8%}
 
-/* Body hotspot zones - invisible, just capture clicks (no visible hover to avoid green rectangles) */
-.ov-hs{border-radius:8px;z-index:4;cursor:pointer}
-.ov-hs:hover{cursor:pointer}
+/* Body hotspot zones - subtle glow on hover */
+.ov-hs{border-radius:8px;z-index:4;cursor:pointer;transition:box-shadow .3s,background .3s}
+.ov-hs:hover{box-shadow:0 0 20px 8px rgba(69,181,170,.25);background:rgba(69,181,170,.06)}
+
+/* Pulsing hotspot dots - show body is interactive */
+.ov-hs::after{content:'';position:absolute;width:8px;height:8px;border-radius:50%;
+  background:var(--teal);top:50%;left:50%;transform:translate(-50%,-50%);
+  animation:hsPulse 2s ease-in-out infinite;opacity:.6;pointer-events:none}
+@keyframes hsPulse{0%,100%{opacity:.4;transform:translate(-50%,-50%) scale(1)}50%{opacity:.8;transform:translate(-50%,-50%) scale(1.8)}}
 
 /* Hotspot popup */
 #hsPopup{position:absolute;z-index:20;background:linear-gradient(135deg,#E8FBF4,#F0FDF8);border:none;border-radius:20px;padding:20px 36px 24px;box-shadow:0 10px 32px rgba(27,61,111,.2);display:none;width:340px}
@@ -184,6 +196,32 @@ html,body{height:100%;font-family:'Nunito',sans-serif;overflow:hidden;background
 @keyframes cb{0%{transform:scale(1)}40%{transform:scale(1.35)}100%{transform:scale(1)}}
 @keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
 @keyframes slotPop{0%{opacity:0;transform:scale(.5)}60%{transform:scale(1.1)}100%{opacity:1;transform:scale(1)}}
+
+/* Flying trait label */
+.flying-trait{position:absolute;z-index:50;font-family:'Fredoka';font-size:min(1.2vw,14px);font-weight:700;
+  color:var(--navy);background:rgba(255,255,255,.9);border:2px solid var(--teal-light);
+  border-radius:12px;padding:6px 14px;pointer-events:none;
+  box-shadow:0 4px 16px rgba(69,181,170,.3)}
+.flying-trait::after{content:'';position:absolute;inset:-4px;border-radius:16px;
+  border:2px solid var(--teal);opacity:.5;animation:flyPulse .4s ease-out infinite alternate}
+@keyframes flyPulse{0%{opacity:.3;transform:scale(1)}100%{opacity:.6;transform:scale(1.05)}}
+
+/* Milestone celebration overlay */
+#milestoneOverlay{position:fixed;inset:0;z-index:250;display:none;align-items:center;justify-content:center;
+  background:rgba(224,247,241,.92);backdrop-filter:blur(12px)}
+#milestoneOverlay.active{display:flex}
+.ms-content{text-align:center;animation:pop .6s cubic-bezier(.34,1.56,.64,1)}
+.ms-count{font-family:'Fredoka';font-size:min(12vw,100px);font-weight:700;color:var(--teal);line-height:1}
+.ms-label{font-family:'Fredoka';font-size:min(4vw,32px);font-weight:700;color:var(--navy);margin:8px 0}
+.ms-sub{font-family:'Nunito';font-size:min(1.8vw,16px);color:var(--text-dim);margin-bottom:20px}
+.ms-progress{display:flex;gap:6px;justify-content:center;margin:16px 0}
+.ms-star{width:min(4vw,32px);height:min(4vw,32px);border-radius:50%;border:2px solid var(--teal-light);
+  display:flex;align-items:center;justify-content:center;font-size:min(2vw,16px);transition:all .3s}
+.ms-star.earned{background:var(--yellow);border-color:var(--yellow)}
+.ms-btn{padding:14px 40px;background:var(--coral);color:#fff;border:none;border-radius:50px;
+  font-family:'Fredoka';font-size:18px;font-weight:600;cursor:pointer;
+  box-shadow:0 6px 24px rgba(244,123,108,.3);transition:all .2s;margin-top:8px}
+.ms-btn:hover{transform:scale(1.05)}
 </style>
 </head>
 <body>
@@ -262,6 +300,7 @@ html,body{height:100%;font-family:'Nunito',sans-serif;overflow:hidden;background
 <div id="zoomOverlay"><div class="zoom-inner" id="zoomInner"></div></div>
 <div id="idkOverlay"><div class="idk-content"><div class="idk-x">✕</div><div class="idk-msg">Think harder! What comes to mind?</div></div></div>
 <div id="doneOverlay"><div class="done-content" id="doneContent"></div></div>
+<div id="milestoneOverlay"><div class="ms-content" id="msContent"></div></div>
 <div id="toast"><span id="tE"></span><span id="tT"></span></div>
 
 <script>
@@ -283,9 +322,26 @@ const clrs=['#F47B6C','#3EA66B','#F7DC6F','#7EDDC3','#1B3D6F','#FF87B2'];
 function burst(x,y,n){cv.width=innerWidth;cv.height=innerHeight;for(let i=0;i<n;i++)cp.push({x,y,vx:(Math.random()-.5)*20,vy:(Math.random()-.8)*16,w:Math.random()*10+4,h:Math.random()*6+3,c:clrs[Math.random()*clrs.length|0],r:Math.random()*360,rv:(Math.random()-.5)*14,l:1,d:Math.random()*.008+.005});if(!cr)aniC()}
 function aniC(){cr=true;cx.clearRect(0,0,cv.width,cv.height);cp=cp.filter(p=>p.l>0);cp.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.35;p.r+=p.rv;p.l-=p.d;p.vx*=.99;cx.save();cx.translate(p.x,p.y);cx.rotate(p.r*Math.PI/180);cx.globalAlpha=Math.min(p.l*2,1);cx.fillStyle=p.c;cx.fillRect(-p.w/2,-p.h/2,p.w,p.h);cx.restore()});cp.length?requestAnimationFrame(aniC):cr=false}
 
-/* MILESTONES */
+/* MILESTONES - upgraded with full-screen celebrations at 4 and 8 */
 const MS={3:{e:'⭐',t:'Great start!'},5:{e:'🔥',t:'On fire! 5!'},10:{e:'🎉',t:'Amazing! 10!'},15:{e:'🚀',t:'15 traits!'},20:{e:'💪',t:'Unstoppable!'}};
-function checkMS(n){const m=MS[n];if(!m)return;document.getElementById('tE').textContent=m.e;document.getElementById('tT').textContent=m.t;const t=document.getElementById('toast');t.classList.add('show');sndCeleb();burst(innerWidth/2,innerHeight/3,90);setTimeout(()=>t.classList.remove('show'),3000)}
+const BIG_MS={4:{title:'Halfway There!',sub:'4 out of 8 traits discovered. Keep exploring!'},8:{title:'All 8 Found!',sub:'You discovered all the traits. Amazing job!'}};
+function checkMS(n){
+  const big=BIG_MS[n];
+  if(big){showMilestone(n,big);return}
+  const m=MS[n];if(!m)return;
+  document.getElementById('tE').textContent=m.e;document.getElementById('tT').textContent=m.t;
+  const t=document.getElementById('toast');t.classList.add('show');sndCeleb();burst(innerWidth/2,innerHeight/3,90);
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+function showMilestone(n,ms){
+  sndCeleb();burst(innerWidth/2,innerHeight/3,150);
+  const c=document.getElementById('msContent');
+  let stars='';for(let i=1;i<=8;i++)stars+=`<div class="ms-star ${i<=n?'earned':''}">★</div>`;
+  c.innerHTML=`<div class="ms-count">${n}</div><div class="ms-label">${ms.title}</div><div class="ms-sub">${ms.sub}</div><div class="ms-progress">${stars}</div><button class="ms-btn" onclick="closeMilestone()">Keep Going!</button>`;
+  document.getElementById('milestoneOverlay').classList.add('active');
+  setTimeout(()=>burst(innerWidth/2,innerHeight/2,80),500);
+}
+function closeMilestone(){document.getElementById('milestoneOverlay').classList.remove('active')}
 
 /* INTRO */
 function startGame(){initA();sndWhoosh();document.querySelectorAll('.ideco').forEach(d=>d.classList.add('on'));document.getElementById('intro').classList.add('hidden');setTimeout(()=>{document.getElementById('intro').style.display='none';document.getElementById('game').classList.add('on');setTimeout(()=>sndPop(),500)},700)}
@@ -304,8 +360,33 @@ function findSlot(region){
 function fillSlot(idx,trait,detail){
   slotData[idx]={trait,detail};
   const el=document.querySelector(`.slot-${idx}`);
-  el.className=`ov ov-slot slot-${idx} filled`;
-  el.innerHTML=`<div>${trait}</div>${detail?`<div class="sub">${detail}</div>`:''}`;
+  flyTraitToSlot(trait,el,()=>{
+    el.className=`ov ov-slot slot-${idx} filled`;
+    el.innerHTML=`<div>${trait}</div>${detail?`<div class="sub">${detail}</div>`:''}`;
+  });
+}
+function flyTraitToSlot(text,targetEl,cb){
+  const canvas=document.getElementById('gameCanvas');
+  if(!canvas){cb();return}
+  const cr=canvas.getBoundingClientRect();
+  const inp=document.querySelector('.ov-input');
+  if(!inp){cb();return}
+  const ir=inp.getBoundingClientRect();
+  const tr=targetEl.getBoundingClientRect();
+  const fly=document.createElement('div');
+  fly.className='flying-trait';
+  fly.textContent=text;
+  fly.style.left=(ir.left-cr.left+ir.width/2)+'px';
+  fly.style.top=(ir.top-cr.top)+'px';
+  canvas.appendChild(fly);
+  const dx=(tr.left-cr.left+tr.width/2)-(ir.left-cr.left+ir.width/2);
+  const dy=(tr.top-cr.top+tr.height/2)-(ir.top-cr.top);
+  fly.animate([
+    {transform:'translate(0,0) scale(1)',opacity:1},
+    {transform:`translate(${dx*.3}px,${dy*.5}px) scale(1.2)`,opacity:1,offset:.4},
+    {transform:`translate(${dx}px,${dy}px) scale(.8)`,opacity:.6}
+  ],{duration:600,easing:'cubic-bezier(.23,1,.32,1)',fill:'forwards'})
+  .onfinish=()=>{fly.remove();cb()};
 }
 
 function renderSlots(){
